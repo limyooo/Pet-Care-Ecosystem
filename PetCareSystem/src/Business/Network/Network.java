@@ -17,7 +17,7 @@ public class Network {
     private String name;
     private EnterpriseDirectory enterpriseDirectory;
     
-    public Network() {
+    public Network(String name) {
         enterpriseDirectory = new EnterpriseDirectory();
     }
     

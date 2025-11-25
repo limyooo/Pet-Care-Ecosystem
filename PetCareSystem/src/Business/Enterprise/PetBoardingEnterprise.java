@@ -1,13 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Enterprise;
 
+import Business.Organization.Organization;
+import java.util.ArrayList;
+
 /**
- *
- * @author hanlinyao
+ * Enterprise for pet boarding service.
  */
-public class PetBoardingEnterprise {
-    
+public class PetBoardingEnterprise extends Enterprise {
+
+    public PetBoardingEnterprise(String name) {
+        super(name, EnterpriseType.PetBoarding);
+    }
+
+    @Override
+    public ArrayList<Organization.Type> getSupportedOrganizationTypes() {
+        ArrayList<Organization.Type> list = new ArrayList<>();
+        // Departments inside pet boarding enterprise
+        list.add(Organization.Type.FrontDesk);
+        list.add(Organization.Type.PetCare);
+        list.add(Organization.Type.BoardingService);
+        return list;
+    }
 }

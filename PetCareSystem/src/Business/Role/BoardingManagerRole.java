@@ -1,13 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.Role;
 
+import Business.Petsystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+
 /**
- *
- * @author hanlinyao
+ * BoardingManagerRole:
+ * Manages boarding reservations, capacity and overall operations.
  */
-public class BoardingManagerRole {
-    
+public class BoardingManagerRole extends Role {
+
+    @Override
+    public JPanel createWorkArea(JPanel userProcessContainer,
+                                 UserAccount account,
+                                 Organization organization,
+                                 Enterprise enterprise,
+                                 Petsystem system) {
+        // TODO: replace with real Boarding Manager work area panel
+        // return new BoardingManagerWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
+        return null;
+    }
 }

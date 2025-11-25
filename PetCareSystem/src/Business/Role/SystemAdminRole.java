@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business.Role;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.Petsystem;
+import Business.UserAccount.UserAccount;
 import UI.admin.SystemAdminWorkAreaJPanel;
 import javax.swing.JPanel;
 
@@ -33,4 +37,14 @@ public class SystemAdminRole extends Role { // <--- 关键：必须继承 Role
     //     return new SystemAdminWorkAreaJPanel(); 
     // }
     
+    @Override
+    public JPanel createWorkArea(JPanel userProcessContainer,
+                             UserAccount account,
+                             Organization organization,
+                             Enterprise enterprise,
+                             Petsystem business) {
+
+    return null;//创建UI面板之后再补充
+}
+
 }

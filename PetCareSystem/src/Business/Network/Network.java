@@ -9,5 +9,8 @@ package Business.Network;
  * @author hanlinyao
  */
 public class Network {
+
+    public Network(String name) {
+    }
     
 }

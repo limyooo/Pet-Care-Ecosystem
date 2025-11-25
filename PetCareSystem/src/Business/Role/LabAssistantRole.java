@@ -7,10 +7,10 @@ import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
 
 /**
- * InsuranceAgentRole:
- * Manages insurance policies and helps customers create or update policies.
+ * LabAssistntRole:
+ * Processes lab test requests and records test results.
  */
-public class InsuranceAgentRole extends Role {
+public class LabAssistantRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer,
@@ -18,8 +18,8 @@ public class InsuranceAgentRole extends Role {
                                  Organization organization,
                                  Enterprise enterprise,
                                  Petsystem system) {
-        // TODO: replace with real Insurance Agent work area panel
-        // return new InsuranceAgentWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
+        // TODO: replace with real Lab Assistant work area panel
+        // return new LabAssistantWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
         return null;
     }
 }

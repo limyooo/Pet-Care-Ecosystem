@@ -1,13 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.PetClinicOrganization;
 
+import Business.Organization.Organization;
+import Business.Role.Role;
+import Business.Role.VetDoctorRole;
+import java.util.ArrayList;
+
 /**
- *
- * @author hanlinyao
+ * VetDoctorOrganization:
+ * Veterinarians who diagnose pets and create lab test requests.
  */
-public class VetDoctorOrganization {
-    
+public class VetDoctorOrganization extends Organization {
+
+    public VetDoctorOrganization() {
+        super("Vet Doctor Organization");
+    }
+
+    // Only vet doctors work here
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roles = new ArrayList<>();
+        roles.add(new VetDoctorRole());
+        return roles;
+    }
 }

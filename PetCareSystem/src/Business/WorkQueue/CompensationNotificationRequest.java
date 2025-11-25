@@ -1,13 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.WorkQueue;
 
 /**
- *
- * @author hanlinyao
+ * Request to notify another organization about compensation.
+ * For example: Insurance Claim -> Pet Boarding for payment info.
  */
-public class CompensationNotificationRequest {
-    
+public class CompensationNotificationRequest extends WorkRequest {
+
+    private double compensationAmount;   // final compensation amount
+    private String note;                 // extra message (optional)
+
+    public double getCompensationAmount() {
+        return compensationAmount;
+    }
+
+    public void setCompensationAmount(double compensationAmount) {
+        this.compensationAmount = compensationAmount;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

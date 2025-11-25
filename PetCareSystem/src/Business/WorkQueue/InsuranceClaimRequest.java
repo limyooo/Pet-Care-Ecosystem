@@ -1,13 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.WorkQueue;
 
 /**
- *
- * @author hanlinyao
+ * Work request for an insurance claim.
+ * Created by customer / front desk / clinic and
+ * handled by Insurance Claim Organization.
  */
-public class InsuranceClaimRequest {
-    
+public class InsuranceClaimRequest extends WorkRequest {
+
+    private double claimAmount;      // requested claim money
+    private String claimDecision;    // "Approved" / "Rejected" / etc.
+
+    public double getClaimAmount() {
+        return claimAmount;
+    }
+
+    public void setClaimAmount(double claimAmount) {
+        this.claimAmount = claimAmount;
+    }
+
+    public String getClaimDecision() {
+        return claimDecision;
+    }
+
+    public void setClaimDecision(String claimDecision) {
+        this.claimDecision = claimDecision;
+    }
 }

@@ -32,7 +32,7 @@ public class MainJFrame extends javax.swing.JFrame {
         
         // 初始状态设置
         jSplitPane1.setLeftComponent(jPanel1);
-        jPanel2.removeAll(); // 清空右侧工作区
+        container.removeAll(); // 清空右侧工作区
         btnLogout.setEnabled(false); // 初始状态禁用登出按钮
         
         // 默认将窗口最大化或设置一个合理大小
@@ -56,10 +56,9 @@ public class MainJFrame extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.CardLayout());
 
         jLabel1.setText("User Name");
 
@@ -114,20 +113,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jPanel1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
-        );
+        container.setLayout(new java.awt.CardLayout());
+        jSplitPane1.setRightComponent(container);
 
-        jSplitPane1.setRightComponent(jPanel2);
-
-        getContentPane().add(jSplitPane1, "card2");
+        getContentPane().add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -158,20 +147,29 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // 1. 清除当前用户会话
+       // 1. 清除当前用户会话
         this.userAccount = null;
-        
-        // 2. 切换回登录状态
-        jPanel2.removeAll(); // 清除右侧工作区内容
-        jPanel2.revalidate();
-        jPanel2.repaint();
-        
-        jPanel1.setVisible(true); // 显示左侧登录面板
-        btnLogout.setEnabled(false); // 禁用登出按钮
-        
-        // 3. 清空输入框
-        jTextField1.setText("");
-        jTextField2.setText("");
+    
+    // 2. 恢复登录界面
+    getContentPane().removeAll(); // 清空当前内容
+    getContentPane().setLayout(new java.awt.CardLayout()); // 重新设置布局
+    getContentPane().add(jSplitPane1, "card2"); // 添加回登录界面
+    
+    // 3. 重置登录面板状态
+    jPanel1.setVisible(true); // 显示左侧登录面板
+    container.removeAll(); // 清除右侧工作区内容
+    container.revalidate();
+    container.repaint();
+    
+    btnLogout.setEnabled(false); // 禁用登出按钮
+    
+    // 4. 清空输入框
+    jTextField1.setText("");
+    jTextField2.setText("");
+    
+    // 5. 刷新界面
+    getContentPane().revalidate();
+    getContentPane().repaint();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
@@ -212,10 +210,10 @@ public class MainJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JPanel container;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
@@ -224,28 +222,25 @@ public class MainJFrame extends javax.swing.JFrame {
     private void loadWorkArea() {
        if (userAccount == null) return;
 
-        JPanel workAreaPanel = null;
-        
-        // 检查是否是系统管理员
-        if (userAccount.getRole() instanceof SystemAdminRole) {
-            // 加载 SystemAdminWorkAreaJPanel
-            // 关键：将系统实例传递给工作区面板
-            workAreaPanel = new SystemAdminWorkAreaJPanel(system); 
-        } 
-        // 您可以在这里添加其他角色的判断和加载，例如：
-        // else if (userAccount.getRole() instanceof LabManagerRole) {
-        //     workAreaPanel = new LabManagerWorkAreaJPanel(system);
-        // }
+    JPanel workAreaPanel = null;
+    
+    // 检查是否是系统管理员
+    if (userAccount.getRole() instanceof SystemAdminRole) {
+        // 创建工作区面板
+        workAreaPanel = new SystemAdminWorkAreaJPanel(system); 
+    } 
+    // 您可以在这里添加其他角色的判断
 
-        if (workAreaPanel != null) {
-            // 5. 将工作区面板加载到右侧的 jPanel2 中
-            jPanel2.removeAll();
-            jPanel2.setLayout(new CardLayout()); // 使用 CardLayout 管理
-            jPanel2.add("WorkArea", workAreaPanel);
-            
-            jPanel2.revalidate();
-            jPanel2.repaint();
-        }
+    if (workAreaPanel != null) {
+        // ⭐ 关键修改：移除整个 jSplitPane1，用工作区面板替换
+        getContentPane().removeAll(); // 清空所有内容
+        getContentPane().setLayout(new java.awt.BorderLayout()); // 设置布局
+        getContentPane().add(workAreaPanel, java.awt.BorderLayout.CENTER); // 添加工作区
+        
+        // 刷新界面
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }
     }
 
     private void setupActionListeners() {

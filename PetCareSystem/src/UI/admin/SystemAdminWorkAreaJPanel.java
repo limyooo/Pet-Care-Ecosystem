@@ -5,18 +5,37 @@
 package UI.admin;
 
 import Business.Petsystem;
+import Business.Network.Network;
+import Business.Enterprise.Enterprise;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
  * @author hanlinyao
  */
 public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
+    private Petsystem system;
+    
+    
 
     /**
      * Creates new form SystemAdminWorkAreaJPanel
      */
     public SystemAdminWorkAreaJPanel(Petsystem system) {
-        initComponents();
+      this.system = system;
+    initComponents();
+    
+    
+    
+    // 初始化 JTree
+    populateTree();
     }
 
     /**
@@ -37,7 +56,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageEnterprise = new javax.swing.JButton();
         btnMea = new javax.swing.JButton();
 
-        setLayout(new java.awt.CardLayout());
+        setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setViewportView(jTree1);
 
@@ -46,50 +65,90 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
 
         btnManageNetwork.setText("Manage Network");
+        btnManageNetwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageNetworkActionPerformed(evt);
+            }
+        });
 
         btnManageEnterprise.setText("Manage Enterprise");
+        btnManageEnterprise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageEnterpriseActionPerformed(evt);
+            }
+        });
 
         btnMea.setText("Manage Enterprise Admin");
+        btnMea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMeaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addGap(63, 63, 63)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMea, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnManageEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnManageNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                    .addComponent(btnMea, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnManageEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnManageNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(21, 21, 21)
                 .addComponent(btnManageNetwork)
-                .addGap(33, 33, 33)
+                .addGap(29, 29, 29)
                 .addComponent(btnManageEnterprise)
-                .addGap(40, 40, 40)
+                .addGap(31, 31, 31)
                 .addComponent(btnMea)
-                .addContainerGap(241, Short.MAX_VALUE))
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel2);
 
-        add(jSplitPane1, "card2");
+        add(jSplitPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnManageNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageNetworkActionPerformed
+        // TODO add your handling code here:
+    ManageEnterpriseJPanel manageEnterpriseJPanel = new ManageEnterpriseJPanel(system, this);
+        jSplitPane1.setRightComponent(manageEnterpriseJPanel);
+        jSplitPane1.setDividerLocation(150);
+        jSplitPane1.revalidate();
+    }//GEN-LAST:event_btnManageNetworkActionPerformed
+
+    private void btnManageEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEnterpriseActionPerformed
+        // TODO add your handling code here:
+        ManageEnterpriseJPanel manageEnterpriseJPanel = new ManageEnterpriseJPanel(system, this);
+        jSplitPane1.setRightComponent(manageEnterpriseJPanel);
+        jSplitPane1.setDividerLocation(150);
+        jSplitPane1.revalidate();
+     
+    }//GEN-LAST:event_btnManageEnterpriseActionPerformed
+
+    private void btnMeaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeaActionPerformed
+        // TODO add your handling code here:
+         ManageEnterpriseAdminJPanel manageEnterpriseAdminJPanel = new ManageEnterpriseAdminJPanel(system, this);
+        jSplitPane1.setRightComponent(manageEnterpriseAdminJPanel);
+        jSplitPane1.setDividerLocation(150);
+        jSplitPane1.revalidate();
+    }//GEN-LAST:event_btnMeaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -102,4 +161,34 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTree() {
+        
+        
+    }
+
+    private void loadManageAdminPanel() {
+        try {
+        // 创建目标面板实例
+        ManageEnterpriseAdminJPanel manageEnterpriseAdminJPanel = new ManageEnterpriseAdminJPanel(system, this);
+        
+        // 关键：清除初始的按钮/布局，加载新面板
+        jPanel2.removeAll(); 
+        
+        // 将面板添加到容器 jPanel2 中
+        jPanel2.add("manageEnterpriseAdminJPanel", manageEnterpriseAdminJPanel);
+        
+        // 显示新添加的面板
+        CardLayout layout = (CardLayout)jPanel2.getLayout();
+        layout.show(jPanel2, "manageEnterpriseAdminJPanel");
+        
+        jPanel2.revalidate();
+        jPanel2.repaint();
+        
+    } catch (Exception ex) {
+        // ⭐ 捕获异常，并显示错误信息。这有助于找到真正的失败原因。
+        JOptionPane.showMessageDialog(this, "加载管理面板失败: " + ex.getMessage(), "内部错误", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace(); // 将堆栈跟踪打印到控制台
+    }
+    }
 }

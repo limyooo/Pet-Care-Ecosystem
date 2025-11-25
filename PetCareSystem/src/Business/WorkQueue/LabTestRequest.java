@@ -1,13 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Business.WorkQueue;
 
 /**
- *
- * @author hanlinyao
+ * Work request from Vet Doctor to Vet Lab for a lab test.
  */
-public class LabTestRequest {
-    
+public class LabTestRequest extends WorkRequest {
+
+    private String testResult;   // lab result text
+
+    public String getTestResult() {
+        return testResult;
+    }
+
+    public void setTestResult(String testResult) {
+        this.testResult = testResult;
+    }
 }

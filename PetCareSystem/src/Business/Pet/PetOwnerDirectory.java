@@ -4,10 +4,40 @@
  */
 package Business.Pet;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author jingyangwang
  */
 public class PetOwnerDirectory {
+     private ArrayList<PetOwner> ownerList = new ArrayList<>();
     
+    //Constructor
+    public PetOwnerDirectory(){
+    }
+    //get ownerlist method
+    public ArrayList<PetOwner> getOwnerList(){
+        return ownerList;
+    }
+    //get addowner method
+    public PetOwner addOwner(String ownerId, String name, String phone, String email, String address, String emergencyContact) {
+        PetOwner owner = new PetOwner(ownerId, name, phone, email, address, emergencyContact);
+        ownerList.add(owner);
+        return owner;
+    }
+    //remove owner method
+    public void removeOwner(PetOwner owner) {
+        ownerList.remove(owner);
+    }
+    
+    //search method by ownerId
+    public PetOwner findOwnerById(String ownerId) {
+        for (PetOwner owner : ownerList) {
+            if (owner.getOwnerId().equals(ownerId)) {
+                return owner;
+            }
+        }
+        return null;
+    }
 }

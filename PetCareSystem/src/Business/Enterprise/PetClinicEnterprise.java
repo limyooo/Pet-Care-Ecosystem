@@ -2,15 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Business.Network;
+package Business.Enterprise;
 
 /**
  *
  * @author hanlinyao
  */
-public class Network {
-
-    public Network(String name) {
-    }
+public class PetClinicEnterprise {
     
 }

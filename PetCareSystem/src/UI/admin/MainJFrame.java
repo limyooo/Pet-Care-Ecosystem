@@ -4,17 +4,39 @@
  */
 package UI.admin;
 
+import Business.ConfigureABusiness;
+import Business.Petsystem;
+import Business.UserAccount.UserAccount;
+import Business.Role.SystemAdminRole; // 导入 SystemAdminRole 以便在登录后判断角色
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author hanlinyao
  */
 public class MainJFrame extends javax.swing.JFrame {
+    private Petsystem system;
+    private UserAccount userAccount; // 当前登录的用户
 
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
+        // 在 initComponents() 之前初始化系统实例
+        ConfigureABusiness.configure();
+        this.system = Petsystem.getInstance();
         initComponents();
+        
+        // 初始状态设置
+        jSplitPane1.setLeftComponent(jPanel1);
+        jPanel2.removeAll(); // 清空右侧工作区
+        btnLogout.setEnabled(false); // 初始状态禁用登出按钮
+        
+        // 默认将窗口最大化或设置一个合理大小
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -26,21 +48,131 @@ public class MainJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.CardLayout());
+
+        jLabel1.setText("User Name");
+
+        jLabel2.setText("Password");
+
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(jTextField1)
+            .addComponent(jTextField2)
+            .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(btnLogin)
+                .addGap(26, 26, 26)
+                .addComponent(btnLogout)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
+
+        jSplitPane1.setLeftComponent(jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 464, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setRightComponent(jPanel2);
+
+        getContentPane().add(jSplitPane1, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // 1. 获取用户输入
+        String userName = jTextField1.getText(); // 用户名
+        String password = jTextField2.getText(); // 密码 (注意：jTextField2 最好是 JPasswordField)
+        
+        // 2. 验证用户
+        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
+        
+        if (userAccount == null) {
+            // 验证失败
+            JOptionPane.showMessageDialog(this, "用户名或密码错误！", "登录失败", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            // 验证成功
+            this.userAccount = userAccount;
+            
+            // 3. 登录成功后的 UI 切换
+            jPanel1.setVisible(false); // 隐藏左侧登录面板
+            btnLogout.setEnabled(true); // 启用登出按钮
+            
+            // 4. 加载用户工作区
+            loadWorkArea();
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // 1. 清除当前用户会话
+        this.userAccount = null;
+        
+        // 2. 切换回登录状态
+        jPanel2.removeAll(); // 清除右侧工作区内容
+        jPanel2.revalidate();
+        jPanel2.repaint();
+        
+        jPanel1.setVisible(true); // 显示左侧登录面板
+        btnLogout.setEnabled(false); // 禁用登出按钮
+        
+        // 3. 清空输入框
+        jTextField1.setText("");
+        jTextField2.setText("");
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +210,51 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLogout;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    private void loadWorkArea() {
+       if (userAccount == null) return;
+
+        JPanel workAreaPanel = null;
+        
+        // 检查是否是系统管理员
+        if (userAccount.getRole() instanceof SystemAdminRole) {
+            // 加载 SystemAdminWorkAreaJPanel
+            // 关键：将系统实例传递给工作区面板
+            workAreaPanel = new SystemAdminWorkAreaJPanel(system); 
+        } 
+        // 您可以在这里添加其他角色的判断和加载，例如：
+        // else if (userAccount.getRole() instanceof LabManagerRole) {
+        //     workAreaPanel = new LabManagerWorkAreaJPanel(system);
+        // }
+
+        if (workAreaPanel != null) {
+            // 5. 将工作区面板加载到右侧的 jPanel2 中
+            jPanel2.removeAll();
+            jPanel2.setLayout(new CardLayout()); // 使用 CardLayout 管理
+            jPanel2.add("WorkArea", workAreaPanel);
+            
+            jPanel2.revalidate();
+            jPanel2.repaint();
+        }
+    }
+
+    private void setupActionListeners() {
+        // 绑定登录按钮事件
+        btnLogin.addActionListener(this::btnLoginActionPerformed);
+        
+        // 绑定登出按钮事件
+        btnLogout.addActionListener(this::btnLogoutActionPerformed);
+    }
+       
+        
 }

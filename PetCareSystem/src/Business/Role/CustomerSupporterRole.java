@@ -4,10 +4,29 @@
  */
 package Business.Role;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JPanel;
+
 /**
  *
- * @author hanlinyao
+ * CustomerSupporterRole:
+ * Handles customer inquiries, booking support and general assistance
+ * for the Boarding Service Organization.
+ *
  */
-public class CustomerSupporterRole {
-    
+public class CustomerSupporterRole extends Role {
+
+    @Override
+    public JPanel createWorkArea(JPanel userProcessContainer, 
+                                 UserAccount account, 
+                                 Organization organization, 
+                                 Enterprise enterprise, 
+                                 EcoSystem system) {
+        // TODO: Replace with actual Customer Support work area panel
+        // return new CustomerSupportWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
+        return null;
+    }
 }

@@ -7,10 +7,10 @@ import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
 
 /**
- * FrontDeskAgentRole:
- * Handles patient registration, appointment scheduling and basic triage.
+ * LabAssistntRole:
+ * Processes lab test requests and records test results.
  */
-public class FrontDeskAgentRole extends Role {
+public class LabAssistantRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer,
@@ -18,8 +18,8 @@ public class FrontDeskAgentRole extends Role {
                                  Organization organization,
                                  Enterprise enterprise,
                                  EcoSystem system) {
-        // TODO: replace with real Front Desk work area panel
-        // return new FrontDeskAgentWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
+        // TODO: replace with real Lab Assistant work area panel
+        // return new LabAssistantWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
         return null;
     }
 }

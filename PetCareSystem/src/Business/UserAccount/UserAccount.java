@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Business.Role;
+package Business.UserAccount;
 
 /**
  *
- * @author hanlinyao
+ * @author Eve Dou
  */
-public class LabAssisatntRole {
+public class UserAccount {
     
 }

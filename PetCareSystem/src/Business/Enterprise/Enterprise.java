@@ -63,4 +63,10 @@ public abstract class Enterprise extends Organization {
     public ArrayList<Role> getSupportedRole() {
         return new ArrayList<>();
     }
+    
+    @Override
+    public String toString() {
+    return getName();
+}
+
 }

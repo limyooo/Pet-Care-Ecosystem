@@ -108,7 +108,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(btnLogin)
                 .addGap(26, 26, 26)
                 .addComponent(btnLogout)
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);

@@ -70,7 +70,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -106,7 +106,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnMea, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnManageEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnManageNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +117,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnManageEnterprise)
                 .addGap(31, 31, 31)
                 .addComponent(btnMea)
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel2);
@@ -191,4 +191,20 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         ex.printStackTrace(); // 将堆栈跟踪打印到控制台
     }
     }
+
+    void restoreDefaultView() {
+        // 1. 恢复 jSplitPane1 的右侧组件为包含按钮的 jPanel2
+    jSplitPane1.setRightComponent(jPanel2); 
+    
+    // 2. 可选：重设分割线位置，让 JTree 区域保持一致
+    jSplitPane1.setDividerLocation(150); 
+    
+    // 3. 刷新容器以显示恢复后的视图
+    jSplitPane1.revalidate();
+    jSplitPane1.repaint(); 
+    
+    // ⭐ 确保重新加载 JTree，以便在创建新企业后显示新节点
+    populateTree();
+    }
+        
 }

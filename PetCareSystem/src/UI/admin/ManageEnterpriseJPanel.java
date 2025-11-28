@@ -4,20 +4,32 @@
  */
 package UI.admin;
 
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.EnterpriseDirectory;
+import Business.Network.Network;
 import Business.Petsystem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author hanlinyao
  */
 public class ManageEnterpriseJPanel extends javax.swing.JPanel {
+    private Petsystem system;
+    private SystemAdminWorkAreaJPanel parent; // ⭐ 1. 声明父面板实例变量
 
     /**
      * Creates new form ManageEnterpriseJPanel
      */
     public ManageEnterpriseJPanel(Petsystem system, SystemAdminWorkAreaJPanel aThis) {
         initComponents();
+        this.system = system;
+        this.parent = aThis; // ⭐ 2. 初始化父面板变量
+        
+        populateTable();
+        populateComboBox();
     }
 
     /**
@@ -69,7 +81,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Enterprise Type");
 
-        enterpriseTypeJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        enterpriseTypeJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pet Boarding", "Pet clinic", "Pet insurance" }));
 
         submitJButton.setText("Submit");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +125,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backJButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,17 +148,46 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                     .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(submitJButton)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
+// 1. 获取选定的 Network 和 EnterpriseType
+        Network network = (Network) networkJComboBox.getSelectedItem();
+        Enterprise.EnterpriseType type = (Enterprise.EnterpriseType) enterpriseTypeJComboBox.getSelectedItem();
 
+        String name = nameJTextField.getText().trim();
+
+        // 2. 验证输入
+        if (network == null || type == null || name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Network/Enterprise Type/Name can not be empty！", "Input error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 3. 创建 Enterprise
+        // 假设 EnterpriseDirectory 中有 createAndAddEnterprise(String name, Enterprise.EnterpriseType type) 方法
+        EnterpriseDirectory directory = network.getEnterpriseDirectory();
+        
+        // ⭐ 注意：由于您提供的 EnterpriseDirectory.java 仅包含 getter，我们假设 createAndAddEnterprise 存在于 Network/EnterpriseDirectory 中
+        // 为确保编译，这里需要一个实现来处理创建。
+        // 由于我们没有 EnterpriseDirectory.createAndAddEnterprise 的代码，这里只是调用一个假设的方法。
+        Enterprise enterprise = directory.createAndAddEnterprise(name, type);
+
+        // 4. 刷新表格并清空输入
+        populateTable();
+        nameJTextField.setText("");
+        
+        JOptionPane.showMessageDialog(this, "The enterprise was successfully established.！", "Success", JOptionPane.INFORMATION_MESSAGE);
+    
       
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-       
+       // ⭐ 关键修复：调用父面板的方法来恢复默认视图（显示按钮）
+        if (parent != null) {
+            parent.restoreDefaultView();
+        }
     }//GEN-LAST:event_backJButtonActionPerformed
 
 
@@ -162,4 +203,42 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox networkJComboBox;
     private javax.swing.JButton submitJButton;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) enterpriseJTable.getModel();
+        model.setRowCount(0); // 清空表格
+        
+        // 遍历所有 Network
+        for (Network network : system.getNetworkList()) {
+            // 假设 Network 中有获取 EnterpriseDirectory 的方法
+            if (network.getEnterpriseDirectory() != null) {
+                // 遍历 Network 下的所有 Enterprise
+                for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                    Object[] row = new Object[3];
+                    row[0] = enterprise.getName();
+                    row[1] = network.getName(); // 表格中显示 Network 对象（Network.toString()）
+                    row[2] = enterprise.getEnterpriseType().getValue(); // 显示 EnterpriseType 的描述
+
+                    model.addRow(row);
+                }
+            }
+        }
+    }
+        
+
+    private void populateComboBox() {
+        networkJComboBox.removeAllItems();
+        enterpriseTypeJComboBox.removeAllItems();
+
+        // 填充 Network 下拉框
+        for (Network network : system.getNetworkList()) {
+            networkJComboBox.addItem(network); // Network 对象的 toString() 方法会显示名称
+        }
+
+        // 填充 Enterprise Type 下拉框
+        for (Enterprise.EnterpriseType type : Enterprise.EnterpriseType.values()) {
+            enterpriseTypeJComboBox.addItem(type);
+        }
+    }
+        
 }

@@ -127,8 +127,8 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageNetworkActionPerformed
         // TODO add your handling code here:
-    ManageEnterpriseJPanel manageEnterpriseJPanel = new ManageEnterpriseJPanel(system, this);
-        jSplitPane1.setRightComponent(manageEnterpriseJPanel);
+    ManageNetworkJPanel manageNetworkJPanel = new ManageNetworkJPanel(system, this);
+        jSplitPane1.setRightComponent(manageNetworkJPanel);
         jSplitPane1.setDividerLocation(150);
         jSplitPane1.revalidate();
     }//GEN-LAST:event_btnManageNetworkActionPerformed
@@ -162,7 +162,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
 
-    private void populateTree() {
+    void populateTree() {
         
         
     }

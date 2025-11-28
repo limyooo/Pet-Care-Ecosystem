@@ -6,6 +6,7 @@ package UI.admin;
 
 import Business.Network.Network;
 import Business.Petsystem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,16 +15,17 @@ import javax.swing.table.DefaultTableModel;
  * @author hanlinyao
  */
 public class ManageNetworkJPanel extends javax.swing.JPanel {
-   private JPanel userProcessContainer;
     private Petsystem system;
+    private SystemAdminWorkAreaJPanel parent; // ⭐ 声明父面板实例变量
     /**
      * Creates new form ManageNetworkJPanel
      */
     public ManageNetworkJPanel(Petsystem system, SystemAdminWorkAreaJPanel aThis) {
         initComponents();
         
-        this.userProcessContainer = userProcessContainer;
+      // ⭐ 关键修复 1: 初始化 system 和 parent
         this.system = system;
+        this.parent = aThis; // 👈 修复了 NullPointerException 的根源
         
         populateNetworkTable();
     }
@@ -124,12 +126,36 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+String name = txtNetworkName.getText().trim();
+        
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Network name can not be empty!", "Input error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        // 1. 创建并添加新的 Network
+        Network network = system.createAndAddNetwork(name);
+        
+        // 2. 刷新表格
+        populateNetworkTable();
+        
+        // 3. ⭐ 刷新父面板的 JTree (调用 SystemAdminWorkAreaJPanel 上的方法)
+        if (parent != null) {
+             parent.populateTree(); // 此时 parent 已经被初始化，不再为 null
+        }
+       
+        // 4. 清理输入
+        txtNetworkName.setText("");
+        
+        JOptionPane.showMessageDialog(this, "Network created successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    
        
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-       
+       if (parent != null) {
+            parent.restoreDefaultView();
+        }
         
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -146,6 +172,17 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
     
 
     private void populateNetworkTable() {
+        DefaultTableModel model = (DefaultTableModel) networkJTable.getModel();
+        model.setRowCount(0);
+
+        if (system.getNetworkList() != null) {
+            for (Network network : system.getNetworkList()) {
+                Object[] row = new Object[1];
+                row[0] = network; // 传入对象，假设 Network.toString() 返回名称
+
+                model.addRow(row);
+            }
+        }
         
     }
         

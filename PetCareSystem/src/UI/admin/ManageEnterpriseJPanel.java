@@ -17,16 +17,18 @@ import javax.swing.table.DefaultTableModel;
  * @author hanlinyao
  */
 public class ManageEnterpriseJPanel extends javax.swing.JPanel {
+    //1.声明父面板实例变量
     private Petsystem system;
-    private SystemAdminWorkAreaJPanel parent; // ⭐ 1. 声明父面板实例变量
+    private SystemAdminWorkAreaJPanel parent; 
 
     /**
      * Creates new form ManageEnterpriseJPanel
      */
     public ManageEnterpriseJPanel(Petsystem system, SystemAdminWorkAreaJPanel aThis) {
         initComponents();
+        //2.初始化父面板变量
         this.system = system;
-        this.parent = aThis; // ⭐ 2. 初始化父面板变量
+        this.parent = aThis; 
         
         populateTable();
         populateComboBox();
@@ -184,7 +186,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-       // ⭐ 关键修复：调用父面板的方法来恢复默认视图（显示按钮）
+       //调用父面板的方法来恢复默认视图
         if (parent != null) {
             parent.restoreDefaultView();
         }

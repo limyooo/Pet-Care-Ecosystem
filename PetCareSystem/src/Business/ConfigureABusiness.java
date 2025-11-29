@@ -17,6 +17,7 @@ import Business.Role.VetDoctorRole;
 import Business.Role.LabAssistantRole;
 import Business.Role.InsuranceAgentRole;
 import Business.Role.ClaimProcessorRole;
+import Business.Role.EnterpriseAdminRole;
 
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.CompensationNotificationRequest;
@@ -58,6 +59,37 @@ public class ConfigureABusiness {
                         .createAndAddEnterprise(
                                 "Happy Paws Insurance",
                                 Enterprise.EnterpriseType.PetInsurance);
+        
+         // 3.x 为每个 Enterprise 创建一个 Enterprise Admin 账号（固定用户名和密码，方便登录演示）
+        // Boarding Enterprise Admin
+        Employee boardingAdminEmp = boardingEnt.getEmployeeDirectory()
+                .createEmployee("Boarding Enterprise Admin");
+        boardingEnt.getUserAccountDirectory().createUserAccount(
+                "boardingAdmin",          // 用户名
+                "Boarding@123",           // 密码（你可以自己改强一点）
+                boardingAdminEmp,
+                new EnterpriseAdminRole() // 如果没有这个类，先用你的 AdminRole
+        );
+
+        // Clinic Enterprise Admin
+        Employee clinicAdminEmp = clinicEnt.getEmployeeDirectory()
+                .createEmployee("Clinic Enterprise Admin");
+        clinicEnt.getUserAccountDirectory().createUserAccount(
+                "clinicAdmin",
+                "Clinic@123",
+                clinicAdminEmp,
+                new EnterpriseAdminRole()
+        );
+
+        // Insurance Enterprise Admin
+        Employee insuranceAdminEmp = insuranceEnt.getEmployeeDirectory()
+                .createEmployee("Insurance Enterprise Admin");
+        insuranceEnt.getUserAccountDirectory().createUserAccount(
+                "insuranceAdmin",
+                "Insurance@123",
+                insuranceAdminEmp,
+                new EnterpriseAdminRole()
+        );
 
         // 4. 给每个 Enterprise 创建 Organizations（要求你已经有 OrganizationDirectory.createOrganization(Type)）
         // 4.1 Boarding enterprise

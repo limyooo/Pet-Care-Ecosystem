@@ -67,4 +67,10 @@ public abstract class Organization {
     public int getOrganizationID() {
         return organizationID; 
     }
+    
+    @Override
+    public String toString() {
+    return this.getName();
+}
+
 }

@@ -271,35 +271,43 @@ public class MainJFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loadWorkArea() {
-    if (userAccount == null) return;
-
-    JPanel workAreaPanel = null;
-
-    // System Admin
-    if (userAccount.getRole() instanceof SystemAdminRole) {
-        workAreaPanel = new SystemAdminWorkAreaJPanel(system);
-    }
-    // Enterprise Admin
-    else if (userAccount.getRole() instanceof EnterpriseAdminRole) {
-        workAreaPanel = new UI.enterpriseAdmin.EnterpriseAdminWorkAreaJPanel(
-                container,
-                userAccount,
-                inEnterprise,
-                system
-        );
-    } else {
-        JOptionPane.showMessageDialog(this,
-                "The work area for this role has not been implemented yet.",
-                "Information",
-                JOptionPane.INFORMATION_MESSAGE);
+    if (userAccount == null) {
+        // 如果没有用户账户，就退出
         return;
     }
 
-    // 把工作区面板放到右侧 container（CardLayout）
+    // 1. 统一调用当前登录用户的 Role 对象的 createWorkArea 方法。
+    //    无论用户是系统管理员、企业管理员还是组织（如 Boarding Manager），
+    //    都会调用其角色类中实现的 createWorkArea 方法来获取工作区面板。
+    JPanel workAreaPanel = userAccount.getRole().createWorkArea(
+        container,         // userProcessContainer
+        userAccount,       // account
+        inOrganization,    // organization (对于组织角色，这是 BoardingServiceOrganization)
+        inEnterprise,      // enterprise
+        system             // system
+    );
+
+    // 2. 检查是否成功创建了工作区面板
+    if (workAreaPanel == null) {
+        JOptionPane.showMessageDialog(this,
+            "The work area panel returned null. Please check your Role implementation for this user type.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        
+        // 如果工作区创建失败，恢复登录状态
+        btnLogoutActionPerformed(null); 
+        return;
+    }
+
+    // 3. 把工作区面板放到右侧 container（CardLayout）
     container.removeAll();
     container.add("workArea", workAreaPanel);
     CardLayout layout = (CardLayout) container.getLayout();
     layout.next(container);
+    
+    // 刷新界面确保显示
+    container.revalidate();
+    container.repaint();
 }
 
 

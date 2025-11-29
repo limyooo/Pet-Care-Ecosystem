@@ -150,6 +150,9 @@ public class ConfigureABusiness {
             boardingServiceOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new BoardingManagerRole());
         }
+        Employee bmEmp = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Boarding Manager");
+        boardingServiceOrg.getUserAccountDirectory().createUserAccount(
+                "bm1", "1234", bmEmp, new BoardingManagerRole());
 
         // 6.4 Vet Doctor
         for (int i = 0; i < 3; i++) {

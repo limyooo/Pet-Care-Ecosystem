@@ -10,9 +10,10 @@ import Business.Pet.PetBoardingRecord;
 import Business.PetBoardingOrganization.BoardingServiceOrganization;
 import Business.Petsystem;
 import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author hanlinyao
@@ -37,6 +38,7 @@ public class WelcomJpanel extends javax.swing.JPanel {
         initComponents();
         // 初始加载表格数据
         populateTable();
+        
     }
 
     /**
@@ -50,17 +52,18 @@ public class WelcomJpanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tblPet = new javax.swing.JTable();
+        btnRegister = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
+        btnRecord = new javax.swing.JButton();
+        btnSubmit = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 51, 51));
         jLabel1.setText("Welcome to  Pet Boarding Centre");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -68,15 +71,22 @@ public class WelcomJpanel extends javax.swing.JPanel {
                 "Record ID", "Pet Name", "Specis", "Age", "Owner Name", "Start Date", "End Date", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblPet);
 
-        jButton1.setText("Register New Boarding Service");
+        btnRegister.setText("Register New Boarding Service");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("View Details");
+        btnView.setText("View Details");
 
-        jButton3.setText("Record Today's Take");
+        btnRecord.setText("Record Today's Take");
 
-        jButton4.setText("Submit Health Request");
+        btnSubmit.setText("Submit Health Request");
+
+        btnLogout.setText("Logout");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -86,7 +96,9 @@ public class WelcomJpanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(406, 406, 406))
+                        .addGap(314, 314, 314)
+                        .addComponent(btnLogout)
+                        .addGap(14, 14, 14))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(23, 23, 23)
@@ -94,44 +106,53 @@ public class WelcomJpanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addGap(76, 76, 76)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                                .addComponent(btnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRecord, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnLogout))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
-                .addComponent(jButton1)
+                .addComponent(btnRegister)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnView)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnRecord)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addComponent(btnSubmit)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // TODO add your handling code here:
+      // 跳转到注册新寄养服务的面板
+       
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnRecord;
+    private javax.swing.JButton btnRegister;
+    private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblPet;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblPet.getModel();
         model.setRowCount(0);
         
         // 假设 Boarding Service Organization 中包含 BoardingRecordDirectory

@@ -65,8 +65,8 @@ public class ConfigureABusiness {
         Employee boardingAdminEmp = boardingEnt.getEmployeeDirectory()
                 .createEmployee("Boarding Enterprise Admin");
         boardingEnt.getUserAccountDirectory().createUserAccount(
-                "boardingAdmin",          // 用户名
-                "Boarding@123",           // 密码（你可以自己改强一点）
+                "boardingadmin",          // 用户名
+                "1111",           // 密码（你可以自己改强一点）
                 boardingAdminEmp,
                 new EnterpriseAdminRole() // 如果没有这个类，先用你的 AdminRole
         );

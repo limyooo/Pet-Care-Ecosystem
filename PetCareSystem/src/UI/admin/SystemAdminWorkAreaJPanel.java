@@ -65,7 +65,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,6 +163,41 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     void populateTree() {
+        // 1. 获取 JTree 的模型
+    DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
+
+    // 2. 创建系统根节点
+    DefaultMutableTreeNode root = new DefaultMutableTreeNode("PetCareSystem");
+    model.setRoot(root);
+
+    // 3. 遍历所有 Network (需要 Petsystem 中有 getNetworkList())
+    if (system.getNetworkList() != null) {
+        for (Network network : system.getNetworkList()) {
+            // 使用 Network 对象作为节点的用户对象 (user object)
+            DefaultMutableTreeNode networkNode = new DefaultMutableTreeNode(network);
+            root.add(networkNode);
+
+            // 4. 遍历 Network 下的所有 Enterprise
+            // 假设 Network 中有获取 EnterpriseDirectory 的方法
+            if (network.getEnterpriseDirectory() != null) {
+                for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                    // 使用 Enterprise 对象作为节点的用户对象
+                    DefaultMutableTreeNode enterpriseNode = new DefaultMutableTreeNode(enterprise);
+                    networkNode.add(enterpriseNode);
+                    
+                    // 如果需要显示 Organization，可以在这里继续添加循环
+                }
+            }
+        }
+    }
+
+    // 5. 刷新树视图
+    model.reload();
+
+    // 6. 展开所有节点，使结构可见
+    for (int i = 0; i < jTree1.getRowCount(); i++) {
+        jTree1.expandRow(i);
+    }
         
         
     }

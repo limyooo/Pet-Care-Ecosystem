@@ -12,6 +12,11 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.Role.EnterpriseAdminRole;
+
 
 /**
  *
@@ -20,6 +25,9 @@ import javax.swing.JPanel;
 public class MainJFrame extends javax.swing.JFrame {
     private Petsystem system;
     private UserAccount userAccount; // 当前登录的用户
+    private Enterprise inEnterprise;
+    private Organization inOrganization;
+
 
     /**
      * Creates new form MainJFrame
@@ -108,7 +116,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(btnLogin)
                 .addGap(26, 26, 26)
                 .addComponent(btnLogout)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -122,28 +130,71 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // 1. 获取用户输入
-        String userName = jTextField1.getText(); // 用户名
-        String password = jTextField2.getText(); // 密码 (注意：jTextField2 最好是 JPasswordField)
-        
-        // 2. 验证用户
-        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
-        
-        if (userAccount == null) {
-            // 验证失败
-            JOptionPane.showMessageDialog(this, "用户名或密码错误！", "登录失败", JOptionPane.ERROR_MESSAGE);
-            return;
-        } else {
-            // 验证成功
-            this.userAccount = userAccount;
-            
-            // 3. 登录成功后的 UI 切换
-            jPanel1.setVisible(false); // 隐藏左侧登录面板
-            btnLogout.setEnabled(true); // 启用登出按钮
-            
-            // 4. 加载用户工作区
-            loadWorkArea();
+                                    
+    String userName = jTextField1.getText().trim();
+    String password = jTextField2.getText().trim();
+
+    // 先清空之前的状态
+    userAccount = null;
+    inEnterprise = null;
+    inOrganization = null;
+
+    // 1️⃣ 先在 System 层找（System Admin）
+    userAccount = system.getUserAccountDirectory()
+                        .authenticateUser(userName, password);
+
+    // 2️⃣ 如果没找到，再在 Network -> Enterprise -> Organization 里找
+    if (userAccount == null) {
+        for (Network network : system.getNetworkList()) {
+            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+
+                // 2.1 先在 Enterprise 自己的账号目录里找（Enterprise Admin）
+                userAccount = enterprise.getUserAccountDirectory()
+                                        .authenticateUser(userName, password);
+                if (userAccount != null) {
+                    inEnterprise = enterprise;
+                    break; // 找到了就不用再找 org 了
+                }
+
+                // 2.2 再去下面的 Organization 里找（医生、前台等）
+                for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+                    userAccount = org.getUserAccountDirectory()
+                                     .authenticateUser(userName, password);
+                    if (userAccount != null) {
+                        inEnterprise = enterprise;
+                        inOrganization = org;
+                        break;
+                    }
+                }
+
+                if (userAccount != null) {
+                    break;
+                }
+            }
+            if (userAccount != null) {
+                break;
+            }
         }
+    }
+
+    // 3️⃣ 如果所有地方都找不到，提示错误
+    if (userAccount == null) {
+        JOptionPane.showMessageDialog(this,
+                "用户名或密码错误！",
+                "登录失败",
+                JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // 4️⃣ 找到了，记录当前用户，调整 UI
+    this.userAccount = userAccount;
+
+    jPanel1.setVisible(false);   // 隐藏左侧登录面板
+    btnLogout.setEnabled(true);  // 启用登出按钮
+
+    // 5️⃣ 加载对应角色的工作区
+    loadWorkArea();
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
@@ -220,28 +271,38 @@ public class MainJFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loadWorkArea() {
-       if (userAccount == null) return;
+    if (userAccount == null) return;
 
     JPanel workAreaPanel = null;
-    
-    // 检查是否是系统管理员
-    if (userAccount.getRole() instanceof SystemAdminRole) {
-        // 创建工作区面板
-        workAreaPanel = new SystemAdminWorkAreaJPanel(system); 
-    } 
-    // 您可以在这里添加其他角色的判断
 
-    if (workAreaPanel != null) {
-        // ⭐ 关键修改：移除整个 jSplitPane1，用工作区面板替换
-        getContentPane().removeAll(); // 清空所有内容
-        getContentPane().setLayout(new java.awt.BorderLayout()); // 设置布局
-        getContentPane().add(workAreaPanel, java.awt.BorderLayout.CENTER); // 添加工作区
-        
-        // 刷新界面
-        getContentPane().revalidate();
-        getContentPane().repaint();
+    // System Admin
+    if (userAccount.getRole() instanceof SystemAdminRole) {
+        workAreaPanel = new SystemAdminWorkAreaJPanel(system);
     }
+    // Enterprise Admin
+    else if (userAccount.getRole() instanceof EnterpriseAdminRole) {
+        workAreaPanel = new UI.enterpriseAdmin.EnterpriseAdminWorkAreaJPanel(
+                container,
+                userAccount,
+                inEnterprise,
+                system
+        );
+    } else {
+        JOptionPane.showMessageDialog(this,
+                "The work area for this role has not been implemented yet.",
+                "Information",
+                JOptionPane.INFORMATION_MESSAGE);
+        return;
     }
+
+    // 把工作区面板放到右侧 container（CardLayout）
+    container.removeAll();
+    container.add("workArea", workAreaPanel);
+    CardLayout layout = (CardLayout) container.getLayout();
+    layout.next(container);
+}
+
+
 
     private void setupActionListeners() {
         // 绑定登录按钮事件

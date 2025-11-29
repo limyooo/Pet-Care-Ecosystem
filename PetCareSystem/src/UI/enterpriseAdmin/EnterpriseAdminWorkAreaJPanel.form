@@ -142,11 +142,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Manage Employees"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageEmployeesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnManageUsers">
           <Properties>
             <Property name="text" type="java.lang.String" value="Manage Users"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageUsersActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

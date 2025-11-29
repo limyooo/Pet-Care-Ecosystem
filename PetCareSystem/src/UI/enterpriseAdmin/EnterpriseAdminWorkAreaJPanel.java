@@ -3,6 +3,7 @@ package UI.enterpriseAdmin;
 import Business.Enterprise.Enterprise;
 import Business.Petsystem;
 import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
@@ -84,8 +85,18 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         btnManageEmployees.setText("Manage Employees");
+        btnManageEmployees.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageEmployeesActionPerformed(evt);
+            }
+        });
 
         btnManageUsers.setText("Manage Users");
+        btnManageUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageUsersActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout enterpriseJPanelLayout = new javax.swing.GroupLayout(enterpriseJPanel);
         enterpriseJPanel.setLayout(enterpriseJPanelLayout);
@@ -155,8 +166,28 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtEnterpriseActionPerformed
 
     private void btnManageOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageOrgActionPerformed
-        // TODO add your handling code here:
+    ManageOrganizationJPanel panel =
+            new ManageOrganizationJPanel(userProcessContainer, enterprise);
+    userProcessContainer.add("ManageOrganizationJPanel", panel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageOrgActionPerformed
+
+    private void btnManageEmployeesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEmployeesActionPerformed
+    ManageEmployeeJPanel panel = new ManageEmployeeJPanel(userProcessContainer, enterprise);
+
+    userProcessContainer.add("ManageEmployeeJPanel", panel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnManageEmployeesActionPerformed
+
+    private void btnManageUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUsersActionPerformed
+    ManageUserAccountJPanel panel =
+        new ManageUserAccountJPanel(userProcessContainer, enterprise, system);
+    userProcessContainer.add("ManageUserAccountJPanel", panel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnManageUsersActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

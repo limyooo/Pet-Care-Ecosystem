@@ -1,22 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package UI.enterpriseAdmin;
 
-/**
- *
- * @author Eve Dou
- */
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.Organization.Organization.Type;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class ManageOrganizationJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageOrganizationJPanel
-     */
-    public ManageOrganizationJPanel() {
+    private JPanel userProcessContainer;
+    private Enterprise enterprise;
+
+    // ⭐ 构造函数：从 EnterpriseAdminWorkAreaJPanel 传进来
+    public ManageOrganizationJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+
+        lblTitle.setText("Manage Organizations - " + enterprise.getName());
+
+        populateTable();
+        populateComboBox();
     }
 
+    // 填充表格：显示当前 enterprise 下面已有的 org
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblOrgList.getModel();
+        model.setRowCount(0);
+
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            Object[] row = new Object[2];
+            row[0] = org.getOrganizationID();
+            row[1] = org.getName();
+            model.addRow(row);
+        }
+    }
+
+    // 填充下拉框：可选择的 Organization Type
+    private void populateComboBox() {
+        cbxSelectOrg.removeAllItems();
+
+        // 简单做法：把所有枚举都加进去（你也可以根据 enterprise 类型做过滤）
+        for (Type type : Type.values()) {
+            cbxSelectOrg.addItem(type.getValue());   // JComboBox<String>
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,6 +70,11 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
         lblTitle.setText("Manage Organizations");
 
         btnBack.setText("<<Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         lblOrgList.setText("Organization List: ");
 
@@ -63,6 +98,11 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
         cbxSelectOrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -109,6 +149,36 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
                 .addContainerGap(120, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        String value = (String) cbxSelectOrg.getSelectedItem();
+        if (value == null) {
+            JOptionPane.showMessageDialog(this, "Please select an organization type.");
+            return;
+        }
+
+        // 把 String 转回枚举 Type
+        Type type = null;
+        for (Type t : Type.values()) {
+            if (t.getValue().equals(value)) {
+                type = t;
+                break;
+            }
+        }
+        if (type == null) {
+            JOptionPane.showMessageDialog(this, "Invalid organization type.");
+            return;
+        }
+
+        enterprise.getOrganizationDirectory().createOrganization(type);
+        populateTable();
+    }//GEN-LAST:event_btnAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

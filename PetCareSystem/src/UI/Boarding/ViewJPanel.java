@@ -8,12 +8,12 @@ package UI.Boarding;
  *
  * @author hanlinyao
  */
-public class RegisterJpanel extends javax.swing.JPanel {
+public class ViewJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form RegisterJpanel
+     * Creates new form ViewJPanel
      */
-    public RegisterJpanel() {
+    public ViewJPanel() {
         initComponents();
     }
 
@@ -26,61 +26,61 @@ public class RegisterJpanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle = new javax.swing.JLabel();
-        lblPet = new javax.swing.JLabel();
-        lblPetOwner = new javax.swing.JLabel();
-        lblPetName = new javax.swing.JLabel();
-        lblSpecies = new javax.swing.JLabel();
+        fieldWeight = new javax.swing.JTextField();
         lblAge = new javax.swing.JLabel();
         lblWeight = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        lblBoarding = new javax.swing.JLabel();
-        lblRoom = new javax.swing.JLabel();
-        lblSD = new javax.swing.JLabel();
-        lblED = new javax.swing.JLabel();
-        lblName = new javax.swing.JLabel();
-        lblPhone = new javax.swing.JLabel();
-        lblAddress = new javax.swing.JLabel();
-        lblEmail = new javax.swing.JLabel();
-        lblInsurance = new javax.swing.JLabel();
-        lblCompany = new javax.swing.JLabel();
-        lblPolicy = new javax.swing.JLabel();
-        lblCoverage = new javax.swing.JLabel();
-        fieldPetName = new javax.swing.JTextField();
-        fieldSpecies = new javax.swing.JTextField();
-        fieldAge = new javax.swing.JTextField();
-        fieldWeight = new javax.swing.JTextField();
         fieldOwnerName = new javax.swing.JTextField();
         fieldPhone = new javax.swing.JTextField();
         fieldAddress = new javax.swing.JTextField();
+        lblBoarding = new javax.swing.JLabel();
         fieldEmail = new javax.swing.JTextField();
+        lblRoom = new javax.swing.JLabel();
+        lblSD = new javax.swing.JLabel();
         fieldCompany = new javax.swing.JTextField();
+        lblED = new javax.swing.JLabel();
         fieldPolicy = new javax.swing.JTextField();
+        lblName = new javax.swing.JLabel();
+        lblPhone = new javax.swing.JLabel();
         fieldCL = new javax.swing.JTextField();
         fieldRoom = new javax.swing.JTextField();
+        lblAddress = new javax.swing.JLabel();
         fieldSD = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
         fieldED = new javax.swing.JTextField();
-        btnAdd = new javax.swing.JButton();
+        btnModifty = new javax.swing.JButton();
+        lblInsurance = new javax.swing.JLabel();
         lblEp = new javax.swing.JLabel();
+        lblCompany = new javax.swing.JLabel();
         fieldEp = new javax.swing.JTextField();
+        lblPolicy = new javax.swing.JLabel();
         lblFood = new javax.swing.JLabel();
+        lblCoverage = new javax.swing.JLabel();
         fieldFood = new javax.swing.JTextField();
-        btnBack = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        fieldPetName = new javax.swing.JTextField();
+        lblPet = new javax.swing.JLabel();
+        fieldSpecies = new javax.swing.JTextField();
+        lblPetOwner = new javax.swing.JLabel();
+        fieldAge = new javax.swing.JTextField();
+        lblPetName = new javax.swing.JLabel();
+        lblSpecies = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
 
-        lblTitle.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        lblTitle.setText("Register New Boarding Service");
-
-        lblPet.setText("Pet");
-
-        lblPetOwner.setText("Pet Owner");
-
-        lblPetName.setText("Pet Name");
-
-        lblSpecies.setText("Species");
+        fieldWeight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldWeightActionPerformed(evt);
+            }
+        });
 
         lblAge.setText("Age");
 
         lblWeight.setText("Weight");
+
+        fieldAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldAddressActionPerformed(evt);
+            }
+        });
 
         lblBoarding.setText("Boarding");
 
@@ -98,31 +98,19 @@ public class RegisterJpanel extends javax.swing.JPanel {
 
         lblEmail.setText("Email");
 
+        btnModifty.setText("Modifty");
+
         lblInsurance.setText("Insurance");
+
+        lblEp.setText("Expiration Date");
 
         lblCompany.setText("Insurance Company");
 
         lblPolicy.setText("Policy No");
 
-        lblCoverage.setText("Coverage Level");
-
-        fieldWeight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldWeightActionPerformed(evt);
-            }
-        });
-
-        fieldAddress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldAddressActionPerformed(evt);
-            }
-        });
-
-        btnAdd.setText("Add");
-
-        lblEp.setText("Expiration Date");
-
         lblFood.setText("Food Allergy");
+
+        lblCoverage.setText("Coverage Level");
 
         fieldFood.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,119 +118,125 @@ public class RegisterJpanel extends javax.swing.JPanel {
             }
         });
 
-        btnBack.setText("Back");
+        lblTitle.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        lblTitle.setText("View Details");
+
+        lblPet.setText("Pet");
+
+        lblPetOwner.setText("Pet Owner");
+
+        lblPetName.setText("Pet Name");
+
+        lblSpecies.setText("Species");
+
+        btnSave.setText("Save");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(lblPet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblPetOwner)
-                .addGap(158, 158, 158))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblPetName)
-                .addGap(64, 64, 64)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(fieldSpecies, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(fieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(lblPet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblPetOwner)
+                        .addGap(182, 182, 182))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fieldAge, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnBack)
-                        .addGap(124, 124, 124)
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSpecies)
-                            .addComponent(lblAge)
-                            .addComponent(lblWeight)
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(67, 67, 67)
-                                    .addComponent(lblBoarding))
-                                .addComponent(lblED)
-                                .addComponent(lblSD)
-                                .addComponent(lblRoom))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(106, 106, 106)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(fieldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldSD, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldED, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblPetName)
+                                .addGap(64, 64, 64)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldSpecies, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldAge, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(210, 210, 210)
+                                .addComponent(lblFood)
+                                .addGap(49, 49, 49)
+                                .addComponent(fieldFood, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSpecies)
+                                    .addComponent(lblAge)
+                                    .addComponent(lblWeight)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGap(67, 67, 67)
+                                            .addComponent(lblBoarding))
+                                        .addComponent(lblED)
+                                        .addComponent(lblSD)
+                                        .addComponent(lblRoom))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(106, 106, 106)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(fieldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(fieldSD, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(fieldED, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblPolicy)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(fieldPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(210, 210, 210)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblPolicy)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(fieldPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblCompany)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(fieldCompany, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lblInsurance)
+                                                .addGap(95, 95, 95))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblCoverage)
+                                                    .addComponent(lblEp))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(fieldCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(fieldEp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblCompany)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(fieldCompany, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblInsurance)
-                                        .addGap(95, 95, 95))
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(202, 202, 202)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblCoverage)
-                                            .addComponent(lblEp))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(fieldCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(fieldEp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblAddress)
+                                                    .addComponent(lblEmail))
+                                                .addGap(33, 33, 33)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(fieldAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblPhone)
+                                                    .addComponent(lblName))
+                                                .addGap(26, 26, 26)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(fieldOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(fieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(202, 202, 202)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblAddress)
-                                            .addComponent(lblEmail))
-                                        .addGap(33, 33, 33)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(fieldAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblPhone)
-                                            .addComponent(lblName))
-                                        .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(fieldOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(fieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(286, 286, 286)
-                        .addComponent(btnAdd))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblFood)
-                        .addGap(49, 49, 49)
-                        .addComponent(fieldFood, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                                .addGap(280, 280, 280)
+                                .addComponent(lblTitle)))
+                        .addGap(82, 82, 82))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(241, 241, 241)
+                .addComponent(btnModifty)
+                .addGap(72, 72, 72)
+                .addComponent(btnSave)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lblTitle)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblInsurance)
@@ -259,10 +253,6 @@ public class RegisterJpanel extends javax.swing.JPanel {
                             .addComponent(lblCoverage)
                             .addComponent(fieldCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTitle)
-                            .addComponent(btnBack))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPet)
                             .addComponent(lblPetOwner))
@@ -294,9 +284,7 @@ public class RegisterJpanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFood)
                             .addComponent(fieldFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
-                        .addGap(82, 82, 82)
+                        .addGap(88, 88, 88)
                         .addComponent(lblBoarding)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,9 +305,11 @@ public class RegisterJpanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEp)
                     .addComponent(fieldEp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAdd)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnModifty)
+                    .addComponent(btnSave))
+                .addGap(56, 56, 56))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -337,8 +327,8 @@ public class RegisterJpanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnModifty;
+    private javax.swing.JButton btnSave;
     private javax.swing.JTextField fieldAddress;
     private javax.swing.JTextField fieldAge;
     private javax.swing.JTextField fieldCL;
@@ -355,7 +345,6 @@ public class RegisterJpanel extends javax.swing.JPanel {
     private javax.swing.JTextField fieldSD;
     private javax.swing.JTextField fieldSpecies;
     private javax.swing.JTextField fieldWeight;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblBoarding;

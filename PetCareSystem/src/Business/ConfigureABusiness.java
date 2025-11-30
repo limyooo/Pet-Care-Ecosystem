@@ -211,6 +211,16 @@ public class ConfigureABusiness {
                     username, password, e, new ClaimProcessorRole());
         }
 
+        // 固定的 Claim Processor 测试账号
+        Employee cpTestEmp = claimOrg.getEmployeeDirectory()
+                                     .createEmployee("Test Claim Processor");
+        claimOrg.getUserAccountDirectory().createUserAccount(
+                "claim",          // 用户名
+                "12345",         // 密码
+                cpTestEmp,
+                new ClaimProcessorRole()
+        );
+        
         // 7. 用 Faker 生成 WorkRequest 测试数据
 
         // 7.1 Boarding -> Clinic：健康检查

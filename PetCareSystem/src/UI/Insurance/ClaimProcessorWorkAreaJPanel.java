@@ -3,18 +3,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package UI.Insurance;
+import Business.UserAccount.UserAccount;
+import Business.Petsystem;
+import Business.Enterprise.PetInsuranceEnterprise;
+import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Eve Dou
  */
 public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private InsuranceClaimOrganization organization;
+    private PetInsuranceEnterprise enterprise;
+    private Petsystem system;
 
     /**
      * Creates new form ClaimProcessorWorkAreaJPanel
      */
-    public ClaimProcessorWorkAreaJPanel() {
+    public ClaimProcessorWorkAreaJPanel(JPanel userProcessContainer,
+                                        UserAccount account,
+                                        InsuranceClaimOrganization organization,
+                                        PetInsuranceEnterprise enterprise,
+                                        Petsystem system) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.system = system;
+    }
+    
+     private void populateTable() {
+        // 下一步我们来真正填充表格
     }
 
     /**
@@ -36,7 +59,9 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         btnApprove = new javax.swing.JButton();
         btnReject = new javax.swing.JButton();
 
-        lblInsuranceClaimProcess.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        setBackground(new java.awt.Color(204, 204, 255));
+
+        lblInsuranceClaimProcess.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblInsuranceClaimProcess.setText("Welcome Insurance Claim Management ");
 
         btnLogOut.setText("LogOut");
@@ -59,17 +84,21 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblInsuranceClaim);
 
+        btnPolicyRecord.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnPolicyRecord.setText("View Policy Record");
 
-        btnViewDetail.setText("View Details");
+        btnViewDetail.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        btnViewDetail.setText("View Claim Details");
         btnViewDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewDetailActionPerformed(evt);
             }
         });
 
+        lblClaimList.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
         lblClaimList.setText("Claim List:");
 
+        btnApprove.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnApprove.setText("Approve");
         btnApprove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +106,7 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnReject.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnReject.setText("Reject");
         btnReject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,24 +122,27 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblClaimList, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(764, 764, 764))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnViewDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPolicyRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnReject, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(200, 200, 200))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblInsuranceClaimProcess)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLogOut)
-                        .addGap(61, 61, 61))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblClaimList, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(btnPolicyRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnReject, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(btnViewDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(22, Short.MAX_VALUE))))
+                        .addGap(54, 54, 54))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,9 +161,9 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnApprove))
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPolicyRecord)
-                    .addComponent(btnReject))
-                .addContainerGap(100, Short.MAX_VALUE))
+                    .addComponent(btnReject)
+                    .addComponent(btnPolicyRecord))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

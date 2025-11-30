@@ -3,19 +3,57 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package UI.Insurance;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
+import Business.WorkQueue.InsuranceClaimRequest;
 /**
  *
  * @author Eve Dou
  */
 public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
-
+    private JPanel userProcessContainer;
+    private InsuranceClaimRequest claim;
     /**
      * Creates new form PolicyRecordJPanel
      */
-    public ClaimPolicyRecordJPanel() {
-        initComponents();
+    public ClaimPolicyRecordJPanel(JPanel userProcessContainer,
+                               InsuranceClaimRequest claim) {
+    this.userProcessContainer = userProcessContainer;
+    this.claim = claim;
+    initComponents();
+    populateFields();   // 把 claim 里的数据填到黄色面板
+}
+    private void populateFields() {
+    if (claim == null) {
+        return;
     }
+
+    // 上面搜索区
+    txtPolicyId.setText(claim.getPolicyId());          // Policy ID
+    // Policy Holder Name 目前没有字段，就先留空不管
+
+    // 左侧 Policy Basic Information
+    txtCompany.setText(claim.getInsuranceCompany());   // Insurance Company
+    txtPetName.setText(claim.getPetName());            // Pet Name
+    txtCoverage.setText(claim.getCoverageLevel());     // Coverage Type
+    txtExpiration.setText(claim.getExpirationDate());  // Expiration Date
+    txtStatus.setText(claim.getStatus());              // Status（来自 WorkRequest）
+
+    // 右侧 Policy Claim History
+    if (claim.getRequestDate() != null) {
+        txtDate.setText(claim.getRequestDate().toString());  // Date
+    }
+    // 系统里没有单独的 ClaimID 字段，可以先用 PolicyId 或者留空，这里用 PolicyId：
+    txtClaimID.setText(claim.getPolicyId());
+    txtAmount.setText(String.valueOf(claim.getClaimAmount()));
+    String decision = claim.getClaimDecision();
+    if (decision == null || decision.isEmpty()) {
+        decision = "Pending";
+    }
+    txtResult.setText(decision);
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -227,7 +265,9 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtStatusActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+    userProcessContainer.remove(this);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

@@ -3,12 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package UI.Insurance;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
+import Business.WorkQueue.InsuranceClaimRequest;
 
 /**
  *
  * @author Eve Dou
  */
 public class ClaimDetailJPanel extends javax.swing.JPanel {
+
+    private JPanel userProcessContainer;
+    private InsuranceClaimRequest claim;
+
 
     /**
      * Creates new form ViewDetailsJPanel
@@ -17,6 +25,66 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public ClaimDetailJPanel(JPanel userProcessContainer,
+                         InsuranceClaimRequest claim) {
+    this();                         // 先调用无参构造，完成 initComponents()
+    this.userProcessContainer = userProcessContainer;
+    this.claim = claim;
+
+    populateFields();               // 把 claim 的数据填到文本框
+}
+    private void populateFields() {
+    if (claim == null) {
+        return;
+    }
+
+    // -------- Claim Info --------
+    txtPatientID.setText(claim.getPatientId());
+    txtClaimID.setText("CLM-" + claim.getPolicyId());      // 先简单用 policyId 拼一下
+    txtClaimReason.setText(claim.getMessage());            // 用 WorkRequest 的 message
+    txtClaimAmount.setText(String.valueOf(claim.getClaimAmount()));
+
+    if (claim.getRequestDate() != null) {
+        txtRequestDate.setText(claim.getRequestDate().toString());
+    }
+    txtStatus.setText(claim.getStatus());
+
+    if (claim.getSender() != null) {
+        // 你们的 WorkRequest 里 sender 一般是 UserAccount
+        txtSender.setText(claim.getSender().getUsername());
+        // 如果你更想显示员工名字，可以改成：
+        // txtSender.setText(claim.getSender().getEmployee().getName());
+    }
+
+    // -------- Pet Info --------
+    txtPetName.setText(claim.getPetName());
+    // 下面这些字段目前 InsuranceClaimRequest 没有对应属性，先留空占位
+    txtSpecies.setText("");
+    txtAge.setText("");
+    txtWeight.setText("");
+    txtAllergy.setText("");
+
+    // -------- Owner Info --------
+    txtOwnerName.setText("");
+    txtPhone.setText("");
+    txtEmail.setText("");
+    txtAddress.setText("");
+    txtEmergency.setText("");
+
+    // -------- Medical Info --------
+    txtDoctor.setText("");
+    txtDiagnosis.setText("");
+    txtLabResult.setText("");
+    txtCost.setText(String.valueOf(claim.getTreatmentCost()));
+
+    // -------- Insurance Info --------
+    txtInsuranceCompany.setText("");
+    txtPolicyID.setText(claim.getPolicyId());
+    txtCoverageLevel.setText("");
+    txtExpirationDate.setText("");
+}
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,7 +95,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         lblViewDetails = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblClaimInfo = new javax.swing.JLabel();
         lblClaimID = new javax.swing.JLabel();
         txtPatientID = new javax.swing.JTextField();
         lblClaimReason = new javax.swing.JLabel();
@@ -53,9 +121,9 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         lblDoctor = new javax.swing.JLabel();
         lblDiagnosis = new javax.swing.JLabel();
         lblLabResult = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jTextField13 = new javax.swing.JTextField();
+        txtDoctor = new javax.swing.JTextField();
+        txtLabResult = new javax.swing.JTextField();
+        txtDiagnosis = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
         lblPatientID = new javax.swing.JLabel();
         txtClaimID = new javax.swing.JTextField();
@@ -72,7 +140,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         txtAddress = new javax.swing.JTextField();
         txtEmergency = new javax.swing.JTextField();
         lblCost = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
+        txtCost = new javax.swing.JTextField();
         lblInsuranceInfo = new javax.swing.JLabel();
         lblOwner = new javax.swing.JLabel();
         lblCompany = new javax.swing.JLabel();
@@ -92,8 +160,8 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         lblViewDetails.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblViewDetails.setText("Claim Details");
 
-        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        jLabel1.setText("Claim Info:");
+        lblClaimInfo.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        lblClaimInfo.setText("Claim Info:");
 
         lblClaimID.setText("Claim ID:  ");
 
@@ -139,9 +207,9 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
 
         lblLabResult.setText("Lab Test Result:");
 
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+        txtDiagnosis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
+                txtDiagnosisActionPerformed(evt);
             }
         });
 
@@ -184,6 +252,11 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
 
         btnModify.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnModify.setText("Modify");
+        btnModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifyActionPerformed(evt);
+            }
+        });
 
         btnSave.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnSave.setText("Save");
@@ -202,7 +275,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                     .addComponent(lblPet, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblClaimInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,10 +301,10 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                                 .addGap(256, 256, 256))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                                    .addComponent(jTextField13)
-                                    .addComponent(jTextField12)
-                                    .addComponent(jTextField17))
+                                    .addComponent(txtDoctor, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                    .addComponent(txtDiagnosis)
+                                    .addComponent(txtLabResult)
+                                    .addComponent(txtCost))
                                 .addGap(69, 69, 69)))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,7 +321,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                                     .addComponent(txtCoverageLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPolicyID, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtInsuranceCompany, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(0, 154, Short.MAX_VALUE))
+                .addGap(0, 142, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +387,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                     .addComponent(lblViewDetails)
                     .addComponent(btnBack))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(lblClaimInfo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -392,19 +465,19 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDoctor)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDiagnosis)
-                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDiagnosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblLabResult)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtLabResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCost)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -425,7 +498,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblExpirationDate)
                             .addComponent(txtExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModify)
                     .addComponent(btnSave))
@@ -441,29 +514,34 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAgeActionPerformed
 
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+    private void txtDiagnosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiagnosisActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
+    }//GEN-LAST:event_txtDiagnosisActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+    if (userProcessContainer == null) {
+        return;
+    }
+    userProcessContainer.remove(this);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
+    
+    }//GEN-LAST:event_btnModifyActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnModify;
     private javax.swing.JButton btnSave;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField17;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblAllergy;
     private javax.swing.JLabel lblClaimAmount;
     private javax.swing.JLabel lblClaimID;
+    private javax.swing.JLabel lblClaimInfo;
     private javax.swing.JLabel lblClaimReason;
     private javax.swing.JLabel lblCompany;
     private javax.swing.JLabel lblCost;
@@ -495,11 +573,15 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtClaimAmount;
     private javax.swing.JTextField txtClaimID;
     private javax.swing.JTextField txtClaimReason;
+    private javax.swing.JTextField txtCost;
     private javax.swing.JTextField txtCoverageLevel;
+    private javax.swing.JTextField txtDiagnosis;
+    private javax.swing.JTextField txtDoctor;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEmergency;
     private javax.swing.JTextField txtExpirationDate;
     private javax.swing.JTextField txtInsuranceCompany;
+    private javax.swing.JTextField txtLabResult;
     private javax.swing.JTextField txtOwnerName;
     private javax.swing.JTextField txtPatientID;
     private javax.swing.JTextField txtPetName;

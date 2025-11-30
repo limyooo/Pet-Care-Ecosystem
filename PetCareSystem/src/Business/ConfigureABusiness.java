@@ -41,6 +41,11 @@ public class ConfigureABusiness {
 
         // 1. 获取唯一系统实例
         Petsystem system = Petsystem.getInstance();
+        
+        // ⭐ 关键修正：检查是否已经配置过数据。如果系统中的 Network 列表不为空，则直接返回。
+        if (!system.getNetworkList().isEmpty()) {
+            return system; 
+        }
 
         // Java Faker：用于生成随机测试数据
         Faker faker = new Faker();

@@ -3,18 +3,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package UI.Boarding;
+import Business.Enterprise.Enterprise;
+import Business.Pet.Pet;
+import Business.Pet.PetBoardingRecord;
+import Business.Pet.PetOwner;
+import Business.PetBoardingOrganization.BoardingServiceOrganization;
+import Business.Petsystem;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author hanlinyao
  */
 public class RecordJPanel extends javax.swing.JPanel {
+     private JPanel userProcessContainer;
+    private UserAccount account;
+    private BoardingServiceOrganization organization;
+    private Enterprise enterprise;
+    private Petsystem system;
 
     /**
      * Creates new form RecordJPanel
      */
-    public RecordJPanel() {
+    public RecordJPanel(JPanel userProcessContainer, UserAccount account, 
+                         BoardingServiceOrganization organization, 
+                         Enterprise enterprise, Petsystem system) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.system = system;
     }
 
     /**
@@ -101,6 +124,11 @@ public class RecordJPanel extends javax.swing.JPanel {
         jCheckBox8.setText("No");
 
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -152,7 +180,7 @@ public class RecordJPanel extends javax.swing.JPanel {
                         .addGap(152, 152, 152)
                         .addComponent(lblTittle, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(330, 330, 330)
+                        .addGap(316, 316, 316)
                         .addComponent(btnSave)))
                 .addContainerGap(170, Short.MAX_VALUE))
         );
@@ -172,11 +200,11 @@ public class RecordJPanel extends javax.swing.JPanel {
                             .addComponent(lblBreakfast)
                             .addComponent(jCheckBox1)
                             .addComponent(jCheckBox5))
-                        .addGap(18, 18, 18)
+                        .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblLunch)
                             .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox6)))
+                            .addComponent(jCheckBox6)
+                            .addComponent(lblLunch)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPoop)
@@ -196,6 +224,23 @@ public class RecordJPanel extends javax.swing.JPanel {
                 .addGap(0, 241, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+         userProcessContainer.remove(this);
+        
+        Component[] componentArray = userProcessContainer.getComponents();
+        if (componentArray.length > 0) {
+            Component component = componentArray[componentArray.length - 1];
+            if (component instanceof WelcomJpanel) {
+                WelcomJpanel welcomePanel = (WelcomJpanel) component;
+                welcomePanel.refreshTable();
+            }
+        }
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

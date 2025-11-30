@@ -27,6 +27,14 @@ import Business.WorkQueue.LabTestRequest;
 
 import com.github.javafaker.Faker;
 
+// 导入新增的 Pet 相关类
+import Business.Pet.Pet;
+import Business.Pet.PetOwner;
+import Business.Pet.PetDirectory;
+import Business.Pet.PetOwnerDirectory;
+import Business.Pet.PetBoardingRecord;
+import Business.Pet.BoardingRecordDirectory;
+
 public class ConfigureABusiness {
 
     public static Petsystem configure() {
@@ -241,7 +249,84 @@ public class ConfigureABusiness {
             req.setStatus("Pending");
             policyOrg.getWorkQueue().getWorkRequestList().add(req);
         }
+        // 8.1 创建 PetOwner 和 Pet
+        // *** 关键假设：Petsystem 有 getPetOwnerDirectory() 方法 ***
+        // *** 实际中您可能需要去 Petsystem.java 中实现这个方法 ***
+        PetOwnerDirectory petOwnerDirectory = system.getPetOwnerDirectory();
+        java.util.List<Pet> createdPets = new java.util.ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            // 创建 PetOwner
+            String ownerId = "PO" + faker.number().digits(4);
+            String name = faker.name().fullName();
+            String phone = faker.phoneNumber().cellPhone();
+            String email = faker.internet().emailAddress();
+            String address = faker.address().fullAddress();
+            String emergencyContact = faker.phoneNumber().phoneNumber();
+            
+            // 使用 PetOwnerDirectory.addOwner() 方法
+            PetOwner owner = petOwnerDirectory.addOwner(
+                    ownerId, name, phone, email, address, emergencyContact);
+            // 创建 Pet
+            // *** 关键假设：PetOwner 有 getPetDirectory() 方法，返回 PetDirectory 实例 ***
+            // *** 实际中您可能需要去 PetOwner.java 中实现 getPetDirectory() ***
+            PetDirectory petDirectory = owner.getPetDirectory(); 
+            
+            String petId = "P" + faker.number().digits(4);
+            String petName = faker.dog().name();
+            String species = (i % 2 == 0) ? "Dog" : "Cat"; // 随机生成 Dog 或 Cat
+            int age = faker.number().numberBetween(1, 10);
+            double weight = faker.number().randomDouble(2, 5, 50);
+            String foodPreference = faker.food().dish();
+            String foodAllergy = faker.food().ingredient();
+            String healthNotes = faker.lorem().sentence();
+
+            // 使用 PetDirectory.addPet() 方法
+            Pet pet = petDirectory.addPet(
+                    petId, petName, species, age, weight,
+                    foodPreference, foodAllergy, healthNotes, owner);
+
+            createdPets.add(pet);
+        }
+        // 8.2 创建 PetBoardingRecord
+        // *** 关键假设：PetBoardingEnterprise 有 getBoardingRecordDirectory() 方法 ***
+        // *** 实际中您可能需要去 PetBoardingEnterprise.java 中实现这个方法 ***
+        BoardingRecordDirectory boardingRecordDirectory = 
+                ((PetBoardingEnterprise) boardingEnt).getBoardingRecordDirectory();
+
+        int petIndex = 0;
+        for (int i = 0; i < 7; i++) {
+            if (createdPets.isEmpty()) break;
+            Pet pet = createdPets.get(petIndex++ % createdPets.size());
+            
+            String recordId = "BR" + faker.number().digits(4);
+            
+            // 生成过去 1-7 天的日期作为开始日期
+            java.util.Date startDate = faker.date().past(7, java.util.concurrent.TimeUnit.DAYS);
+            // 生成未来 1-7 天的日期作为结束日期
+            java.util.Date endDate = faker.date().future(7, java.util.concurrent.TimeUnit.DAYS); 
+            
+            // 状态从 Checked In, Pending Check-out, Completed 中随机选择
+            String status = faker.options().option("Checked In", "Pending Check-out", "Completed");
+
+            // Room Number: 楼层-房间号 (e.g., A-101)
+            String roomNumber = faker.bothify("?-###", true); 
+
+            // 使用 BoardingRecordDirectory.addRecord() 方法
+            boardingRecordDirectory.addRecord(
+                    recordId,
+                    pet,
+                    startDate.toString(), // 实际项目建议使用 SimpleDateFormat 格式化
+                    endDate.toString(),   // 实际项目建议使用 SimpleDateFormat 格式化
+                    roomNumber, 
+                    faker.lorem().sentence(),
+                    status
+            );
+        }
+        // ======================================================================
 
         return system;
     }
-}
+        
+    }
+    
+

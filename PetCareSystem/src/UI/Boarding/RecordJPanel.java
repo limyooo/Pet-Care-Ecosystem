@@ -111,7 +111,7 @@ public class RecordJPanel extends javax.swing.JPanel {
 
         lblMood.setText("Mood");
 
-        combMood.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combMood.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excited", "Normal", "Frustrated" }));
 
         btnSave.setText("Save");
 
@@ -182,7 +182,7 @@ public class RecordJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(316, 316, 316)
                         .addComponent(btnSave)))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

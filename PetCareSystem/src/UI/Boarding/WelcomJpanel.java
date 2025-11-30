@@ -229,35 +229,43 @@ public class WelcomJpanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
-       DefaultTableModel model = (DefaultTableModel) tblPet.getModel();
-        model.setRowCount(0);
-        
-        // ⭐ 关键修复：从 Organization 获取 BoardingRecordDirectory
-        // 假设您已在 BoardingServiceOrganization.java 中添加了 getBoardingRecordDirectory()
-        
-        try {
-            BoardingRecordDirectory recordDirectory = organization.getBoardingRecordDirectory(); 
-        
-            if (recordDirectory != null && recordDirectory.getRecordList() != null) {
-                for (PetBoardingRecord record : recordDirectory.getRecordList()) {
-                    Object[] row = new Object[8];
-                    row[0] = record.getRecordId();
-                    row[1] = record.getPet() != null ? record.getPet().getPetName() : "N/A"; 
-                    row[2] = record.getPet() != null ? record.getPet().getSpecies() : "N/A";
-                    row[3] = record.getPet() != null ? record.getPet().getAge() : "N/A";
-                    row[4] = (record.getPet() != null && record.getPet().getPetOwner() != null) ? record.getPet().getPetOwner().getOwnerName() : "N/A";
-                    row[5] = record.getStartDate();
-                    row[6] = record.getEndDate();
-                    row[7] = record.getStatus();
+      DefaultTableModel model = (DefaultTableModel) tblPet.getModel();
+    model.setRowCount(0);
+    
+    // ⭐ 关键修复：从 Enterprise 获取 BoardingRecordDirectory
+    if (!(enterprise instanceof Business.Enterprise.PetBoardingEnterprise)) {
+        JOptionPane.showMessageDialog(this, "Error: Current Enterprise is not PetBoardingEnterprise.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // 1. 获取正确的目录
+    Business.Enterprise.PetBoardingEnterprise boardingEnt = (Business.Enterprise.PetBoardingEnterprise) this.enterprise;
+    Business.Pet.BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
+    
+    try {
+        if (recordDirectory != null && recordDirectory.getRecordList() != null) {
+            for (PetBoardingRecord record : recordDirectory.getRecordList()) {
+                Object[] row = new Object[8];
+                
+                // 确保 Pet 对象和 PetOwner 对象存在，以避免 NullPointerException
+                Business.Pet.Pet pet = record.getPet();
+                Business.Pet.PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
 
-                    model.addRow(row);
-                }
+                row[0] = record.getRecordId();
+                row[1] = (pet != null) ? pet.getPetName() : "N/A";
+                row[2] = (pet != null) ? pet.getSpecies() : "N/A";
+                row[3] = (pet != null) ? pet.getAge() : "N/A";
+                row[4] = (owner != null) ? owner.getOwnerName() : "N/A";
+                row[5] = record.getStartDate();
+                row[6] = record.getEndDate();
+                row[7] = record.getStatus();
+
+                model.addRow(row);
             }
-        } catch (Exception e) {
-             // 如果方法不存在，提示用户检查业务层
-             // JOptionPane.showMessageDialog(this, "Error: Check getBoardingRecordDirectory() method.", "Data Error", JOptionPane.ERROR_MESSAGE);
-             // e.printStackTrace();
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error retrieving boarding records: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
+    }
     }
 
    public void refreshTable() {

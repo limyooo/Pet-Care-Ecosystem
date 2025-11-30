@@ -17,9 +17,11 @@ public class PetOwner {
     private String email;
     private String address;
     private String emergencyContact;
+    private PetDirectory petDirectory; // 新增成员变量
     
     //constructor
     public PetOwner() {
+        petDirectory = new PetDirectory(); // 初始化
     }
 
     public PetOwner(String ownerId, String ownerName, String phone, String email, String address, String emergencyContact) {
@@ -29,8 +31,13 @@ public class PetOwner {
         this.email = email;
         this.address = address;
         this.emergencyContact = emergencyContact;
+        petDirectory = new PetDirectory(); // 初始化
     }
     //getter and setter method
+    // 新增 getPetDirectory 方法
+    public PetDirectory getPetDirectory() {
+        return petDirectory;
+    }
     public String getOwnerId() {
         return ownerId;
     }

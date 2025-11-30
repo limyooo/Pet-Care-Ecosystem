@@ -4,17 +4,25 @@
  */
 package UI.petClinic;
 
+import Business.WorkQueue.HealthCareCheckRequest;
+import javax.swing.JPanel;
+
 /**
  *
  * @author jingyangwang
  */
 public class ViewDetailsJPanel extends javax.swing.JPanel {
-
+    
+    private JPanel userProcessContainer;
+    private HealthCareCheckRequest request;
     /**
      * Creates new form ViewDetailsJPanel
      */
-    public ViewDetailsJPanel() {
+    public ViewDetailsJPanel(JPanel userProcessContainer, HealthCareCheckRequest request) {
+        
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.request = request;
     }
 
     /**

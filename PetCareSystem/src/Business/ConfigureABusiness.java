@@ -130,6 +130,15 @@ public class ConfigureABusiness {
             frontDeskOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new FrontDeskAgentRole());
         }
+        
+        // 固定 Front Desk 测试账号
+        Employee frontDeskTest = frontDeskOrg.getEmployeeDirectory().createEmployee("Test Front Desk");
+        frontDeskOrg.getUserAccountDirectory().createUserAccount(
+                "fd1",    
+                "1111",   
+                frontDeskTest,
+                new FrontDeskAgentRole()
+        );
 
         // 6.2 Pet Care 员工
         for (int i = 0; i < 3; i++) {

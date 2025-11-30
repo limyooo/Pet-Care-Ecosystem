@@ -4,17 +4,50 @@
  */
 package UI.petClinic;
 
+import Business.PetClinicOrganization.FrontDeskOrganization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HealthCareCheckRequest;
+import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jingyangwang
  */
 public class FrontDeskManagementJPanel extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private FrontDeskOrganization frontDeskOrg;
     /**
      * Creates new form FrontDeskManagementJPanel
      */
-    public FrontDeskManagementJPanel() {
+    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, FrontDeskOrganization frontDeskOrg) {
         initComponents();
+        
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.frontDeskOrg = frontDeskOrg;
+
+        populateTable();
+        
+        //以下是测试数据！！
+        // test data
+        HealthCareCheckRequest testReq = new HealthCareCheckRequest();
+        testReq.setPatientId(1001);
+        testReq.setMessage("Pet needs urgent health check");
+        testReq.setSender(account);   // front desk自己假装 sender
+        testReq.setSymptom("vomiting");
+        testReq.setAssignedDoctor(null);
+        testReq.setLabResult(null);
+        testReq.setInsuranceClaimRequest(null);
+
+        // 加到 front desk的 work queue
+        frontDeskOrg.getWorkQueue().getWorkRequestList().add(testReq);
+
     }
 
     /**
@@ -37,6 +70,11 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         title.setText("Welcome Front Desk");
 
         btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         tblFrontDesk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -60,8 +98,18 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblFrontDesk);
 
         btnViewDetails.setText("View Details");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailsActionPerformed(evt);
+            }
+        });
 
         btnViewMedicalStatus.setText("View Medical Status");
+        btnViewMedicalStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewMedicalStatusActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -100,6 +148,51 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+        //get selected row
+        int selectedRow = tblFrontDesk.getSelectedRow();
+        //selected row can not be null
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select to view details.");
+            return;
+        }
+
+        //get information from jtable
+        HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
+
+        ViewDetailsJPanel panel = new ViewDetailsJPanel(userProcessContainer, request);
+        userProcessContainer.add("ViewDetailsJPanel", panel);
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    
+       
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
+
+    private void btnViewMedicalStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewMedicalStatusActionPerformed
+        //get selected row
+        int selectedRow = tblFrontDesk.getSelectedRow();
+
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row first.");
+            return;
+        }
+        //get information from jtable
+        HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
+        
+        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request);
+        userProcessContainer.add("ViewMedicalStatusJPanel", panel);
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+
+    }//GEN-LAST:event_btnViewMedicalStatusActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
@@ -109,4 +202,30 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblFrontDesk;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        
+        //clear the table
+        DefaultTableModel model = (DefaultTableModel) tblFrontDesk.getModel();
+        model.setRowCount(0);
+        
+        //get the work queue from front desk organization and loop for each work request
+        for (WorkRequest request : frontDeskOrg.getWorkQueue().getWorkRequestList()) {
+            //if the work request belongs to health care check request populate table
+            if (request instanceof HealthCareCheckRequest req) {
+
+                Object[] row = new Object[7];
+                
+                row[0] = req;// 放request本体
+                row[1] = req.getMessage();  
+                row[2] = req.getSender() == null ? "Unknown" : req.getSender().getUsername();
+                row[3] = req.getSymptom() == null ? "None" : req.getSymptom();
+                row[4] = req.getAssignedDoctor() == null ? "Not Assigned" : req.getAssignedDoctor();
+                row[5] = req.getLabResult() == null ? "Pending" : req.getLabResult();
+                row[6] = req.getInsuranceClaimRequest() == null ? "Not Submitted" : req.getInsuranceClaimRequest();
+
+                model.addRow(row);
+            }
+        }
+    }
 }

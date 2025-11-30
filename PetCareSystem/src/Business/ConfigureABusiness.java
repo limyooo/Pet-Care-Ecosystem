@@ -34,6 +34,7 @@ import Business.Pet.PetDirectory;
 import Business.Pet.PetOwnerDirectory;
 import Business.Pet.PetBoardingRecord;
 import Business.Pet.BoardingRecordDirectory;
+import Business.Pet.InsurancePolicy;
 
 public class ConfigureABusiness {
 
@@ -320,6 +321,33 @@ public class ConfigureABusiness {
                     foodPreference, foodAllergy, healthNotes, owner);
 
             createdPets.add(pet);
+            // ⭐⭐⭐ 核心修正：创建并关联 InsurancePolicy ⭐⭐⭐
+            
+            // 生成保险数据
+            String policyId = "IP" + faker.number().digits(5);
+            String provider = faker.company().name() + " Ins";
+            String coverageType = faker.options().option("Bronze", "Silver", "Gold");
+            
+            // Start date: 过去一年
+            String policyStartDate = faker.date().past(365, java.util.concurrent.TimeUnit.DAYS).toString();
+            // End date: 未来一年
+            String policyEndDate = faker.date().future(365, java.util.concurrent.TimeUnit.DAYS).toString();
+            
+            double premium = faker.number().randomDouble(2, 50, 500);
+
+            // 创建 InsurancePolicy 对象
+            InsurancePolicy policy = new InsurancePolicy(
+                    policyId, 
+                    provider,       // 对应 InsurancePolicy.provider
+                    coverageType,   // 对应 InsurancePolicy.coverageType
+                    policyStartDate, 
+                    policyEndDate,  // 对应 InsurancePolicy.endDate
+                    premium, 
+                    pet // 关联宠物
+            );
+            
+            // 链接 Policy 到 Pet 对象
+            pet.setInsurancePolicy(policy);
         }
         // 8.2 创建 PetBoardingRecord
         // *** 关键假设：PetBoardingEnterprise 有 getBoardingRecordDirectory() 方法 ***

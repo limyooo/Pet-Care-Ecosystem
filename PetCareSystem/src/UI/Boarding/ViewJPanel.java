@@ -548,36 +548,56 @@ public class ViewJPanel extends javax.swing.JPanel {
         
     // ⭐ 外部调用方法：用于加载指定记录的详细信息
     public void loadRecordDetails(PetBoardingRecord record) {
-        this.selectedRecord = record;
-        if (record == null) return;
         
-        Pet pet = record.getPet();
-        PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+       this.selectedRecord = record;
+    if (record == null) return;
+    
+    Pet pet = record.getPet();
+    PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
 
-        // 宠物主人信息 (Pet Owner)
-        fieldOwnerName.setText((owner != null) ? owner.getOwnerName() : "");
-        fieldPhone.setText((owner != null) ? owner.getPhone() : "");
-        fieldAddress.setText((owner != null) ? owner.getAddress() : "");
-        fieldEmail.setText((owner != null) ? owner.getEmail() : "");
-        fieldContact.setText((owner != null) ? owner.getEmergencyContact() : "");
+    // 假设您已在 Pet.java 中导入并定义了 InsurancePolicy 类
+    // 如果您还没有 InsurancePolicy 类，请将 Business.Pet.InsurancePolicy 替换为实际的类名
+    Business.Pet.InsurancePolicy policy = (pet != null) ? pet.getInsurancePolicy() : null;
 
-        // 宠物信息 (Pet)
-        fieldPetName.setText((pet != null) ? pet.getPetName() : "");
-        fieldSpecies.setText((pet != null) ? pet.getSpecies() : "");
-        fieldAge.setText((pet != null) ? String.valueOf(pet.getAge()) : "");
-        fieldWeight.setText((pet != null) ? String.valueOf(pet.getWeight()) : "");
-        fieldFood.setText((pet != null) ? pet.getFoodAllergy() : ""); 
-        // 假设 fieldFood 字段用于显示 Food Allergy，Food Preference 未在 UI 中
+    // 宠物主人信息 (Pet Owner)
+    fieldOwnerName.setText((owner != null) ? owner.getOwnerName() : "");
+    fieldPhone.setText((owner != null) ? owner.getPhone() : "");
+    fieldAddress.setText((owner != null) ? owner.getAddress() : "");
+    fieldEmail.setText((owner != null) ? owner.getEmail() : "");
+    fieldContact.setText((owner != null) ? owner.getEmergencyContact() : "");
 
-        // 寄养信息 (Boarding)
-        fieldRoom.setText(record.getRoomNumber());
-        fieldSD.setText(record.getStartDate());
-        fieldED.setText(record.getEndDate());
-        
-        // 保险信息 (Insurance) - 暂时留空或默认值，因为没有 InsurancePolicyDirectory 访问逻辑
-        fieldCompany.setText("");
-        fieldPolicy.setText("");
-        fieldCL.setText("");
-        fieldEp.setText("");
+    // 宠物信息 (Pet)
+    fieldPetName.setText((pet != null) ? pet.getPetName() : "");
+    fieldSpecies.setText((pet != null) ? pet.getSpecies() : "");
+    fieldAge.setText((pet != null) ? String.valueOf(pet.getAge()) : "");
+    fieldWeight.setText((pet != null) ? String.valueOf(pet.getWeight()) : "");
+    fieldFood.setText((pet != null) ? pet.getFoodAllergy() : ""); 
+    // 假设 fieldFood 字段用于显示 Food Allergy，Food Preference 未在 UI 中
+
+    // 寄养信息 (Boarding)
+    fieldRoom.setText(record.getRoomNumber());
+    fieldSD.setText(record.getStartDate());
+    fieldED.setText(record.getEndDate());
+    
+    // ⭐ 核心修正：填充保险信息 (Insurance)
+    if (policy != null) {
+    // 修正：将 getInsuranceCompany() 替换为 getProvider()
+    fieldCompany.setText(policy.getProvider()); // 保险公司 (Provider)
+    
+    // 保单号的 getter 方法是正确的
+    fieldPolicy.setText(policy.getPolicyId());        // 保单号
+    
+    // 修正：将 getCoverageLevel() 替换为 getCoverageType()
+    fieldCL.setText(policy.getCoverageType());       // 承保级别 (CoverageType)
+    
+    // 修正：将 getExpirationDate() 替换为 getEndDate()
+    fieldEp.setText(policy.getEndDate());      // 有效期/结束日期 (EndDate)
+} else {
+    // 如果没有保险，清空字段或显示默认值
+    fieldCompany.setText("None / N/A");
+    fieldPolicy.setText("");
+    fieldCL.setText("");
+    fieldEp.setText("");
+}
     }
 }

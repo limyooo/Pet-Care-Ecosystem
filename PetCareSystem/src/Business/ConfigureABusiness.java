@@ -74,7 +74,7 @@ public class ConfigureABusiness {
                 .createEmployee("Boarding Enterprise Admin");
         boardingEnt.getUserAccountDirectory().createUserAccount(
                 "boardingadmin",          // 用户名
-                "1111",           // 密码（你可以自己改强一点）
+                "boardingadmin",           // 密码（你可以自己改强一点）
                 boardingAdminEmp,
                 new EnterpriseAdminRole() // 如果没有这个类，先用你的 AdminRole
         );
@@ -164,9 +164,9 @@ public class ConfigureABusiness {
             boardingServiceOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new BoardingManagerRole());
         }
-        Employee bmEmp = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Boarding Manager");
+        Employee pct1 = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Pet Care Taker");
         boardingServiceOrg.getUserAccountDirectory().createUserAccount(
-                "bm1", "1234", bmEmp, new BoardingManagerRole());
+                "pct1", "pct1", pct1, new PetCareTakerRole());
 
         // 6.4 Vet Doctor
         for (int i = 0; i < 3; i++) {

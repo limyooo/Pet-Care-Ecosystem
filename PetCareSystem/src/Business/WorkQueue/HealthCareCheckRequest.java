@@ -19,8 +19,10 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String checkResult;  // doctor's conclusion for the check
     //添加pet之后request就可以携带宠物资料
     private Pet pet;
-
+    private String boardingRecordId;
+    
     //Constructor：create new patientId
+    
     public HealthCareCheckRequest() {
         this.patientId = ++counter;  
     }
@@ -75,6 +77,14 @@ public class HealthCareCheckRequest extends WorkRequest {
     
     public void setPet(Pet pet) {
         this.pet = pet; 
+    }
+    // ⭐ 新增：getter 和 setter 方法
+    public String getBoardingRecordId() {
+        return boardingRecordId;
+    }
+    
+    public void setBoardingRecordId(String boardingRecordId) {
+        this.boardingRecordId = boardingRecordId;
     }
     
     @Override

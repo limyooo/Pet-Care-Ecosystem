@@ -4,6 +4,8 @@
  */
 package UI.Boarding;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetBoardingEnterprise;
+import Business.Pet.BoardingRecordDirectory;
 import Business.Pet.Pet;
 import Business.Pet.PetBoardingRecord;
 import Business.Pet.PetOwner;
@@ -12,8 +14,11 @@ import Business.Petsystem;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -38,6 +43,9 @@ public class RecordJPanel extends javax.swing.JPanel {
         this.organization = organization;
         this.enterprise = enterprise;
         this.system = system;
+        
+        // 初始加载表格数据
+        populateTable();
     }
 
     /**
@@ -114,6 +122,11 @@ public class RecordJPanel extends javax.swing.JPanel {
         combMood.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excited", "Normal", "Frustrated" }));
 
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         jCheckBox5.setText("No");
 
@@ -242,6 +255,62 @@ public class RecordJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblRecord.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please first select a foster care record from the table.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 1. 读取数据
+        String recordId = (String) tblRecord.getValueAt(selectedRow, 0);
+        
+        boolean hadBreakfast = jCheckBox1.isSelected();
+        boolean hadLunch = jCheckBox2.isSelected();
+        boolean hadDinner = jCheckBox3.isSelected();
+        boolean hadPoop = jCheckBox4.isSelected();
+        String mood = (String) combMood.getSelectedItem();
+        
+        // 2. 模拟保存逻辑（在实际系统中，这会更新到 PetBoardingRecord 或 DailyCareLog 中）
+        String careDetails = String.format(
+            "--- Daily Care Log (%s) ---\n" +
+            "Breakfast: %s, Lunch: %s, Dinner: %s, Defecation: %s, Mood: %s",
+            new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
+            hadBreakfast ? "Is" : "Is not",
+            hadLunch ? "Is" : "Is not",
+            hadDinner ? "Is" : "Is not",
+            hadPoop ? "Is" : "Is not",
+            mood
+        );
+        
+        // 查找记录对象，并更新 Notes（作为临时的每日日志存储）
+        PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) this.enterprise;
+        BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
+        PetBoardingRecord record = recordDirectory.findRecordById(recordId); 
+        
+        if (record != null) {
+            String existingNotes = record.getNotes();
+            record.setNotes(existingNotes + "\n" + careDetails); // 附加到现有 Notes
+        }
+        
+        // 3. 提示并清理 UI
+        JOptionPane.showMessageDialog(this, 
+           "Daily care records for [" + recordId + "] have been successfully saved!\nEmotion: " + mood, 
+            "success", JOptionPane.INFORMATION_MESSAGE);
+        
+        // 清理 CheckBoxes 和 ComboBox
+        jCheckBox1.setSelected(false);
+        jCheckBox2.setSelected(false);
+        jCheckBox3.setSelected(false);
+        jCheckBox4.setSelected(false);
+        jCheckBox5.setSelected(false);
+        jCheckBox6.setSelected(false);
+        jCheckBox7.setSelected(false);
+        jCheckBox8.setSelected(false);
+        combMood.setSelectedIndex(1); // 设置回 Normal
+    }//GEN-LAST:event_btnSaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -264,4 +333,39 @@ public class RecordJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTittle;
     private javax.swing.JTable tblRecord;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblRecord.getModel();
+        model.setRowCount(0);
+        
+        if (!(enterprise instanceof PetBoardingEnterprise)) {
+            return;
+        }
+
+        PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) this.enterprise;
+        BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
+
+        try {
+            if (recordDirectory != null && recordDirectory.getRecordList() != null) {
+                // 仅显示状态为 "Checked In" 或 "Pending Check-out" 的记录
+                for (PetBoardingRecord record : recordDirectory.getRecordList()) {
+                    if (!"Completed".equalsIgnoreCase(record.getStatus())) {
+                        Object[] row = new Object[5];
+                        Pet pet = record.getPet();
+
+                        row[0] = record.getRecordId(); // Record ID
+                        row[1] = (pet != null) ? pet.getPetName() : "N/A"; // Pet Name
+                        row[2] = record.getRoomNumber(); // Room Number
+                        row[3] = record.getStatus(); // Status
+                        row[4] = record.getEndDate(); // End Date
+                        
+                        model.addRow(row);
+                    }
+                }
+            }
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(this, "An error occurred while loading the record table.: " + e.getMessage(), "数据加载错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+        
 }

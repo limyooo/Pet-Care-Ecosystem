@@ -10,10 +10,19 @@ import Business.Pet.PetOwner;
 import Business.PetBoardingOrganization.BoardingServiceOrganization;
 import Business.Petsystem;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HealthCareCheckRequest; // 导入 HealthCareCheckRequest
+import Business.WorkQueue.WorkRequest; // 导入 WorkRequest
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import java.util.Random; // 用于生成 Pet ID 供演示
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.PetClinicOrganization.FrontDeskOrganization;
+import Business.Role.FrontDeskAgentRole;
+import Business.Enterprise.PetClinicEnterprise;
 
 
 /**
@@ -39,6 +48,9 @@ public class SubmitJPanel extends javax.swing.JPanel {
         this.organization = organization;
         this.enterprise = enterprise;
         this.system = system;
+        
+        // 初始加载表格数据
+        populateTable();
     }
 
     /**
@@ -64,11 +76,11 @@ public class SubmitJPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Message", "Sender", "Receiver", "Status"
+                "Record ID", "Symptom", "Message", "Sender", "Receiver", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -78,6 +90,11 @@ public class SubmitJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblTaker);
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -98,11 +115,11 @@ public class SubmitJPanel extends javax.swing.JPanel {
                         .addGap(150, 150, 150)
                         .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(148, 148, 148)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(243, 243, 243)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(61, 61, 61)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(222, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -114,9 +131,9 @@ public class SubmitJPanel extends javax.swing.JPanel {
                     .addComponent(btnBack))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(34, 34, 34)
                 .addComponent(btnAdd)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(313, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -137,6 +154,72 @@ public class SubmitJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+      // 1. 获取 Boarding Record ID (必须)
+        String recordId = JOptionPane.showInputDialog(this, "Please enter the related Boarding Record ID:", "Submit request", JOptionPane.QUESTION_MESSAGE);
+
+        if (recordId == null || recordId.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Boarding Record ID is required.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 2. 获取 Symptom (症状) (必须)
+        String symptom = JOptionPane.showInputDialog(this, "Please enter the pet's main symptom:", "Submit request", JOptionPane.QUESTION_MESSAGE);
+
+        if (symptom == null || symptom.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Symptom is required.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // 3. 获取 Message (附注信息) (可选)
+        String notes = JOptionPane.showInputDialog(this, "Please provide any additional notes:", "Submit request", JOptionPane.QUESTION_MESSAGE);
+        
+        // 4. 构造最终的 message
+        String finalMessage;
+        if (notes == null || notes.trim().isEmpty()) {
+            finalMessage = "Symptom observed: " + symptom;
+        } else {
+            finalMessage = "Symptom: " + symptom + ". Notes: " + notes;
+        }
+
+        // 5. 创建 Work Request
+        HealthCareCheckRequest request = new HealthCareCheckRequest();
+        
+        // 设置基本信息
+        request.setMessage(finalMessage); 
+        request.setSymptom(symptom);      
+        request.setSender(account);
+        request.setBoardingRecordId(recordId); 
+
+        // ⭐ 6. 查找目标 Clinic 组织并发送请求 (发送给队列)
+        Organization targetOrganization = findTargetFrontDeskOrganization();
+        
+        if (targetOrganization != null) {
+            // 设置接收人为 null (表示发送给组织 Work Queue)
+            request.setReceiver(null); 
+            request.setStatus("Sent to Clinic Queue"); 
+            
+            // 将请求添加到目标组织的 Work Queue 中
+            targetOrganization.getWorkQueue().getWorkRequestList().add(request);
+
+            JOptionPane.showMessageDialog(this, 
+                "The health check request for Record ID [" + recordId + "] has been submitted to the " + targetOrganization.getName() + " Work Queue.", 
+                "Request Sent to Queue", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else {
+            // 找不到目标组织，请求无法发送
+            JOptionPane.showMessageDialog(this, "Error: Could not find a Pet Clinic Front Desk Organization to send the request to. The request was not submitted.", "System Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // 7. 刷新表格
+        populateTable();
+        
+    
+    
+    }//GEN-LAST:event_btnAddActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -145,4 +228,62 @@ public class SubmitJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblTaker;
     // End of variables declaration//GEN-END:variables
-}
+
+    private void populateTable() {
+     DefaultTableModel model = (DefaultTableModel) tblTaker.getModel();
+        model.setRowCount(0);
+        
+        if (organization == null || organization.getWorkQueue() == null) {
+            return;
+        }
+        
+        // 预先查找目标组织的名称，用于显示
+        Organization targetOrg = findTargetFrontDeskOrganization();
+        String targetOrgName = (targetOrg != null) ? targetOrg.getName() + " Queue" : "N/A";
+
+
+        // 遍历当前组织的工作请求队列
+        for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
+            // 仅显示 HealthCareCheckRequest
+            if (request instanceof HealthCareCheckRequest) {
+                HealthCareCheckRequest healthRequest = (HealthCareCheckRequest) request;
+                
+                // 6 列数据
+                Object[] row = new Object[6]; 
+                
+                // 填充数据
+                row[0] = healthRequest.getBoardingRecordId() != null ? healthRequest.getBoardingRecordId() : "N/A"; 
+                row[1] = healthRequest.getSymptom() != null ? healthRequest.getSymptom() : "N/A"; 
+                row[2] = healthRequest.getMessage();
+                // Sender (显示 Employee Name)
+                row[3] = healthRequest.getSender() != null ? healthRequest.getSender().getEmployee().getName() : "N/A";
+                // ⭐ Receiver (如果为 null，显示目标组织名称/队列)
+                row[4] = healthRequest.getReceiver() != null ? healthRequest.getReceiver().getEmployee().getName() : targetOrgName; 
+                row[5] = healthRequest.getStatus();
+                
+                model.addRow(row);
+            }
+        }
+        }
+ 
+    // ⭐ 辅助方法：查找目标 Clinic Front Desk Organization
+    private Organization findTargetFrontDeskOrganization() {
+        // 遍历整个系统来找到第一个 Pet Clinic 的 FrontDeskOrganization
+        for (Network network : system.getNetworkList()) {
+            for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+                // 找到宠物诊所企业
+                if (e.getEnterpriseType() == Enterprise.EnterpriseType.PetClinic) {
+                    for (Organization org : e.getOrganizationDirectory().getOrganizationList()) {
+                        // 找到前台组织
+                        if (org instanceof FrontDeskOrganization) {
+                            return org;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    }
+       
+

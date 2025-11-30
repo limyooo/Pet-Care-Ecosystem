@@ -5,6 +5,7 @@
 package UI.Boarding;
 
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetBoardingEnterprise;
 import Business.Pet.BoardingRecordDirectory;
 import Business.Pet.PetBoardingRecord;
 import Business.PetBoardingOrganization.BoardingServiceOrganization;
@@ -61,7 +62,7 @@ public class WelcomJpanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel1.setText("Welcome to  Pet Boarding Centre");
+        jLabel1.setText("Welcome to  Pet Care Taker");
 
         tblPet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -166,9 +167,41 @@ public class WelcomJpanel extends javax.swing.JPanel {
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-         ViewJPanel viewPanel = new ViewJPanel(
-            userProcessContainer, account, organization, enterprise, system);
         
+        // ⭐ 核心逻辑：获取选中记录并跳转到 ViewJPanel
+        int selectedRow = tblPet.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a foster care record to view.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 1. 获取选中的 Record ID (假设 ID 在第一列)
+        String recordId = (String) tblPet.getValueAt(selectedRow, 0);
+
+        // 2. 查找对应的 PetBoardingRecord 对象
+        if (!(enterprise instanceof PetBoardingEnterprise)) {
+            JOptionPane.showMessageDialog(this, "Incorrect enterprise type. Unable to retrieve records.", "Warning", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) this.enterprise;
+        BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
+
+        PetBoardingRecord record = recordDirectory.findRecordById(recordId); 
+
+        if (record == null) {
+            JOptionPane.showMessageDialog(this, "The detailed information of this record was not found.", "Warning", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 3. 创建 ViewJPanel 实例
+        ViewJPanel viewPanel = new ViewJPanel(
+             userProcessContainer, account, organization, enterprise, system);
+
+        // ⭐ 关键修正：调用 loadRecordDetails 方法，将数据对象传递给 ViewJPanel
+        viewPanel.loadRecordDetails(record); 
+
+        // 4. 切换到 ViewJPanel
         userProcessContainer.add("ViewJPanel", viewPanel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);

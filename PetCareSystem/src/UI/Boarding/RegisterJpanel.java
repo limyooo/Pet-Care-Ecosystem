@@ -4,6 +4,7 @@
  */
 package UI.Boarding;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetBoardingEnterprise;
 import Business.Pet.Pet;
 import Business.Pet.PetBoardingRecord;
 import Business.Pet.PetOwner;
@@ -89,11 +90,18 @@ public class RegisterJpanel extends javax.swing.JPanel {
         lblEmail = new javax.swing.JLabel();
         fieldED = new javax.swing.JTextField();
         fieldWeight = new javax.swing.JTextField();
+        lblContact = new javax.swing.JLabel();
+        fieldContact = new javax.swing.JTextField();
 
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         lblTitle.setText("Register New Boarding Service");
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -168,6 +176,14 @@ public class RegisterJpanel extends javax.swing.JPanel {
             }
         });
 
+        lblContact.setText("Emergency Contact");
+
+        fieldContact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldContactActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -186,6 +202,12 @@ public class RegisterJpanel extends javax.swing.JPanel {
                         .addGap(304, 304, 304)
                         .addComponent(btnAdd)))
                 .addContainerGap(265, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblContact)
+                .addGap(49, 49, 49)
+                .addComponent(fieldContact, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(32, 32, 32)
@@ -269,7 +291,11 @@ public class RegisterJpanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitle)
                     .addComponent(btnBack))
-                .addGap(240, 240, 240)
+                .addGap(208, 208, 208)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblContact)
+                    .addComponent(fieldContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addComponent(jLabel8)
                 .addGap(269, 269, 269)
                 .addComponent(btnAdd)
@@ -379,6 +405,127 @@ public class RegisterJpanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldWeightActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        // 1. 数据读取
+        // Pet Owner Details
+        String ownerName = fieldOwnerName.getText();
+        String phone = fieldPhone.getText();
+        String email = fieldEmail.getText();
+        String address = fieldAddress.getText();
+        // ⭐ 使用 fieldContact 的值作为 Emergency Contact
+        String emergencyContact = fieldContact.getText(); 
+
+        // Pet Details
+        String petName = fieldPetName.getText();
+        String species = fieldSpecies.getText();
+        String ageText = fieldAge.getText();
+        String weightText = fieldWeight.getText();
+        String foodAllergy = fieldFood.getText();
+        String foodPreference = ""; // 假设 Food Preference 字段未在 UI 中明确收集
+        String healthNotes = "";    // 假设 Health Notes 字段未在 UI 中明确收集
+
+        // Boarding Details
+        String roomNumber = fieldRoom.getText();
+        String startDate = fieldSD.getText();
+        String endDate = fieldED.getText();
+        
+        // 忽略 Insurance 字段
+
+        // 2. 基础输入验证 (检查关键字段是否为空)
+        if (ownerName.isEmpty() || petName.isEmpty() || species.isEmpty() || ageText.isEmpty() ||
+            weightText.isEmpty() || roomNumber.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || emergencyContact.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all the required information.", "Input error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // 验证 Age 和 Weight 是否为数字
+            int age = Integer.parseInt(ageText);
+            double weight = Double.parseDouble(weightText);
+            
+            // 3. 创建 Pet Owner
+            Business.Pet.PetOwnerDirectory ownerDirectory = system.getPetOwnerDirectory();
+            
+            // 简单的 ID 生成器
+            String ownerId = "PO" + (new java.util.Random().nextInt(9000) + 1000);
+            
+            Business.Pet.PetOwner newOwner = ownerDirectory.addOwner(
+                    ownerId, 
+                    ownerName, 
+                    phone, 
+                    email, 
+                    address, 
+                    emergencyContact); // ⭐ 传入正确的 emergencyContact
+
+            // 4. 创建 Pet
+            Business.Pet.PetDirectory petDirectory = newOwner.getPetDirectory();
+            String petId = "P" + (new java.util.Random().nextInt(9000) + 1000);
+            
+            // 使用 PetDirectory.addPet() 方法
+            Pet newPet = petDirectory.addPet(
+                    petId, 
+                    petName, 
+                    species, 
+                    age, 
+                    weight,
+                    foodPreference, 
+                    foodAllergy, 
+                    healthNotes, 
+                    newOwner);
+            
+            // 5. 创建 Boarding Record
+            if (!(enterprise instanceof PetBoardingEnterprise)) {
+                JOptionPane.showMessageDialog(this, "The current enterprise type is incorrect. Unable to register the foster care record.", "System error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) this.enterprise;
+            
+            Business.Pet.BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
+            
+            String recordId = "BR" + (new java.util.Random().nextInt(9000) + 1000);
+            
+            // 使用 BoardingRecordDirectory.addRecord() 方法
+            recordDirectory.addRecord(
+                    recordId, 
+                    newPet, 
+                    startDate, 
+                    endDate, 
+                    roomNumber, 
+                    "New booking via registration form.", // 默认 notes
+                    "Pending Check-in"); // 设置初始状态
+
+            // 6. 成功提示
+            JOptionPane.showMessageDialog(this, 
+                    "Foster care service registration successful! \\nRecord ID " + recordId, 
+                    "Success", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            // 7. 返回上一个面板并刷新表格 (WelcomJpanel)
+            userProcessContainer.remove(this);
+            Component[] componentArray = userProcessContainer.getComponents();
+            if (componentArray.length > 0) {
+                 Component component = componentArray[componentArray.length - 1];
+                 if (component instanceof WelcomJpanel) {
+                     WelcomJpanel welcomePanel = (WelcomJpanel) component;
+                     welcomePanel.refreshTable(); // 调用 WelcomJpanel 的刷新方法
+                 }
+            }
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            layout.previous(userProcessContainer);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Age and weight must be valid numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "An error occurred during the registration process: " + e.getMessage(), "System Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void fieldContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldContactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldContactActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -387,6 +534,7 @@ public class RegisterJpanel extends javax.swing.JPanel {
     private javax.swing.JTextField fieldAge;
     private javax.swing.JTextField fieldCL;
     private javax.swing.JTextField fieldCompany;
+    private javax.swing.JTextField fieldContact;
     private javax.swing.JTextField fieldED;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldEp;
@@ -404,6 +552,7 @@ public class RegisterJpanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblBoarding;
     private javax.swing.JLabel lblCompany;
+    private javax.swing.JLabel lblContact;
     private javax.swing.JLabel lblCoverage;
     private javax.swing.JLabel lblED;
     private javax.swing.JLabel lblEmail;

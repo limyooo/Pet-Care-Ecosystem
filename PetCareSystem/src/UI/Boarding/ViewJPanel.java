@@ -26,6 +26,8 @@ public class ViewJPanel extends javax.swing.JPanel {
     private BoardingServiceOrganization organization;
     private Enterprise enterprise;
     private Petsystem system;
+    // ⭐ 新增：用于存储当前正在查看/编辑的记录
+    private PetBoardingRecord selectedRecord;
 
     /**
      * Creates new form ViewJPanel
@@ -39,6 +41,11 @@ public class ViewJPanel extends javax.swing.JPanel {
         this.organization = organization;
         this.enterprise = enterprise;
         this.system = system;
+        
+        // 初始化时禁用编辑模式
+        setFieldsEditable(false);
+        // 隐藏 Save 按钮，只有点击 Modify 后才显示
+        btnSave.setEnabled(false);
     }
 
     /**
@@ -90,6 +97,8 @@ public class ViewJPanel extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         lblPetowner = new javax.swing.JLabel();
+        lblContact = new javax.swing.JLabel();
+        fieldContact = new javax.swing.JTextField();
 
         fieldWeight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +135,11 @@ public class ViewJPanel extends javax.swing.JPanel {
         lblEmail.setText("Email");
 
         btnModifty.setText("Modifty");
+        btnModifty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModiftyActionPerformed(evt);
+            }
+        });
 
         lblInsurance.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         lblInsurance.setForeground(new java.awt.Color(0, 102, 255));
@@ -159,6 +173,11 @@ public class ViewJPanel extends javax.swing.JPanel {
         lblSpecies.setText("Species");
 
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +189,8 @@ public class ViewJPanel extends javax.swing.JPanel {
         lblPetowner.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         lblPetowner.setForeground(new java.awt.Color(0, 51, 255));
         lblPetowner.setText("Pet Owner");
+
+        lblContact.setText("Emergency Contact");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -246,7 +267,13 @@ public class ViewJPanel extends javax.swing.JPanel {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(fieldCL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(fieldEp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                                .addComponent(fieldEp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblContact)
+                                .addGap(49, 49, 49)
+                                .addComponent(fieldContact, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
                         .addGap(254, 254, 254)
@@ -317,7 +344,10 @@ public class ViewJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFood)
-                            .addComponent(fieldFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fieldFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblContact)
+                                .addComponent(fieldContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(88, 88, 88)
                         .addComponent(lblBoarding)
                         .addGap(18, 18, 18)
@@ -377,6 +407,76 @@ public class ViewJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnModiftyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModiftyActionPerformed
+        // TODO add your handling code here:
+        setFieldsEditable(true);
+        btnModifty.setEnabled(false);
+        btnSave.setEnabled(true);
+    }//GEN-LAST:event_btnModiftyActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        if (selectedRecord == null) {
+            JOptionPane.showMessageDialog(this, "没有选中的记录进行保存。", "错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 1. 验证和读取数据
+        String ownerName = fieldOwnerName.getText();
+        String petName = fieldPetName.getText();
+        String species = fieldSpecies.getText();
+        String roomNumber = fieldRoom.getText();
+        
+        if (ownerName.isEmpty() || petName.isEmpty() || species.isEmpty() || roomNumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "宠物主人姓名、宠物名称、种类和房间号不能为空。", "输入错误", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            int age = Integer.parseInt(fieldAge.getText());
+            double weight = Double.parseDouble(fieldWeight.getText());
+
+            // 2. 更新 PetOwner 对象
+            PetOwner owner = selectedRecord.getPet().getPetOwner();
+            if (owner != null) {
+                owner.setOwnerName(ownerName);
+                owner.setPhone(fieldPhone.getText());
+                owner.setAddress(fieldAddress.getText());
+                owner.setEmail(fieldEmail.getText());
+                owner.setEmergencyContact(fieldContact.getText());
+            }
+
+            // 3. 更新 Pet 对象
+            Pet pet = selectedRecord.getPet();
+            if (pet != null) {
+                pet.setPetName(petName);
+                pet.setSpecies(species);
+                pet.setAge(age);
+                pet.setWeight(weight);
+                pet.setFoodAllergy(fieldFood.getText());
+            }
+            
+            // 4. 更新 PetBoardingRecord 对象
+            selectedRecord.setRoomNumber(roomNumber);
+            selectedRecord.setStartDate(fieldSD.getText());
+            selectedRecord.setEndDate(fieldED.getText());
+            // 注意：不修改 Status，Status 应该通过工作流程按钮来修改
+            
+            // 5. 切换回只读模式
+            setFieldsEditable(false);
+            btnModifty.setEnabled(true);
+            btnSave.setEnabled(false);
+
+            JOptionPane.showMessageDialog(this, "记录更新成功！", "成功", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "年龄和体重必须是有效的数字。", "输入错误", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "保存过程中发生错误: " + e.getMessage(), "系统错误", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -386,6 +486,7 @@ public class ViewJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField fieldAge;
     private javax.swing.JTextField fieldCL;
     private javax.swing.JTextField fieldCompany;
+    private javax.swing.JTextField fieldContact;
     private javax.swing.JTextField fieldED;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldEp;
@@ -402,6 +503,7 @@ public class ViewJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblBoarding;
     private javax.swing.JLabel lblCompany;
+    private javax.swing.JLabel lblContact;
     private javax.swing.JLabel lblCoverage;
     private javax.swing.JLabel lblED;
     private javax.swing.JLabel lblEmail;
@@ -420,4 +522,62 @@ public class ViewJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblWeight;
     // End of variables declaration//GEN-END:variables
+
+    private void setFieldsEditable(boolean editable) {
+        fieldOwnerName.setEditable(editable);
+        fieldPhone.setEditable(editable);
+        fieldAddress.setEditable(editable);
+        fieldEmail.setEditable(editable);
+        fieldContact.setEditable(editable);
+        
+        fieldPetName.setEditable(editable);
+        fieldSpecies.setEditable(editable);
+        fieldAge.setEditable(editable);
+        fieldWeight.setEditable(editable);
+        fieldFood.setEditable(editable);
+        
+        fieldRoom.setEditable(editable);
+        fieldSD.setEditable(editable);
+        fieldED.setEditable(editable);
+        
+        fieldCompany.setEditable(editable);
+        fieldPolicy.setEditable(editable);
+        fieldCL.setEditable(editable);
+        fieldEp.setEditable(editable);
+    }
+        
+    // ⭐ 外部调用方法：用于加载指定记录的详细信息
+    public void loadRecordDetails(PetBoardingRecord record) {
+        this.selectedRecord = record;
+        if (record == null) return;
+        
+        Pet pet = record.getPet();
+        PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+
+        // 宠物主人信息 (Pet Owner)
+        fieldOwnerName.setText((owner != null) ? owner.getOwnerName() : "");
+        fieldPhone.setText((owner != null) ? owner.getPhone() : "");
+        fieldAddress.setText((owner != null) ? owner.getAddress() : "");
+        fieldEmail.setText((owner != null) ? owner.getEmail() : "");
+        fieldContact.setText((owner != null) ? owner.getEmergencyContact() : "");
+
+        // 宠物信息 (Pet)
+        fieldPetName.setText((pet != null) ? pet.getPetName() : "");
+        fieldSpecies.setText((pet != null) ? pet.getSpecies() : "");
+        fieldAge.setText((pet != null) ? String.valueOf(pet.getAge()) : "");
+        fieldWeight.setText((pet != null) ? String.valueOf(pet.getWeight()) : "");
+        fieldFood.setText((pet != null) ? pet.getFoodAllergy() : ""); 
+        // 假设 fieldFood 字段用于显示 Food Allergy，Food Preference 未在 UI 中
+
+        // 寄养信息 (Boarding)
+        fieldRoom.setText(record.getRoomNumber());
+        fieldSD.setText(record.getStartDate());
+        fieldED.setText(record.getEndDate());
+        
+        // 保险信息 (Insurance) - 暂时留空或默认值，因为没有 InsurancePolicyDirectory 访问逻辑
+        fieldCompany.setText("");
+        fieldPolicy.setText("");
+        fieldCL.setText("");
+        fieldEp.setText("");
+    }
 }

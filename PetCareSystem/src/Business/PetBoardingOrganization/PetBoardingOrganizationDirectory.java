@@ -22,6 +22,7 @@ public class PetBoardingOrganizationDirectory {
         return organizationList;
     }
 
+    
     /**
      * Factory method to create organizations by type.
      * Only PetCare and BoardingService are allowed here.

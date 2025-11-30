@@ -81,12 +81,32 @@ public class WelcomJpanel extends javax.swing.JPanel {
         });
 
         btnView.setText("View Details");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
 
         btnRecord.setText("Record Today's Take");
+        btnRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecordActionPerformed(evt);
+            }
+        });
 
         btnSubmit.setText("Submit Health Request");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -135,9 +155,66 @@ public class WelcomJpanel extends javax.swing.JPanel {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
-      // 跳转到注册新寄养服务的面板
+         RegisterJpanel registerPanel = new RegisterJpanel(
+            userProcessContainer, account, organization, enterprise, system);
+        
+        userProcessContainer.add("RegisterJpanel", registerPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
        
     }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+         ViewJPanel viewPanel = new ViewJPanel(
+            userProcessContainer, account, organization, enterprise, system);
+        
+        userProcessContainer.add("ViewJPanel", viewPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecordActionPerformed
+        // TODO add your handling code here:
+         RecordJPanel recordPanel = new RecordJPanel(
+            userProcessContainer, account, organization, enterprise, system);
+        
+        userProcessContainer.add("RegisterJpanel", recordPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnRecordActionPerformed
+
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        // TODO add your handling code here:
+         SubmitJPanel submitPanel = new SubmitJPanel(
+            userProcessContainer, account, organization, enterprise, system);
+        
+        userProcessContainer.add("RegisterJpanel", submitPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnSubmitActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        java.awt.Component comp = this;
+
+    // 向上遍历组件树，直到找到 MainJFrame
+    while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
+        comp = comp.getParent();
+    }
+
+    if (comp instanceof UI.admin.MainJFrame) {
+        // ⭐ 关键修正：调用新的公共代理方法
+        ((UI.admin.MainJFrame) comp).triggerLogout(); 
+    } else {
+        // 找不到 MainJFrame，执行后备方案
+        if (userProcessContainer != null) {
+            userProcessContainer.removeAll();
+            userProcessContainer.revalidate();
+            userProcessContainer.repaint();
+        }
+    }
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -152,36 +229,39 @@ public class WelcomJpanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) tblPet.getModel();
+       DefaultTableModel model = (DefaultTableModel) tblPet.getModel();
         model.setRowCount(0);
         
-        // 假设 Boarding Service Organization 中包含 BoardingRecordDirectory
-        // 实际中可能需要通过 Enterprise 或 Organization 的方法获取
+        // ⭐ 关键修复：从 Organization 获取 BoardingRecordDirectory
+        // 假设您已在 BoardingServiceOrganization.java 中添加了 getBoardingRecordDirectory()
         
-        // 示例：从 Organization 的工作队列中加载请求（更常见）
-        // for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
-        //    // ...
-        // }
+        try {
+            BoardingRecordDirectory recordDirectory = organization.getBoardingRecordDirectory(); 
         
-        // 假设 BoardingServiceOrganization 有 getBoardingRecordDirectory()
-        // 由于没有 BoardingServiceOrganization.java 的代码，我们假设记录存在于一个目录中：
-        BoardingRecordDirectory recordDirectory = new BoardingRecordDirectory(); 
-        
-        if (recordDirectory.getRecordList() != null) {
-            for (PetBoardingRecord record : recordDirectory.getRecordList()) {
-                Object[] row = new Object[8];
-                row[0] = record.getRecordId();
-                row[1] = record.getPet().getPetName(); 
-                row[2] = record.getPet().getSpecies();
-                row[3] = record.getPet().getAge();
-                row[4] = record.getPet().getPetOwner().getOwnerName();
-                row[5] = record.getStartDate();
-                row[6] = record.getEndDate();
-                row[7] = record.getStatus();
+            if (recordDirectory != null && recordDirectory.getRecordList() != null) {
+                for (PetBoardingRecord record : recordDirectory.getRecordList()) {
+                    Object[] row = new Object[8];
+                    row[0] = record.getRecordId();
+                    row[1] = record.getPet() != null ? record.getPet().getPetName() : "N/A"; 
+                    row[2] = record.getPet() != null ? record.getPet().getSpecies() : "N/A";
+                    row[3] = record.getPet() != null ? record.getPet().getAge() : "N/A";
+                    row[4] = (record.getPet() != null && record.getPet().getPetOwner() != null) ? record.getPet().getPetOwner().getOwnerName() : "N/A";
+                    row[5] = record.getStartDate();
+                    row[6] = record.getEndDate();
+                    row[7] = record.getStatus();
 
-                model.addRow(row);
+                    model.addRow(row);
+                }
             }
+        } catch (Exception e) {
+             // 如果方法不存在，提示用户检查业务层
+             // JOptionPane.showMessageDialog(this, "Error: Check getBoardingRecordDirectory() method.", "Data Error", JOptionPane.ERROR_MESSAGE);
+             // e.printStackTrace();
         }
     }
-        
+
+   public void refreshTable() {
+    // 我们可以直接调用 populateTable() 来实现刷新功能
+    populateTable();
+}
 }

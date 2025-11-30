@@ -319,6 +319,11 @@ public class MainJFrame extends javax.swing.JFrame {
         // 绑定登出按钮事件
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
     }
+    
+    public void triggerLogout() {
+    // 传递 null Event 是可以的，因为 btnLogoutActionPerformed 的实现中没有使用 evt 参数。
+    btnLogoutActionPerformed(null); 
+}
        
         
 }

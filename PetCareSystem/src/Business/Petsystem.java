@@ -66,7 +66,7 @@ public class Petsystem {
     public Network createAndAddNetwork(String name){
         Network network = new Network(name); // 假设 Network 有一个带名称的构造函数
         networkList.add(network);
-        networkList.add(network);
+       
         return network;
     }
 }

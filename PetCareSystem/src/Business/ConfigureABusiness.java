@@ -91,13 +91,14 @@ public class ConfigureABusiness {
 
         // Insurance Enterprise Admin
         Employee insuranceAdminEmp = insuranceEnt.getEmployeeDirectory()
-                .createEmployee("Insurance Enterprise Admin");
-        insuranceEnt.getUserAccountDirectory().createUserAccount(
-                "insuranceAdmin",
-                "Insurance@123",
-                insuranceAdminEmp,
-                new EnterpriseAdminRole()
+        .createEmployee("Insurance Enterprise Admin");
+        UserAccount insuranceAdminAccount = insuranceEnt.getUserAccountDirectory().createUserAccount(
+        "insuranceAdmin",
+        "Insurance@123",
+        insuranceAdminEmp,
+        new EnterpriseAdminRole()
         );
+
 
         // 4. 给每个 Enterprise 创建 Organizations（要求你已经有 OrganizationDirectory.createOrganization(Type)）
         // 4.1 Boarding enterprise
@@ -238,12 +239,33 @@ public class ConfigureABusiness {
         }
 
         // 7.3 Insurance Claim 请求
-        for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) {
+
             InsuranceClaimRequest req = new InsuranceClaimRequest();
+
+            // 基础信息
             req.setMessage("Claim for " + faker.name().fullName());
-            req.setClaimAmount(
-                    faker.number().randomDouble(2, 100, 3000));
+            req.setClaimAmount(faker.number().randomDouble(2, 100, 3000));
             req.setStatus("Pending");
+
+            // 用于表格 / 详情展示的字段
+            req.setPatientId("PT" + faker.number().digits(4));
+            req.setPolicyId("PL" + faker.number().digits(4));
+            req.setPetName(faker.dog().name());
+            req.setSymptom(faker.medical().symptoms());
+            req.setLabResult(faker.medical().diseaseName());
+            req.setTreatmentCost(faker.number().randomDouble(2, 50, 500));
+
+            // 保险相关三项
+            req.setInsuranceCompany(faker.company().name());
+            req.setCoverageLevel(faker.options().option("Basic", "Standard", "Premium"));
+            req.setExpirationDate(
+                    faker.date().future(365, java.util.concurrent.TimeUnit.DAYS).toString()
+            );
+
+            // Sender
+            req.setSender(insuranceAdminAccount);
+
             claimOrg.getWorkQueue().getWorkRequestList().add(req);
         }
 

@@ -4,17 +4,42 @@
  */
 package UI.petClinic;
 
+
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.Pet.Pet;
+import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HealthCareCheckRequest;
+import Business.WorkQueue.InsuranceClaimRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author jingyangwang
  */
 public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
-
+    
+    private JPanel userProcessContainer;
+    private HealthCareCheckRequest Request;
+    private UserAccount account;
+    private Enterprise enterprise;
+    
     /**
      * Creates new form SubmitInsuranceClaimRequestJPanel
      */
-    public SubmitInsuranceClaimRequestJPanel() {
+    public SubmitInsuranceClaimRequestJPanel(JPanel userProcessContainer, HealthCareCheckRequest Request,UserAccount account,
+        Enterprise enterprise) {
+        
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.Request = Request;
+        this.account = account;
+        this.enterprise = enterprise;
+        
+        populateData();
     }
 
     /**
@@ -27,7 +52,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         fieldPetName = new javax.swing.JTextField();
         fieldSpieces = new javax.swing.JTextField();
@@ -49,27 +74,32 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         fieldPolicyID = new javax.swing.JTextField();
         fieldExpirationDate = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        lblPetBoarding = new javax.swing.JLabel();
+        lblMedicalResult = new javax.swing.JLabel();
+        lblServiceProvider = new javax.swing.JLabel();
+        lblStartDate = new javax.swing.JLabel();
+        lblEndDate = new javax.swing.JLabel();
+        fieldServiceProvider = new javax.swing.JTextField();
+        fieldStartDate = new javax.swing.JTextField();
+        fieldEndDate = new javax.swing.JTextField();
+        lblLabTestResult = new javax.swing.JLabel();
+        lblTreatmentNeeded = new javax.swing.JLabel();
+        lblTreatmentCost = new javax.swing.JLabel();
+        fieldLabTestResult = new javax.swing.JTextField();
+        fieldTreatmentCost = new javax.swing.JTextField();
+        comboTreatmentNeeded = new javax.swing.JComboBox<>();
+        comboCoverageLevel = new javax.swing.JComboBox<>();
+        btnSubmitInsuranceClaimRequest = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         jLabel1.setText("Submit Insurance Claim Request");
 
-        jButton1.setText("<<< Back");
+        btnBack.setText("<<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         lblPetName.setText("Pet Name");
 
@@ -93,27 +123,32 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
 
         lblExpirationDate.setText("Expiration Date");
 
-        jLabel3.setText("Pet Boarding ");
+        lblPetBoarding.setText("Pet Boarding ");
 
-        jLabel4.setText("Medical Result");
+        lblMedicalResult.setText("Medical Result");
 
-        jLabel5.setText("Service Provider");
+        lblServiceProvider.setText("Service Provider");
 
-        jLabel6.setText("Start Date");
+        lblStartDate.setText("Start Date");
 
-        jLabel7.setText("End Date");
+        lblEndDate.setText("End Date");
 
-        jLabel8.setText("Lab Test Result");
+        lblLabTestResult.setText("Lab Test Result");
 
-        jLabel9.setText("Treatment Needed");
+        lblTreatmentNeeded.setText("Treatment Needed");
 
-        jLabel10.setText("Treatment Cost");
+        lblTreatmentCost.setText("Treatment Cost");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medication Only 药物", "IV Fluids & Supportive Care 输液", "Diagnostic Imaging (X-ray / Ultrasound) 拍片子", "Surgery 做手术", "Hospitalization 住院 " }));
+        comboTreatmentNeeded.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medication Only 药物", "IV Fluids & Supportive Care 输液", "Diagnostic Imaging (X-ray / Ultrasound) 拍片子", "Surgery 做手术", "Hospitalization 住院 " }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Coverage 100%", "Partial Coverage 50%", " ", " " }));
+        comboCoverageLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Coverage 100%", "Partial Coverage 50%", " ", " " }));
 
-        jButton2.setText("Submit Insurance Claim Request");
+        btnSubmitInsuranceClaimRequest.setText("Submit Insurance Claim Request");
+        btnSubmitInsuranceClaimRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitInsuranceClaimRequestActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -123,7 +158,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                 .addGap(84, 84, 84)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnBack)
                 .addGap(80, 80, 80))
             .addGroup(layout.createSequentialGroup()
                 .addGap(188, 188, 188)
@@ -138,33 +173,33 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
+                                    .addComponent(lblServiceProvider)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel6)))
+                                        .addComponent(lblEndDate)
+                                        .addComponent(lblStartDate)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField3))
+                                    .addComponent(fieldServiceProvider, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                                    .addComponent(fieldStartDate)
+                                    .addComponent(fieldEndDate))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel10))
+                                    .addComponent(lblTreatmentNeeded)
+                                    .addComponent(lblLabTestResult)
+                                    .addComponent(lblTreatmentCost))
                                 .addGap(62, 62, 62)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, 0, 1, Short.MAX_VALUE)
-                                    .addComponent(jTextField6)))
+                                    .addComponent(fieldLabTestResult, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(comboTreatmentNeeded, 0, 1, Short.MAX_VALUE)
+                                    .addComponent(fieldTreatmentCost)))
                             .addComponent(jSeparator1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(93, 93, 93)
-                                        .addComponent(jLabel3)
+                                        .addComponent(lblPetBoarding)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
-                                        .addComponent(jLabel4))
+                                        .addComponent(lblMedicalResult))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(34, 34, 34)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,11 +227,11 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                                     .addComponent(fieldInsuranceCompany)
                                     .addComponent(fieldPolicyID)
                                     .addComponent(fieldExpirationDate)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(comboCoverageLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jSeparator2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(248, 248, 248)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSubmitInsuranceClaimRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -205,7 +240,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                    .addComponent(btnBack))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPet)
@@ -241,7 +276,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCoverageLevel)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboCoverageLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblExpirationDate)
@@ -252,79 +287,184 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                     .addComponent(lblFoodAllergy))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(lblPetBoarding)
+                    .addComponent(lblMedicalResult))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblServiceProvider)
+                    .addComponent(fieldServiceProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLabTestResult)
+                    .addComponent(fieldLabTestResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStartDate)
+                    .addComponent(fieldStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTreatmentNeeded)
+                    .addComponent(comboTreatmentNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblEndDate)
+                            .addComponent(fieldEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lblTreatmentCost)
+                            .addComponent(fieldTreatmentCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btnSubmitInsuranceClaimRequest)
                 .addGap(27, 27, 27))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnSubmitInsuranceClaimRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitInsuranceClaimRequestActionPerformed
+        // TODO add your handling code here:
+        try {
+        //Create a new InsuranceClaimRequest
+        InsuranceClaimRequest claimRequest = new InsuranceClaimRequest();
+        claimRequest.setClaimAmount(Double.parseDouble(fieldTreatmentCost.getText()));
+        claimRequest.setClaimDecision("Pending");
+        
+        //set Message
+        claimRequest.setMessage("Insurance claim for patient: " + Request.getPatientId());
+        
+        //set Sender
+        claimRequest.setSender(account);
+
+        //fint the Insurance Claim Organization
+        Organization claimOrg = null;
+
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (org instanceof InsuranceClaimOrganization) {
+                claimOrg = org;
+                break;
+            }
+        }
+        //if it is found 
+        if (claimOrg != null) {
+            //put the request into the cliam org
+            claimOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
+
+            // 当前用户的 workQueue 也要存一份
+            account.getWorkQueue().getWorkRequestList().add(claimRequest);
+
+            JOptionPane.showMessageDialog(this,"Insurance Claim Request submitted successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+            JOptionPane.showMessageDialog(this,"Insurance Claim Organization not found!","Error",JOptionPane.ERROR_MESSAGE);
+            }
+    
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(this,"Please check the treatment cost input.","Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+    }//GEN-LAST:event_btnSubmitInsuranceClaimRequestActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnSubmitInsuranceClaimRequest;
+    private javax.swing.JComboBox<String> comboCoverageLevel;
+    private javax.swing.JComboBox<String> comboTreatmentNeeded;
     private javax.swing.JTextField fieldAge;
+    private javax.swing.JTextField fieldEndDate;
     private javax.swing.JTextField fieldExpirationDate;
     private javax.swing.JTextField fieldFoodAllergy;
     private javax.swing.JTextField fieldInsuranceCompany;
+    private javax.swing.JTextField fieldLabTestResult;
     private javax.swing.JTextField fieldPetName;
     private javax.swing.JTextField fieldPolicyID;
+    private javax.swing.JTextField fieldServiceProvider;
     private javax.swing.JTextField fieldSpieces;
+    private javax.swing.JTextField fieldStartDate;
+    private javax.swing.JTextField fieldTreatmentCost;
     private javax.swing.JTextField fieldWeight;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblCoverageLevel;
+    private javax.swing.JLabel lblEndDate;
     private javax.swing.JLabel lblExpirationDate;
     private javax.swing.JLabel lblFoodAllergy;
     private javax.swing.JLabel lblInsuranceCompany;
+    private javax.swing.JLabel lblLabTestResult;
+    private javax.swing.JLabel lblMedicalResult;
     private javax.swing.JLabel lblPet;
+    private javax.swing.JLabel lblPetBoarding;
     private javax.swing.JLabel lblPetName;
     private javax.swing.JLabel lblPolicyID;
+    private javax.swing.JLabel lblServiceProvider;
     private javax.swing.JLabel lblSpecies;
+    private javax.swing.JLabel lblStartDate;
+    private javax.swing.JLabel lblTreatmentCost;
+    private javax.swing.JLabel lblTreatmentNeeded;
     private javax.swing.JLabel lblWeight;
     // End of variables declaration//GEN-END:variables
+
+    private void populateData() {
+    
+    //获取宠物对象    
+    Pet p = Request.getPet();
+    // Pet info
+    fieldPetName.setText(p.getPetName());
+    fieldSpieces.setText(p.getSpecies());
+    fieldAge.setText(String.valueOf(p.getAge()));
+    fieldWeight.setText(String.valueOf(p.getWeight()));
+    fieldFoodAllergy.setText(p.getFoodAllergy());
+
+    /*// Insurance info
+    fieldInsuranceCompany.setText(p.getPetOwner().getInsuranceCompany());
+    fieldPolicyID.setText(p.getPetOwner().getPolicyId());
+    comboCoverageLevel.setSelectedItem(p.getPetOwner().getCoverageLevel());
+    fieldExpirationDate.setText(p.getPetOwner().getExpirationDate());
+
+    // Boarding info
+    fieldServiceProvider.setText(Request.getServiceProvider());
+    fieldStartDate.setText(Request.getStartDate());
+    fieldEndDate.setText(Request.getEndDate());
+
+    // Medical Result (来自 Pet Clinic)
+    fieldLabTestResult.setText(Request.getLabResult());
+    comboTreatmentNeeded.setSelectedItem(Request.getTreatmentNeeded());
+    fieldTreatmentCost.setText(String.valueOf(Request.getTreatmentCost()));
+    */
+    
+    disableAllFields();
+    }
+
+    
+    private void disableAllFields() {
+    
+    fieldPetName.setEditable(false);
+    fieldSpieces.setEditable(false);
+    fieldAge.setEditable(false);
+    fieldWeight.setEditable(false);
+    fieldFoodAllergy.setEditable(false);
+
+    fieldInsuranceCompany.setEditable(false);
+    fieldPolicyID.setEditable(false);
+    fieldExpirationDate.setEditable(false);
+    comboCoverageLevel.setEnabled(false);
+
+    fieldServiceProvider.setEditable(false);
+    fieldStartDate.setEditable(false);
+    fieldEndDate.setEditable(false);
+
+    fieldLabTestResult.setEditable(false);
+    comboTreatmentNeeded.setEnabled(false);
+    fieldTreatmentCost.setEditable(false);
+    }
 }

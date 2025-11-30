@@ -1,5 +1,7 @@
 package Business.WorkQueue;
 
+import Business.Pet.Pet;
+
 /**
  * Request for a general health check of a pet.
  * For example: from Pet Boarding to Pet Clinic.
@@ -7,19 +9,24 @@ package Business.WorkQueue;
 public class HealthCareCheckRequest extends WorkRequest {
     
     //messsage and sender has been providede by work request父类
+    //patient ID 从 1001 开始
+    private static int counter = 1000; 
     private int patientId;
     private String symptom;
     private String assignedDoctor;
     private String labResult;
     private String insuranceClaimRequest;
     private String checkResult;  // doctor's conclusion for the check
+    //添加pet之后request就可以携带宠物资料
+    private Pet pet;
 
+    //Constructor：create new patientId
+    public HealthCareCheckRequest() {
+        this.patientId = ++counter;  
+    }
+    
     public int getPatientId() {
         return patientId;
-    }
-
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
     }
 
     public String getSymptom() {
@@ -62,6 +69,14 @@ public class HealthCareCheckRequest extends WorkRequest {
         this.checkResult = checkResult;
     }
    
+    public Pet getPet() { 
+        return pet; 
+    }
+    
+    public void setPet(Pet pet) {
+        this.pet = pet; 
+    }
+    
     @Override
     public String toString() {
         return String.valueOf(this.patientId);

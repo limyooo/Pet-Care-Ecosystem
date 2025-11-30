@@ -4,6 +4,7 @@
  */
 package UI.petClinic;
 
+import Business.Enterprise.Enterprise;
 import Business.PetClinicOrganization.FrontDeskOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
@@ -22,22 +23,24 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
     private UserAccount account;
     private FrontDeskOrganization frontDeskOrg;
+    private Enterprise enterprise;
     /**
      * Creates new form FrontDeskManagementJPanel
      */
-    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, FrontDeskOrganization frontDeskOrg) {
+    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, FrontDeskOrganization frontDeskOrg,Enterprise enterprise) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
         this.account = account;
         this.frontDeskOrg = frontDeskOrg;
+        this.account = account;
+        this.enterprise = enterprise;
 
         populateTable();
         
         //以下是测试数据！！
         // test data
         HealthCareCheckRequest testReq = new HealthCareCheckRequest();
-        testReq.setPatientId(1001);
         testReq.setMessage("Pet needs urgent health check");
         testReq.setSender(account);   // front desk自己假装 sender
         testReq.setSymptom("vomiting");
@@ -185,7 +188,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         //get information from jtable
         HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
         
-        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request);
+        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request,account,enterprise);
         userProcessContainer.add("ViewMedicalStatusJPanel", panel);
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();

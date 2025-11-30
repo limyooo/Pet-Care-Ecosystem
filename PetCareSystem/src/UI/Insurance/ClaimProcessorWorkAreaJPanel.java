@@ -26,30 +26,140 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblInsuranceClaimProcess = new javax.swing.JLabel();
+        btnLogOut = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblInsuranceClaim = new javax.swing.JTable();
+        btnPolicyRecord = new javax.swing.JButton();
+        btnViewDetail = new javax.swing.JButton();
+        lblClaimList = new javax.swing.JLabel();
+        btnApprove = new javax.swing.JButton();
+        btnReject = new javax.swing.JButton();
 
-        jLabel1.setText("Manage Claim Requests");
+        lblInsuranceClaimProcess.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        lblInsuranceClaimProcess.setText("Welcome Insurance Claim Management ");
+
+        btnLogOut.setText("LogOut");
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogOutActionPerformed(evt);
+            }
+        });
+
+        tblInsuranceClaim.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Patient ID", "Policy ID", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Claim Amount", "Sender", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(tblInsuranceClaim);
+
+        btnPolicyRecord.setText("View Policy Record");
+
+        btnViewDetail.setText("View Details");
+        btnViewDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailActionPerformed(evt);
+            }
+        });
+
+        lblClaimList.setText("Claim List:");
+
+        btnApprove.setText("Approve");
+        btnApprove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApproveActionPerformed(evt);
+            }
+        });
+
+        btnReject.setText("Reject");
+        btnReject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRejectActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblInsuranceClaimProcess)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogOut)
+                        .addGap(61, 61, 61))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblClaimList, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(btnPolicyRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnReject, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(btnViewDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel1)
-                .addContainerGap(465, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblInsuranceClaimProcess)
+                    .addComponent(btnLogOut))
+                .addGap(34, 34, 34)
+                .addComponent(lblClaimList)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewDetail)
+                    .addComponent(btnApprove))
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPolicyRecord)
+                    .addComponent(btnReject))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogOutActionPerformed
+
+    private void btnViewDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewDetailActionPerformed
+
+    private void btnApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnApproveActionPerformed
+
+    private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRejectActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnApprove;
+    private javax.swing.JButton btnLogOut;
+    private javax.swing.JButton btnPolicyRecord;
+    private javax.swing.JButton btnReject;
+    private javax.swing.JButton btnViewDetail;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblClaimList;
+    private javax.swing.JLabel lblInsuranceClaimProcess;
+    private javax.swing.JTable tblInsuranceClaim;
     // End of variables declaration//GEN-END:variables
 }

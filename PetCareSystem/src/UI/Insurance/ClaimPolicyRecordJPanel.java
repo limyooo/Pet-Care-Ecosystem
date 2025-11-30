@@ -3,56 +3,74 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package UI.Insurance;
-import java.awt.CardLayout;
-import javax.swing.JPanel;
 
+import Business.Organization.Organization;
 import Business.WorkQueue.InsuranceClaimRequest;
+import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author Eve Dou
  */
 public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
-    private InsuranceClaimRequest claim;
+    private Organization claimOrg;  // InsuranceClaim Organization
     /**
      * Creates new form PolicyRecordJPanel
      */
-    public ClaimPolicyRecordJPanel(JPanel userProcessContainer,
-                               InsuranceClaimRequest claim) {
-    this.userProcessContainer = userProcessContainer;
-    this.claim = claim;
-    initComponents();
-    populateFields();   // 把 claim 里的数据填到黄色面板
-}
-    private void populateFields() {
-    if (claim == null) {
-        return;
+    public ClaimPolicyRecordJPanel(JPanel userProcessContainer, Organization claimOrg) {
+        initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.claimOrg = claimOrg;
     }
 
-    // 上面搜索区
-    txtPolicyId.setText(claim.getPolicyId());          // Policy ID
-    // Policy Holder Name 目前没有字段，就先留空不管
+     private void populateFromClaim(InsuranceClaimRequest claim) {
+        // 上面的搜索区
+        txtPolicyId.setText(claim.getPolicyId());
+        // txtPolicyHolderName 目前没有字段来源，先留空或以后扩展
 
-    // 左侧 Policy Basic Information
-    txtCompany.setText(claim.getInsuranceCompany());   // Insurance Company
-    txtPetName.setText(claim.getPetName());            // Pet Name
-    txtCoverage.setText(claim.getCoverageLevel());     // Coverage Type
-    txtExpiration.setText(claim.getExpirationDate());  // Expiration Date
-    txtStatus.setText(claim.getStatus());              // Status（来自 WorkRequest）
+        // 左边 Policy Basic Information
+        txtCompany.setText(claim.getInsuranceCompany());
+        txtPetName.setText(claim.getPetName());
+        txtCoverage.setText(claim.getCoverageLevel());
+        txtExpiration.setText(claim.getExpirationDate());
+        txtStatus.setText(claim.getStatus());   // WorkRequest.status
 
-    // 右侧 Policy Claim History
-    if (claim.getRequestDate() != null) {
-        txtDate.setText(claim.getRequestDate().toString());  // Date
+        // 右边 Policy Claim History
+        if (claim.getRequestDate() != null) {
+            txtDate.setText(String.valueOf(claim.getRequestDate()));
+        } else {
+            txtDate.setText("");
+        }
+
+        // 暂时用 policyId 当作 ClaimID
+        txtClaimID.setText(claim.getPolicyId());
+        txtAmount.setText(String.valueOf(claim.getClaimAmount()));
+
+        String decision = claim.getClaimDecision();
+        if (decision == null || decision.isEmpty()) {
+            decision = "Pending";
+        }
+        txtResult.setText(decision);
     }
-    // 系统里没有单独的 ClaimID 字段，可以先用 PolicyId 或者留空，这里用 PolicyId：
-    txtClaimID.setText(claim.getPolicyId());
-    txtAmount.setText(String.valueOf(claim.getClaimAmount()));
-    String decision = claim.getClaimDecision();
-    if (decision == null || decision.isEmpty()) {
-        decision = "Pending";
+     
+     private void clearFields() {
+        // 左侧
+        txtCompany.setText("");
+        txtPetName.setText("");
+        txtCoverage.setText("");
+        txtExpiration.setText("");
+        txtStatus.setText("");
+
+        // 右侧
+        txtDate.setText("");
+        txtClaimID.setText("");
+        txtAmount.setText("");
+        txtResult.setText("");
     }
-    txtResult.setText(decision);
-}
+
 
 
     /**
@@ -103,6 +121,11 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
 
         btnSearch.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         lblPetName.setText("Pet Name:");
 
@@ -269,6 +292,39 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
     CardLayout layout = (CardLayout) userProcessContainer.getLayout();
     layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String policyId = txtPolicyId.getText().trim();
+        String holderName = txtPolicyHolderName.getText().trim(); // 目前未使用，可以后扩展
+
+        if (policyId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a Policy ID.");
+            return;
+        }
+
+        InsuranceClaimRequest match = null;
+
+        // 在 claimOrg 的 workQueue 中用 policyId 查找对应的 InsuranceClaimRequest
+        for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
+            if (req instanceof InsuranceClaimRequest) {
+                InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
+                if (policyId.equals(ic.getPolicyId())) {
+                    match = ic;
+                    break;
+                }
+            }
+        }
+
+        if (match == null) {
+            JOptionPane.showMessageDialog(this,
+                    "No record found for Policy ID: " + policyId);
+            clearFields();
+            return;
+        }
+
+        // 找到了，填充下面的字段
+        populateFromClaim(match);
+    }//GEN-LAST:event_btnSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -408,20 +408,8 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRejectActionPerformed
 
     private void btnPolicyRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolicyRecordActionPerformed
-     int selectedRow = tblInsuranceClaim.getSelectedRow();
-    if (selectedRow < 0) {
-        JOptionPane.showMessageDialog(null, "Please select a claim first.");
-        return;
-    }
-
-    // 跟你 View Claim Details 一样的方式，从 org 的 workQueue 里拿对应的 request
-    InsuranceClaimRequest claim =
-            (InsuranceClaimRequest) claimOrg.getWorkQueue()
-                                            .getWorkRequestList()
-                                            .get(selectedRow);
-
-    ClaimPolicyRecordJPanel panel =
-            new ClaimPolicyRecordJPanel(userProcessContainer, claim);
+            ClaimPolicyRecordJPanel panel =
+            new ClaimPolicyRecordJPanel(userProcessContainer, claimOrg);
     userProcessContainer.add("ClaimPolicyRecordJPanel", panel);
     CardLayout layout = (CardLayout) userProcessContainer.getLayout();
     layout.next(userProcessContainer);

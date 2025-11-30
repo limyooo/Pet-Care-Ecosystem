@@ -6,6 +6,7 @@ package Business;
 
 import Business.Employee.EmployeeDirectory;
 import Business.Network.Network;
+import Business.Pet.PetOwnerDirectory;
 import Business.UserAccount.UserAccountDirectory;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Petsystem {
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private ArrayList<Network> networkList; // 用于存储网络列表
+    private PetOwnerDirectory petOwnerDirectory; // 新增成员变量
     
     // 3. 公共静态方法：用于获取唯一的系统实例 (getInstance())
     // 确保只有当实例不存在时才创建它
@@ -35,22 +37,35 @@ public class Petsystem {
         employeeDirectory = new EmployeeDirectory();
         userAccountDirectory = new UserAccountDirectory();
         networkList = new ArrayList<>();
+        petOwnerDirectory = new PetOwnerDirectory();
     }
     // 5. Getter 方法：允许访问子目录和列表
+    // 新增 getPetOwnerDirectory 方法
+    public PetOwnerDirectory getPetOwnerDirectory() {
+        return petOwnerDirectory;
+    }
     public EmployeeDirectory getEmployeeDirectory() {
         return employeeDirectory;
     }
+    public void setEmployeeDirectory(EmployeeDirectory employeeDirectory) {
+        this.employeeDirectory = employeeDirectory;
+    }
+    public ArrayList<Network> getNetworkList() {
+        return networkList;
+    }
 
+    public void setNetworkList(ArrayList<Network> networkList) {
+        this.networkList = networkList;
+    }
     public UserAccountDirectory getUserAccountDirectory() {
         return userAccountDirectory;
     }
     
-    public ArrayList<Network> getNetworkList() {
-        return networkList;
-    }
+    
     // 6. 辅助方法：添加新网络
     public Network createAndAddNetwork(String name){
         Network network = new Network(name); // 假设 Network 有一个带名称的构造函数
+        networkList.add(network);
         networkList.add(network);
         return network;
     }

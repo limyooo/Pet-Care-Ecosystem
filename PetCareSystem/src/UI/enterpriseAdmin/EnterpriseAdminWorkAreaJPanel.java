@@ -159,6 +159,24 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         // TODO add your handling code here:
+        java.awt.Component comp = this;
+
+    // 向上遍历组件树，直到找到 MainJFrame
+    while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
+        comp = comp.getParent();
+    }
+
+    if (comp instanceof UI.admin.MainJFrame) {
+        // ⭐ 关键修正：调用新的公共代理方法
+        ((UI.admin.MainJFrame) comp).triggerLogout(); 
+    } else {
+        // 找不到 MainJFrame，执行后备方案
+        if (userProcessContainer != null) {
+            userProcessContainer.removeAll();
+            userProcessContainer.revalidate();
+            userProcessContainer.repaint();
+        }
+    }
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void txtEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseActionPerformed

@@ -21,16 +21,14 @@ public class PetOwnerDirectory {
         return ownerList;
     }
     //get addowner method
-    public PetOwner addOwner(String ownerId, String name, String phone,
-                         String email, String address, String emergencyContact,
-                         String insuranceCompany, String policyId,
-                         String coverageLevel, String expirationDate) {
-
-    PetOwner owner = new PetOwner(ownerId, name, phone, email, address, emergencyContact,
-                                  insuranceCompany, policyId, coverageLevel, expirationDate);
-
-    ownerList.add(owner);
-    return owner;
+    public PetOwner addOwner(String ownerId, String name, String phone, String email, 
+                             String address, String emergencyContact,
+                             String insuranceCompany, String policyId, 
+                             String coverageLevel, String expirationDate) {
+        PetOwner owner = new PetOwner(ownerId, name, phone, email, address, emergencyContact,
+                                      insuranceCompany, policyId, coverageLevel, expirationDate);
+        ownerList.add(owner);
+        return owner;
     }
     //remove owner method
     public void removeOwner(PetOwner owner) {

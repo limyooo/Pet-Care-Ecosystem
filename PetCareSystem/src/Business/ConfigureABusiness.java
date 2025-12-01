@@ -245,7 +245,7 @@ public class ConfigureABusiness {
         String coverageLevel = faker.options().option("Full Coverage", "Partial Coverage"); // 两种任选
         String expirationDate = faker.date().future(300, java.util.concurrent.TimeUnit.DAYS).toString();
 
-        PetOwner owner = petOwnerDirectory.addOwner(
+       PetOwner owner = petOwnerDirectory.addOwner(
                 ownerId, name, phone, email, address, emergencyContact,
                 insuranceCompany, policyId, coverageLevel, expirationDate);
         

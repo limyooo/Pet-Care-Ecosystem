@@ -430,6 +430,12 @@ public class RegisterJpanel extends javax.swing.JPanel {
         String startDate = fieldSD.getText();
         String endDate = fieldED.getText();
         
+        // ⭐ 新增：读取保险信息
+        String insuranceCompany = fieldCompany.getText();
+        String policyId = fieldPolicy.getText();
+        String coverageLevel = fieldCL.getText();
+        String expirationDate = fieldEp.getText();
+        
         // 忽略 Insurance 字段
 
         // 2. 基础输入验证 (检查关键字段是否为空)
@@ -444,19 +450,21 @@ public class RegisterJpanel extends javax.swing.JPanel {
             int age = Integer.parseInt(ageText);
             double weight = Double.parseDouble(weightText);
             
-            // 3. 创建 Pet Owner
             Business.Pet.PetOwnerDirectory ownerDirectory = system.getPetOwnerDirectory();
-            
-            // 简单的 ID 生成器
-            String ownerId = "PO" + (new java.util.Random().nextInt(9000) + 1000);
-            
-            Business.Pet.PetOwner newOwner = ownerDirectory.addOwner(
-                    ownerId, 
-                    ownerName, 
-                    phone, 
-                    email, 
-                    address, 
-                    emergencyContact); // ⭐ 传入正确的 emergencyContact
+        String ownerId = "PO" + (new java.util.Random().nextInt(9000) + 1000);
+        
+        Business.Pet.PetOwner newOwner = ownerDirectory.addOwner(
+                ownerId, 
+                ownerName, 
+                phone, 
+                email, 
+                address, 
+                emergencyContact,
+                insuranceCompany,   // ⭐ 保险公司
+                policyId,           // ⭐ 保单号
+                coverageLevel,      // ⭐ 保险级别
+                expirationDate      // ⭐ 到期日期
+        );
 
             // 4. 创建 Pet
             Business.Pet.PetDirectory petDirectory = newOwner.getPetDirectory();

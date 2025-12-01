@@ -16,7 +16,6 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String symptom;
     private String assignedDoctor;
     private String labResult;
-    private String insuranceClaimRequest;
     private String checkResult;  // doctor's conclusion for the check
     //添加pet之后request就可以携带宠物资料
     private Pet pet;
@@ -54,14 +53,6 @@ public class HealthCareCheckRequest extends WorkRequest {
 
     public void setLabResult(String labResult) {
         this.labResult = labResult;
-    }
-
-    public String getInsuranceClaimRequest() {
-        return insuranceClaimRequest;
-    }
-
-    public void setInsuranceClaimRequest(String insuranceClaimRequest) {
-        this.insuranceClaimRequest = insuranceClaimRequest;
     }
     
     public String getCheckResult() {

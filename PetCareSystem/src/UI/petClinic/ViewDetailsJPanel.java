@@ -419,11 +419,11 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
 
     private void populateData() {
         
-        fieldSymptom.setText(request.getSymptom());
-        fieldMessage.setText(request.getMessage());
+            fieldSymptom.setText(request.getSymptom());
+    fieldMessage.setText(request.getMessage());
 
-        //1.Pet 
-        if (request.getPet() != null) {
+    // 1. Pet 
+    if (request.getPet() != null) {
         Pet pet = request.getPet();
 
         fieldPetName.setText(pet.getPetName());
@@ -432,24 +432,25 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
         fieldWeight.setText(String.valueOf(pet.getWeight()));
         fieldFoodAllergy.setText(pet.getFoodAllergy());
 
-        //2.Pet Owner
+        // 2. Pet Owner
         if (pet.getPetOwner() != null) {
             PetOwner owner = pet.getPetOwner();
 
+            // --- Owner Info ---
             fieldPetOwnerName.setText(owner.getOwnerName());
             fieldPhone.setText(owner.getPhone());
             fieldEmail.setText(owner.getEmail());
             fieldAddress.setText(owner.getAddress());
             fieldEmergencyContact.setText(owner.getEmergencyContact());
+
+            // --- Insurance Info ---
+            fieldInsuranceCompany.setText(owner.getInsuranceCompany());
+            fieldPolicyID.setText(owner.getPolicyId());
+            fieldCoverageLevel.setText(owner.getCoverageLevel());
+            fieldExpirationDate.setText(owner.getExpirationDate());
         }
     }
-        //3.Insurance
-        fieldInsuranceCompany.setText("");
-        fieldPolicyID.setText("");
-        fieldCoverageLevel.setText("");
-        fieldExpirationDate.setText("");
-        }
-
+}
     private void setViewMode() {
         
         fieldPetName.setEnabled(false);

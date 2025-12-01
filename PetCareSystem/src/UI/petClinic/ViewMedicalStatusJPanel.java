@@ -220,7 +220,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
         fieldSymptom.setText(request.getSymptom() == null ? "N/A" : request.getSymptom());
         fieldMessage.setText(request.getMessage() == null ? "N/A" : request.getMessage());
         fieldDoctorAssigned.setText(request.getAssignedDoctor() == null ? "Not Assigned" : request.getAssignedDoctor());
-        fieldLabAssistant.setText(request.getLabAssistant().getUsername());
+        fieldLabAssistant.setText(request.getLabAssistant() == null ? "Not Assigned" :request.getLabAssistant().getUsername());
         fieldLabTestResult.setText(request.getLabResult() == null ? "Pending" : request.getLabResult());
 
         //set view model

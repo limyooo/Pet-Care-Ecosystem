@@ -92,7 +92,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         btnSubmitInsuranceClaimRequest = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        jLabel1.setText("Submit Insurance Claim Request");
+        jLabel1.setText(" Create Insurance Claim Request");
 
         btnBack.setText("<<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {

@@ -1,6 +1,7 @@
 package Business.WorkQueue;
 
 import Business.Pet.Pet;
+import Business.UserAccount.UserAccount;
 
 /**
  * Request for a general health check of a pet.
@@ -15,12 +16,11 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String symptom;
     private String assignedDoctor;
     private String labResult;
-    private String insuranceClaimRequest;
     private String checkResult;  // doctor's conclusion for the check
     //添加pet之后request就可以携带宠物资料
     private Pet pet;
-    private String boardingRecordId;
-    
+    private UserAccount labAssistant;
+
     //Constructor：create new patientId
     
     public HealthCareCheckRequest() {
@@ -54,14 +54,6 @@ public class HealthCareCheckRequest extends WorkRequest {
     public void setLabResult(String labResult) {
         this.labResult = labResult;
     }
-
-    public String getInsuranceClaimRequest() {
-        return insuranceClaimRequest;
-    }
-
-    public void setInsuranceClaimRequest(String insuranceClaimRequest) {
-        this.insuranceClaimRequest = insuranceClaimRequest;
-    }
     
     public String getCheckResult() {
         return checkResult;
@@ -78,13 +70,13 @@ public class HealthCareCheckRequest extends WorkRequest {
     public void setPet(Pet pet) {
         this.pet = pet; 
     }
-    // ⭐ 新增：getter 和 setter 方法
-    public String getBoardingRecordId() {
-        return boardingRecordId;
+
+    public UserAccount getLabAssistant() {
+        return labAssistant;
     }
-    
-    public void setBoardingRecordId(String boardingRecordId) {
-        this.boardingRecordId = boardingRecordId;
+
+    public void setLabAssistant(UserAccount labAssistant) {
+        this.labAssistant = labAssistant;
     }
     
     @Override

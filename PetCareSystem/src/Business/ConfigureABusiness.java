@@ -34,6 +34,7 @@ import Business.Pet.PetDirectory;
 import Business.Pet.PetOwnerDirectory;
 import Business.Pet.PetBoardingRecord;
 import Business.Pet.BoardingRecordDirectory;
+import Business.Pet.InsurancePolicy;
 
 public class ConfigureABusiness {
 
@@ -41,6 +42,11 @@ public class ConfigureABusiness {
 
         // 1. 获取唯一系统实例
         Petsystem system = Petsystem.getInstance();
+        
+        // ⭐ 关键修正：检查是否已经配置过数据。如果系统中的 Network 列表不为空，则直接返回。
+        if (!system.getNetworkList().isEmpty()) {
+            return system; 
+        }
 
         // Java Faker：用于生成随机测试数据
         Faker faker = new Faker();
@@ -102,14 +108,15 @@ public class ConfigureABusiness {
 
         // 4. 给每个 Enterprise 创建 Organizations（要求你已经有 OrganizationDirectory.createOrganization(Type)）
         // 4.1 Boarding enterprise
-        Organization frontDeskOrg = boardingEnt.getOrganizationDirectory()
-                .createOrganization(Type.FrontDesk);
+        
         Organization petCareOrg = boardingEnt.getOrganizationDirectory()
                 .createOrganization(Type.PetCare);
         Organization boardingServiceOrg = boardingEnt.getOrganizationDirectory()
                 .createOrganization(Type.BoardingService);
 
         // 4.2 Clinic enterprise
+        Organization frontDeskOrg = clinicEnt.getOrganizationDirectory()
+                .createOrganization(Type.FrontDesk);
         Organization vetDoctorOrg = clinicEnt.getOrganizationDirectory()
                 .createOrganization(Type.VetDoctor);
         Organization vetLabOrg = clinicEnt.getOrganizationDirectory()
@@ -220,14 +227,58 @@ public class ConfigureABusiness {
         );
         
         // 7. 用 Faker 生成 WorkRequest 测试数据
+        
+    PetOwnerDirectory petOwnerDirectory = system.getPetOwnerDirectory();
+    java.util.List<Pet> createdPets = new java.util.ArrayList<>();
+
+    for (int i = 0; i < 5; i++) {
+
+        // 创建 PetOwner
+        String ownerId = "PO" + faker.number().digits(4);
+        String name = faker.name().fullName();
+        String phone = faker.phoneNumber().cellPhone();
+        String email = faker.internet().emailAddress();
+        String address = faker.address().fullAddress();
+        String emergencyContact = faker.phoneNumber().phoneNumber();
+
+        PetOwner owner = petOwnerDirectory.addOwner(
+                ownerId, name, phone, email, address, emergencyContact);
+
+        // 创建 Pet
+        PetDirectory petDirectory = owner.getPetDirectory();
+
+        Pet pet = petDirectory.addPet(
+                "P" + faker.number().digits(4),
+                faker.dog().name(),
+                (i % 2 == 0) ? "Dog" : "Cat",
+                faker.number().numberBetween(1, 10),
+                faker.number().randomDouble(2, 5, 50),
+                faker.food().dish(),
+                faker.food().ingredient(),
+                faker.lorem().sentence(),
+                owner
+        );
+
+        createdPets.add(pet);
+    }
 
         // 7.1 Boarding -> Clinic：健康检查
-        for (int i = 0; i < 5; i++) {
-            String petName = faker.dog().name();
-            HealthCareCheckRequest req = new HealthCareCheckRequest();
-            req.setMessage("Health check for pet: " + petName);
-            req.setStatus("Pending");
-            petCareOrg.getWorkQueue().getWorkRequestList().add(req);
+        for (int i = 0; i < createdPets.size(); i++) {
+
+        Pet pet = createdPets.get(i);
+
+        HealthCareCheckRequest req = new HealthCareCheckRequest();
+        req.setMessage("Health check for pet: " + pet.getPetName());
+        req.setStatus("Pending");
+
+        //塞宠物
+        req.setPet(pet);
+
+        //设定症状
+        req.setSymptom(faker.medical().symptoms());
+
+        //将这个request放到clinic front desk的队列里
+        frontDeskOrg.getWorkQueue().getWorkRequestList().add(req);
         }
 
         // 7.2 Doctor -> Lab：实验室检查
@@ -278,44 +329,7 @@ public class ConfigureABusiness {
             req.setStatus("Pending");
             policyOrg.getWorkQueue().getWorkRequestList().add(req);
         }
-        // 8.1 创建 PetOwner 和 Pet
-        // *** 关键假设：Petsystem 有 getPetOwnerDirectory() 方法 ***
-        // *** 实际中您可能需要去 Petsystem.java 中实现这个方法 ***
-        PetOwnerDirectory petOwnerDirectory = system.getPetOwnerDirectory();
-        java.util.List<Pet> createdPets = new java.util.ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            // 创建 PetOwner
-            String ownerId = "PO" + faker.number().digits(4);
-            String name = faker.name().fullName();
-            String phone = faker.phoneNumber().cellPhone();
-            String email = faker.internet().emailAddress();
-            String address = faker.address().fullAddress();
-            String emergencyContact = faker.phoneNumber().phoneNumber();
-            
-            // 使用 PetOwnerDirectory.addOwner() 方法
-            PetOwner owner = petOwnerDirectory.addOwner(
-                    ownerId, name, phone, email, address, emergencyContact);
-            // 创建 Pet
-            // *** 关键假设：PetOwner 有 getPetDirectory() 方法，返回 PetDirectory 实例 ***
-            // *** 实际中您可能需要去 PetOwner.java 中实现 getPetDirectory() ***
-            PetDirectory petDirectory = owner.getPetDirectory(); 
-            
-            String petId = "P" + faker.number().digits(4);
-            String petName = faker.dog().name();
-            String species = (i % 2 == 0) ? "Dog" : "Cat"; // 随机生成 Dog 或 Cat
-            int age = faker.number().numberBetween(1, 10);
-            double weight = faker.number().randomDouble(2, 5, 50);
-            String foodPreference = faker.food().dish();
-            String foodAllergy = faker.food().ingredient();
-            String healthNotes = faker.lorem().sentence();
-
-            // 使用 PetDirectory.addPet() 方法
-            Pet pet = petDirectory.addPet(
-                    petId, petName, species, age, weight,
-                    foodPreference, foodAllergy, healthNotes, owner);
-
-            createdPets.add(pet);
-        }
+        
         // 8.2 创建 PetBoardingRecord
         // *** 关键假设：PetBoardingEnterprise 有 getBoardingRecordDirectory() 方法 ***
         // *** 实际中您可能需要去 PetBoardingEnterprise.java 中实现这个方法 ***

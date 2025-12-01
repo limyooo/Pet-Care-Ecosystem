@@ -7,9 +7,20 @@ package Business.WorkQueue;
  */
 public class InsuranceClaimRequest extends WorkRequest {
 
-    // ======= 你已有的字段 =======
-    private double claimAmount;      // requested claim money
-    private String claimDecision;    // "Approved" / "Rejected" / etc.
+    private static int claimCounter = 2000;  
+
+    private double claimAmount;
+    private String claimDecision;
+    private int claimId;
+    private HealthCareCheckRequest healthRequest;
+
+    public InsuranceClaimRequest() {
+        this.claimId = ++claimCounter;   
+    }
+
+    public int getClaimId() {
+        return claimId;
+    }
 
     // ======= 为 UI 新增的字段 =======
     private String patientId;        // 患者/病历 ID
@@ -39,88 +50,16 @@ public class InsuranceClaimRequest extends WorkRequest {
     public void setClaimDecision(String claimDecision) {
         this.claimDecision = claimDecision;
     }
-
-    // ======= 新增字段的 getter/setter =======
-    public String getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
-    }
-
-    public String getPolicyId() {
-        return policyId;
-    }
-
-    public void setPolicyId(String policyId) {
-        this.policyId = policyId;
-    }
-
-    public String getPetName() {
-        return petName;
-    }
-
-    public void setPetName(String petName) {
-        this.petName = petName;
-    }
-
-    public String getSymptom() {
-        return symptom;
-    }
-
-    public void setSymptom(String symptom) {
-        this.symptom = symptom;
-    }
-
-    public String getLabResult() {
-        return labResult;
-    }
-
-    public void setLabResult(String labResult) {
-        this.labResult = labResult;
-    }
-
-    public double getTreatmentCost() {
-        return treatmentCost;
-    }
-
-    public void setTreatmentCost(double treatmentCost) {
-        this.treatmentCost = treatmentCost;
-    }
-
-    public String getInsuranceCompany() {
-        return insuranceCompany;
-    }
-
-    public void setInsuranceCompany(String insuranceCompany) {
-        this.insuranceCompany = insuranceCompany;
-    }
-
-    public String getCoverageLevel() {
-        return coverageLevel;
-    }
-
-    public void setCoverageLevel(String coverageLevel) {
-        this.coverageLevel = coverageLevel;
-    }
-
-    public String getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
     
+    public HealthCareCheckRequest getHealthRequest() { 
+        return healthRequest; }
+
+    public void setHealthRequest(HealthCareCheckRequest req) { 
+        this.healthRequest = req; }
     
+
     @Override
     public String toString() {
-        // 方便调试：优先显示 policyId
-        if (policyId != null) {
-            return policyId;
-        }
-        return super.toString();
+        return String.valueOf(this.claimId);
     }
 }

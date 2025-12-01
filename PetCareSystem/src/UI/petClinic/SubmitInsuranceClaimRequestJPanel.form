@@ -234,7 +234,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Helvetica Neue" size="16" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Submit Insurance Claim Request"/>
+        <Property name="text" type="java.lang.String" value=" Create Insurance Claim Request"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnBack">

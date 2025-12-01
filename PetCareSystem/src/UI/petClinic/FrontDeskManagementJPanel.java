@@ -8,6 +8,7 @@ import Business.Enterprise.Enterprise;
 import Business.PetClinicOrganization.FrontDeskOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
+import Business.WorkQueue.InsuranceClaimRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -33,23 +34,12 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         this.userProcessContainer = userProcessContainer;
         this.account = account;
         this.frontDeskOrg = frontDeskOrg;
-        this.account = account;
         this.enterprise = enterprise;
 
         populateTable();
+        populateClaimTable();
         
-        //以下是测试数据！！
-        // test data
-        HealthCareCheckRequest testReq = new HealthCareCheckRequest();
-        testReq.setMessage("Pet needs urgent health check");
-        testReq.setSender(account);   // front desk自己假装 sender
-        testReq.setSymptom("vomiting");
-        testReq.setAssignedDoctor(null);
-        testReq.setLabResult(null);
-        testReq.setInsuranceClaimRequest(null);
-
-        // 加到 front desk的 work queue
-        frontDeskOrg.getWorkQueue().getWorkRequestList().add(testReq);
+        
 
     }
 
@@ -68,30 +58,28 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         tblFrontDesk = new javax.swing.JTable();
         btnViewDetails = new javax.swing.JButton();
         btnViewMedicalStatus = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblClaims = new javax.swing.JTable();
 
         title.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         title.setText("Welcome Front Desk");
 
         btnLogout.setText("Logout");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
 
         tblFrontDesk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Patient ID", "Message", "Sender", "Symptom", "Assigned Doctor", "Lab result", "Insurance Claim Request"
+                "Patient ID", "Message", "Sender", "Symptom", "Assigned Doctor", "Health Check Status "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -114,25 +102,50 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel1.setText("Tracking Insurance Claim Request ");
+
+        tblClaims.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Claim ID", "Patient ID", "Claim Amount", "Decision", "Claim Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblClaims);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 887, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnViewDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnViewMedicalStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(title)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addComponent(title)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 956, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnViewMedicalStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                        .addComponent(btnViewDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,58 +155,56 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
                     .addComponent(title)
                     .addComponent(btnLogout))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addComponent(btnViewDetails)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(btnViewMedicalStatus)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-     
-    }//GEN-LAST:event_btnLogoutActionPerformed
-
     private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
-        //get selected row
+        // TODO add your handling code here:
         int selectedRow = tblFrontDesk.getSelectedRow();
-        //selected row can not be null
+        //check if its selected
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(null, "Please select to view details.");
+            JOptionPane.showMessageDialog(null, "Please select a row to view details.");
             return;
         }
 
-        //get information from jtable
+        //select the whole request object
         HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
 
+        //connect to next jpanel
         ViewDetailsJPanel panel = new ViewDetailsJPanel(userProcessContainer, request);
         userProcessContainer.add("ViewDetailsJPanel", panel);
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
-    
-       
     }//GEN-LAST:event_btnViewDetailsActionPerformed
 
     private void btnViewMedicalStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewMedicalStatusActionPerformed
-        //get selected row
+        // TODO add your handling code here:
         int selectedRow = tblFrontDesk.getSelectedRow();
-
+        //check if its selected
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(null, "Please select a row first.");
             return;
         }
-        //get information from jtable
+
         HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
-        
-        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request,account,enterprise);
+
+        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request, account, enterprise);
+
         userProcessContainer.add("ViewMedicalStatusJPanel", panel);
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
-
     }//GEN-LAST:event_btnViewMedicalStatusActionPerformed
 
 
@@ -201,14 +212,17 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnViewDetails;
     private javax.swing.JButton btnViewMedicalStatus;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblClaims;
     private javax.swing.JTable tblFrontDesk;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 
-    private void populateTable() {
+    public void populateTable() {
         
-        //clear the table
+        //cltblHealthCheckRequeste
         DefaultTableModel model = (DefaultTableModel) tblFrontDesk.getModel();
         model.setRowCount(0);
         
@@ -217,15 +231,33 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
             //if the work request belongs to health care check request populate table
             if (request instanceof HealthCareCheckRequest req) {
 
-                Object[] row = new Object[7];
-                
-                row[0] = req;// 放request本体
-                row[1] = req.getMessage();  
+                Object[] row = new Object[6];
+                row[0] = req;
+                row[1] = req.getMessage();
                 row[2] = req.getSender() == null ? "Unknown" : req.getSender().getUsername();
-                row[3] = req.getSymptom() == null ? "None" : req.getSymptom();
+                row[3] = req.getSymptom();
                 row[4] = req.getAssignedDoctor() == null ? "Not Assigned" : req.getAssignedDoctor();
-                row[5] = req.getLabResult() == null ? "Pending" : req.getLabResult();
-                row[6] = req.getInsuranceClaimRequest() == null ? "Not Submitted" : req.getInsuranceClaimRequest();
+                row[5] = req.getStatus();  
+
+                model.addRow(row);
+            }
+        }
+    }
+
+    private void populateClaimTable() {
+        DefaultTableModel model = (DefaultTableModel) tblClaims.getModel();
+        model.setRowCount(0);
+
+        for (WorkRequest wr : account.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof InsuranceClaimRequest claim) {
+
+                Object[] row = new Object[5];
+
+                row[0] = claim.getClaimId();       
+                row[1] = claim.getHealthRequest().getPatientId();    
+                row[2] = claim.getClaimAmount();   
+                row[3] = claim.getClaimDecision(); 
+                row[4] = claim.getStatus();        
 
                 model.addRow(row);
             }

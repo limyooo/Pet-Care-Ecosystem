@@ -60,7 +60,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
         fieldLabTestResult = new javax.swing.JTextField();
         lblPatientID = new javax.swing.JLabel();
         fieldPatientID = new javax.swing.JTextField();
-        btnSubmitInsuranceClaimRequest = new javax.swing.JButton();
+        btnCreateInsuranceClaimRequest = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         lblTitle.setText("View Medical Status ");
@@ -86,10 +86,10 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
 
         lblPatientID.setText("Patient ID");
 
-        btnSubmitInsuranceClaimRequest.setText("Submit Insurance Claim Request");
-        btnSubmitInsuranceClaimRequest.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateInsuranceClaimRequest.setText("Create Insurance Claim Request");
+        btnCreateInsuranceClaimRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitInsuranceClaimRequestActionPerformed(evt);
+                btnCreateInsuranceClaimRequestActionPerformed(evt);
             }
         });
 
@@ -125,7 +125,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSubmitInsuranceClaimRequest))
+                        .addComponent(btnCreateInsuranceClaimRequest))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(lblTitle)
@@ -169,12 +169,12 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
                     .addComponent(lblLabTestResult)
                     .addComponent(fieldLabTestResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                .addComponent(btnSubmitInsuranceClaimRequest)
+                .addComponent(btnCreateInsuranceClaimRequest)
                 .addGap(55, 55, 55))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSubmitInsuranceClaimRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitInsuranceClaimRequestActionPerformed
+    private void btnCreateInsuranceClaimRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateInsuranceClaimRequestActionPerformed
         // TODO add your handling code here:
         SubmitInsuranceClaimRequestJPanel panel = new SubmitInsuranceClaimRequestJPanel(userProcessContainer, request,account,enterprise);
 
@@ -182,7 +182,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
-    }//GEN-LAST:event_btnSubmitInsuranceClaimRequestActionPerformed
+    }//GEN-LAST:event_btnCreateInsuranceClaimRequestActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -193,7 +193,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSubmitInsuranceClaimRequest;
+    private javax.swing.JButton btnCreateInsuranceClaimRequest;
     private javax.swing.JTextField fieldDoctorAssigned;
     private javax.swing.JTextField fieldLabAssistant;
     private javax.swing.JTextField fieldLabTestResult;
@@ -215,30 +215,22 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
     private void populateData() {
         
         
-    fieldPatientID.setText(String.valueOf(request.getPatientId()));
-    fieldPetName.setText("N/A");
-    fieldSymptom.setText(
-        request.getSymptom() == null ? "N/A" : request.getSymptom()
-    );
-    fieldMessage.setText(
-        request.getMessage() == null ? "N/A" : request.getMessage()
-    );
-    fieldDoctorAssigned.setText(
-        request.getAssignedDoctor() == null ? "Not Assigned" : request.getAssignedDoctor()
-    );
-    fieldLabAssistant.setText("N/A");
-    fieldLabTestResult.setText(
-        request.getLabResult() == null ? "Pending" : request.getLabResult()
-    );
+        fieldPatientID.setText(String.valueOf(request.getPatientId()));
+        fieldPetName.setText(request.getPet().getPetName());
+        fieldSymptom.setText(request.getSymptom() == null ? "N/A" : request.getSymptom());
+        fieldMessage.setText(request.getMessage() == null ? "N/A" : request.getMessage());
+        fieldDoctorAssigned.setText(request.getAssignedDoctor() == null ? "Not Assigned" : request.getAssignedDoctor());
+        fieldLabAssistant.setText(request.getLabAssistant() == null ? "Not Assigned" :request.getLabAssistant().getUsername());
+        fieldLabTestResult.setText(request.getLabResult() == null ? "Pending" : request.getLabResult());
 
-    //set view model
-    fieldPatientID.setEditable(false);
-    fieldPetName.setEditable(false);
-    fieldSymptom.setEditable(false);
-    fieldMessage.setEditable(false);
-    fieldDoctorAssigned.setEditable(false);
-    fieldLabAssistant.setEditable(false);
-    fieldLabTestResult.setEditable(false);
-    }
+        //set view model
+        fieldPatientID.setEnabled(false);
+        fieldPetName.setEnabled(false);
+        fieldSymptom.setEnabled(false);
+        fieldMessage.setEnabled(false);
+        fieldDoctorAssigned.setEnabled(false);
+        fieldLabAssistant.setEnabled(false);
+        fieldLabTestResult.setEnabled(false);
+        }
     
 }

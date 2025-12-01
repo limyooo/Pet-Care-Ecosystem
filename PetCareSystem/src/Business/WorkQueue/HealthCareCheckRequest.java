@@ -1,6 +1,7 @@
 package Business.WorkQueue;
 
 import Business.Pet.Pet;
+import Business.UserAccount.UserAccount;
 
 /**
  * Request for a general health check of a pet.
@@ -19,6 +20,7 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String checkResult;  // doctor's conclusion for the check
     //添加pet之后request就可以携带宠物资料
     private Pet pet;
+    private UserAccount labAssistant;
 
     //Constructor：create new patientId
     public HealthCareCheckRequest() {
@@ -75,6 +77,14 @@ public class HealthCareCheckRequest extends WorkRequest {
     
     public void setPet(Pet pet) {
         this.pet = pet; 
+    }
+
+    public UserAccount getLabAssistant() {
+        return labAssistant;
+    }
+
+    public void setLabAssistant(UserAccount labAssistant) {
+        this.labAssistant = labAssistant;
     }
     
     @Override

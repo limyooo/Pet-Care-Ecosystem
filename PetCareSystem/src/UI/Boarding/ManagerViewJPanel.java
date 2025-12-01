@@ -4,17 +4,44 @@
  */
 package UI.Boarding;
 
+import Business.Pet.PetBoardingRecord;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.Pet.Pet;
+import Business.Pet.PetBoardingRecord;
+import Business.Pet.PetOwner;
+import Business.Petsystem;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author hanlinyao
  */
 public class ManagerViewJPanel extends javax.swing.JPanel {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Organization organization;
+    private Enterprise enterprise;
+    private Petsystem system;
+    private PetBoardingRecord selectedRecord;
+
 
     /**
      * Creates new form ManagerViewJPanel
      */
-    public ManagerViewJPanel() {
+    public ManagerViewJPanel(JPanel userProcessContainer, UserAccount account,
+                              Organization organization, Enterprise enterprise, Petsystem system) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.system = system;
+        
+        // 设置所有字段为只读
+        setFieldsEditable(false);
     }
 
     /**
@@ -327,7 +354,9 @@ public class ManagerViewJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void fieldWeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldWeightActionPerformed
@@ -381,4 +410,62 @@ public class ManagerViewJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblWeight;
     // End of variables declaration//GEN-END:variables
-}
+
+    void loadRecordDetails(PetBoardingRecord record) {
+        this.selectedRecord = record;
+        if (record == null) return;
+
+        Pet pet = record.getPet();
+        PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+
+        // 宠物信息 (Pet)
+        fieldPetName.setText((pet != null) ? pet.getPetName() : "");
+        fieldSpecies.setText((pet != null) ? pet.getSpecies() : "");
+        fieldAge.setText((pet != null) ? String.valueOf(pet.getAge()) : "");
+        fieldWeight.setText((pet != null) ? String.valueOf(pet.getWeight()) : "");
+        fieldFood.setText((pet != null) ? pet.getFoodAllergy() : "");
+
+        // 宠物主人信息 (Pet Owner)
+        fieldOwnerName.setText((owner != null) ? owner.getOwnerName() : "");
+        fieldPhone.setText((owner != null) ? owner.getPhone() : "");
+        fieldAddress.setText((owner != null) ? owner.getAddress() : "");
+        fieldEmail.setText((owner != null) ? owner.getEmail() : "");
+        fieldContact.setText((owner != null) ? owner.getEmergencyContact() : "");
+
+        // 寄养信息 (Boarding)
+        fieldRoom.setText(record.getRoomNumber());
+        fieldSD.setText(record.getStartDate());
+        fieldED.setText(record.getEndDate());
+
+        // 保险信息 (Insurance) - 从 PetOwner 获取
+        fieldCompany.setText((owner != null && owner.getInsuranceCompany() != null) ? owner.getInsuranceCompany() : "N/A");
+        fieldPolicy.setText((owner != null && owner.getPolicyId() != null) ? owner.getPolicyId() : "N/A");
+        fieldCL.setText((owner != null && owner.getCoverageLevel() != null) ? owner.getCoverageLevel() : "N/A");
+        fieldEp.setText((owner != null && owner.getExpirationDate() != null) ? owner.getExpirationDate() : "N/A");
+    }
+
+    private void setFieldsEditable(boolean editable) {
+        fieldPetName.setEditable(editable);
+        fieldSpecies.setEditable(editable);
+        fieldAge.setEditable(editable);
+        fieldWeight.setEditable(editable);
+        fieldFood.setEditable(editable);
+        
+        fieldOwnerName.setEditable(editable);
+        fieldPhone.setEditable(editable);
+        fieldAddress.setEditable(editable);
+        fieldEmail.setEditable(editable);
+        fieldContact.setEditable(editable);
+        
+        fieldRoom.setEditable(editable);
+        fieldSD.setEditable(editable);
+        fieldED.setEditable(editable);
+        
+        fieldCompany.setEditable(editable);
+        fieldPolicy.setEditable(editable);
+        fieldCL.setEditable(editable);
+        fieldEp.setEditable(editable);
+    }
+    }
+        
+

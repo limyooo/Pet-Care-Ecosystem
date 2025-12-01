@@ -139,7 +139,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
 
         lblTreatmentCost.setText("Treatment Cost");
 
-        comboTreatmentNeeded.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medication Only 药物", "IV Fluids & Supportive Care 输液", "Diagnostic Imaging (X-ray / Ultrasound) 拍片子", "Surgery 做手术", "Hospitalization 住院 " }));
+        comboTreatmentNeeded.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medication Only ", "IV Fluids & Supportive Care ", "Diagnostic Imaging (X-ray / Ultrasound) ", "Surgery ", "Hospitalization " }));
 
         comboCoverageLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Coverage 100%", "Partial Coverage 50%", " ", " " }));
 
@@ -425,7 +425,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     fieldWeight.setText(String.valueOf(p.getWeight()));
     fieldFoodAllergy.setText(p.getFoodAllergy());
 
-    /*// Insurance info
+    // Insurance info
     fieldInsuranceCompany.setText(p.getPetOwner().getInsuranceCompany());
     fieldPolicyID.setText(p.getPetOwner().getPolicyId());
     comboCoverageLevel.setSelectedItem(p.getPetOwner().getCoverageLevel());
@@ -440,7 +440,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     fieldLabTestResult.setText(Request.getLabResult());
     comboTreatmentNeeded.setSelectedItem(Request.getTreatmentNeeded());
     fieldTreatmentCost.setText(String.valueOf(Request.getTreatmentCost()));
-    */
+    
     
     disableAllFields();
     }

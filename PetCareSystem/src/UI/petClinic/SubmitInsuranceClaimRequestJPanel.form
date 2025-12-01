@@ -374,11 +374,11 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="5">
-            <StringItem index="0" value="Medication Only &#x836f;&#x7269;"/>
-            <StringItem index="1" value="IV Fluids &amp; Supportive Care &#x8f93;&#x6db2;"/>
-            <StringItem index="2" value="Diagnostic Imaging (X-ray / Ultrasound) &#x62cd;&#x7247;&#x5b50;"/>
-            <StringItem index="3" value="Surgery &#x505a;&#x624b;&#x672f;"/>
-            <StringItem index="4" value="Hospitalization &#x4f4f;&#x9662; "/>
+            <StringItem index="0" value="Medication Only "/>
+            <StringItem index="1" value="IV Fluids &amp; Supportive Care "/>
+            <StringItem index="2" value="Diagnostic Imaging (X-ray / Ultrasound) "/>
+            <StringItem index="3" value="Surgery "/>
+            <StringItem index="4" value="Hospitalization "/>
           </StringArray>
         </Property>
       </Properties>

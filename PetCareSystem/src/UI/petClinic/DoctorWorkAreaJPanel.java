@@ -4,17 +4,41 @@
  */
 package UI.petClinic;
 
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.PetClinicOrganization.VetDoctorOrganization;
+import Business.PetClinicOrganization.VetLabOrganization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HealthCareCheckRequest;
+import Business.WorkQueue.LabTestRequest;
+import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jingyangwang
  */
 public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
-
+    
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private VetDoctorOrganization doctorOrg;
+    private Enterprise enterprise;
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public DoctorWorkAreaJPanel() {
+    public DoctorWorkAreaJPanel(JPanel userProcessContainer,UserAccount account,VetDoctorOrganization doctorOrg,Enterprise enterprise) {
+        
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.doctorOrg = doctorOrg;
+        this.enterprise = enterprise;
+
+        populateTable();
     }
 
     /**
@@ -30,10 +54,10 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHealthCheckRequest = new javax.swing.JTable();
         btnLogout = new javax.swing.JButton();
+        btnViewPatientDetails = new javax.swing.JButton();
         btnCreateLabTestRequest = new javax.swing.JButton();
-        btnViewLabTestResult = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        fieldDoctorMessage = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
@@ -47,7 +71,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Patient ID", "Pet Name", "Sender", "Symptom", "Status", "Treatment Needed"
+                "Patient ID", "Pet Name", "Sender", "Symptom", "Lab Test Status", "Treatment Needed"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -61,13 +85,23 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblHealthCheckRequest);
 
         btnLogout.setText("<<< Logout");
-
-        btnCreateLabTestRequest.setText("View Patient Details");
-
-        btnViewLabTestResult.setText("Create Lab Test Request");
-        btnViewLabTestResult.addActionListener(new java.awt.event.ActionListener() {
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewLabTestResultActionPerformed(evt);
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
+        btnViewPatientDetails.setText("View Patient Details");
+        btnViewPatientDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewPatientDetailsActionPerformed(evt);
+            }
+        });
+
+        btnCreateLabTestRequest.setText("Create Lab Test Request");
+        btnCreateLabTestRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateLabTestRequestActionPerformed(evt);
             }
         });
 
@@ -88,7 +122,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                                 .addComponent(lblTitle)
                                 .addGap(363, 363, 363)
                                 .addComponent(btnLogout))
-                            .addComponent(btnCreateLabTestRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnViewPatientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(19, Short.MAX_VALUE))
@@ -96,8 +130,8 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                         .addGap(293, 293, 293)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnViewLabTestResult))
+                            .addComponent(fieldDoctorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCreateLabTestRequest))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -112,31 +146,147 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(btnCreateLabTestRequest)
+                .addComponent(btnViewPatientDetails)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldDoctorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViewLabTestResult)
+                .addComponent(btnCreateLabTestRequest)
                 .addGap(73, 73, 73))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnViewLabTestResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewLabTestResultActionPerformed
+    private void btnCreateLabTestRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateLabTestRequestActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewLabTestResultActionPerformed
+        //select a row to create lab test request
+        int selectedRow = tblHealthCheckRequest.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a request.");
+            return;
+        }
+
+        HealthCareCheckRequest req = (HealthCareCheckRequest) tblHealthCheckRequest.getValueAt(selectedRow, 0);
+        
+        //doctor need to fill the fields
+        String message = fieldDoctorMessage.getText();
+        if (message.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter a message.");
+            return;
+        }
+        
+        // 4.Create LabTestRequest
+        LabTestRequest labRequest = new LabTestRequest();
+        labRequest.setMessage(message);
+        labRequest.setSender(account);        
+        labRequest.setPet(req.getPet());       
+        labRequest.setHealthCareRequest(req);  
+        labRequest.setStatus("Sent to Lab");
+
+        // 5.find Lab Assistant Organization
+        VetLabOrganization labOrg = null;
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (org instanceof VetLabOrganization) {
+                labOrg = (VetLabOrganization) org; 
+                break;
+            }
+        }
+
+        if (labOrg == null) {
+            JOptionPane.showMessageDialog(null, "Lab Organization not found!");
+            return;
+        }
+
+        // 6.add lab request into Lab workQueue
+        labOrg.getWorkQueue().getWorkRequestList().add(labRequest);
+
+        // 7.doctor's workqueue
+        account.getWorkQueue().getWorkRequestList().add(labRequest);
+
+        // 8.update lab result
+        req.setLabResult("Pending");   // 让前台看到“Lab Test Pending”
+
+        JOptionPane.showMessageDialog(null, "Lab Test Request Created Successfully!");
+        
+        //clear fields
+        fieldDoctorMessage.setText("");  // 清空留言
+        
+        populateTable();
+        
+    }//GEN-LAST:event_btnCreateLabTestRequestActionPerformed
+
+    private void btnViewPatientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPatientDetailsActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblHealthCheckRequest.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a request.");
+            return;
+        }
+
+        HealthCareCheckRequest req = (HealthCareCheckRequest) tblHealthCheckRequest.getValueAt(selectedRow, 0);
+
+        ViewPatientDetailsJPanel panel = new ViewPatientDetailsJPanel(userProcessContainer, req,account,enterprise);
+
+        userProcessContainer.add("ViewPatientDetailsJPanel", panel);
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnViewPatientDetailsActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        java.awt.Component comp = this;
+
+        // 向上遍历组件树，直到找到 MainJFrame
+        while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
+            comp = comp.getParent();
+        }
+
+        if (comp instanceof UI.admin.MainJFrame) {
+            // ⭐ 关键修正：调用新的公共代理方法
+            ((UI.admin.MainJFrame) comp).triggerLogout(); 
+        } else {
+            // 找不到 MainJFrame，执行后备方案
+            if (userProcessContainer != null) {
+                userProcessContainer.removeAll();
+                userProcessContainer.revalidate();
+                userProcessContainer.repaint();
+            }
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateLabTestRequest;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton btnViewLabTestResult;
+    private javax.swing.JButton btnViewPatientDetails;
+    private javax.swing.JTextField fieldDoctorMessage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblHealthCheckRequest;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        
+        DefaultTableModel model = (DefaultTableModel) tblHealthCheckRequest.getModel();
+        model.setRowCount(0);
+
+    for (WorkRequest request : doctorOrg.getWorkQueue().getWorkRequestList()) {
+        if (request instanceof HealthCareCheckRequest) {
+            HealthCareCheckRequest req = (HealthCareCheckRequest) request;
+
+            Object[] row = new Object[6];
+            row[0] = req;
+            row[1] = req.getPet() == null ? "Unknown" : req.getPet().getPetName();
+            row[2] = req.getSender() == null ? "Unknown" : req.getSender().getUsername();
+            row[3] = req.getSymptom();
+            row[4] = req.getLabResult() == null ? "Pending" : req.getLabResult();
+            row[5] = req.getTreatmentNeeded() == null ? "Not Set" : req.getTreatmentNeeded();
+
+            model.addRow(row);
+        }
+    }
+  }
 }

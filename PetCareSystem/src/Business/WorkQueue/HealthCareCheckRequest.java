@@ -19,10 +19,10 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String checkResult;  // doctor's conclusion for the check
     //添加pet之后request就可以携带宠物资料
     private Pet pet;
-    private UserAccount labAssistant;
-    
-    // ⭐ 新增字段
+    private UserAccount labAssistant;   
     private String boardingRecordId;
+    private String treatmentNeeded;
+    private double treatmentCost;
     
     //Constructor：create new patientId
     
@@ -90,6 +90,23 @@ public class HealthCareCheckRequest extends WorkRequest {
     public void setLabAssistant(UserAccount labAssistant) {
         this.labAssistant = labAssistant;
     }
+
+    public String getTreatmentNeeded() {
+        return treatmentNeeded;
+    }
+
+    public void setTreatmentNeeded(String treatmentNeeded) {
+        this.treatmentNeeded = treatmentNeeded;
+    }
+
+    public double getTreatmentCost() {
+        return treatmentCost;
+    }
+
+    public void setTreatmentCost(double treatmentCost) {
+        this.treatmentCost = treatmentCost;
+    }
+    
     
     @Override
     public String toString() {

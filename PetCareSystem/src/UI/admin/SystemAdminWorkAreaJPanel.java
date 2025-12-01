@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import UI.admin.SystemAdminWorkAreaJPanel;
+import javax.swing.event.TreeSelectionEvent;
+
+
 
 /**
  *
@@ -31,7 +35,27 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     public SystemAdminWorkAreaJPanel(Petsystem system) {
       this.system = system;
     initComponents();
+    // ⭐ 添加 JTree 监听器
+    jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+        public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+            jTree1ValueChanged(evt);
+            jTree1.updateUI(); // ⭐ 关键：强制刷新 JTree 视图
+        }
+
+          private void jTree1ValueChanged(TreeSelectionEvent evt) {
+              // 这个方法通常用来处理节点点击，但我们在这里主要利用它的触发机制。
+    // 如果您需要根据选中的节点显示信息，代码应该写在这里。
     
+    // 假设您想在点击节点时显示节点的名称：
+    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
+    if (selectedNode != null && selectedNode.getUserObject() instanceof Network) {
+        Network network = (Network) selectedNode.getUserObject();
+        // 可以在这里设置一个标签来显示选中的网络名称，以确认 JTree 正在工作
+        // System.out.println("Selected Network: " + network.getName()); 
+    }
+          }
+              
+    });
     
     
     // 初始化 JTree
@@ -163,25 +187,26 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     void populateTree() {
-        // 1. 获取 JTree 的模型
+     // 1. 获取 JTree 的模型
     DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
 
-    // 2. 创建系统根节点
+    // ⭐ 关键修正：总是创建一个全新的根节点 ("PetCareSystem")，
+    // 并使用 model.setRoot() 方法，强制模型从新根开始构建，彻底消除重复显示。
     DefaultMutableTreeNode root = new DefaultMutableTreeNode("PetCareSystem");
-    model.setRoot(root);
+    model.setRoot(root); 
+    
+    // 注意：不再需要 root.removeAllChildren()，因为 model.setRoot(root) 已经完成了重置。
 
-    // 3. 遍历所有 Network (需要 Petsystem 中有 getNetworkList())
+    // 2. 遍历所有 Network 
     if (system.getNetworkList() != null) {
         for (Network network : system.getNetworkList()) {
-            // 使用 Network 对象作为节点的用户对象 (user object)
+            // 使用 Network 对象作为节点的用户对象 (JTree 会显示其 toString() 返回的文本，例如 "Portland")
             DefaultMutableTreeNode networkNode = new DefaultMutableTreeNode(network);
             root.add(networkNode);
 
-            // 4. 遍历 Network 下的所有 Enterprise
-            // 假设 Network 中有获取 EnterpriseDirectory 的方法
+            // 3. 遍历 Network 下的所有 Enterprise
             if (network.getEnterpriseDirectory() != null) {
                 for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
-                    // 使用 Enterprise 对象作为节点的用户对象
                     DefaultMutableTreeNode enterpriseNode = new DefaultMutableTreeNode(enterprise);
                     networkNode.add(enterpriseNode);
                     
@@ -191,14 +216,13 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         }
     }
 
-    // 5. 刷新树视图
-    model.reload();
-
-    // 6. 展开所有节点，使结构可见
+    // 4. 刷新树视图
+    model.reload(root); // 重新加载模型，从新的根节点开始
+    
+    // 5. 展开所有节点，使结构可见
     for (int i = 0; i < jTree1.getRowCount(); i++) {
         jTree1.expandRow(i);
     }
-        
         
     }
 

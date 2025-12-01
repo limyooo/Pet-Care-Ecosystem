@@ -22,6 +22,19 @@ public class InsuranceClaimRequest extends WorkRequest {
         return claimId;
     }
 
+    // ======= 为 UI 新增的字段 =======
+    private String patientId;        // 患者/病历 ID
+    private String policyId;         // 保单号
+    private String petName;          // 宠物名
+    private String symptom;          // 症状
+    private String labResult;        // 检验结果
+    private double treatmentCost;    // 治疗费用
+    
+    private String insuranceCompany;   // 保险公司
+    private String coverageLevel;      // 保障等级
+    private String expirationDate;     // 到期日（用 String 存就够）
+
+    // ======= 原来的 getter/setter =======
     public double getClaimAmount() {
         return claimAmount;
     }

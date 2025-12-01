@@ -34,6 +34,7 @@ import Business.Pet.PetDirectory;
 import Business.Pet.PetOwnerDirectory;
 import Business.Pet.PetBoardingRecord;
 import Business.Pet.BoardingRecordDirectory;
+import Business.Pet.InsurancePolicy;
 
 public class ConfigureABusiness {
 
@@ -41,6 +42,11 @@ public class ConfigureABusiness {
 
         // 1. 获取唯一系统实例
         Petsystem system = Petsystem.getInstance();
+        
+        // ⭐ 关键修正：检查是否已经配置过数据。如果系统中的 Network 列表不为空，则直接返回。
+        if (!system.getNetworkList().isEmpty()) {
+            return system; 
+        }
 
         // Java Faker：用于生成随机测试数据
         Faker faker = new Faker();
@@ -74,7 +80,7 @@ public class ConfigureABusiness {
                 .createEmployee("Boarding Enterprise Admin");
         boardingEnt.getUserAccountDirectory().createUserAccount(
                 "boardingadmin",          // 用户名
-                "1111",           // 密码（你可以自己改强一点）
+                "boardingadmin",           // 密码（你可以自己改强一点）
                 boardingAdminEmp,
                 new EnterpriseAdminRole() // 如果没有这个类，先用你的 AdminRole
         );
@@ -91,13 +97,14 @@ public class ConfigureABusiness {
 
         // Insurance Enterprise Admin
         Employee insuranceAdminEmp = insuranceEnt.getEmployeeDirectory()
-                .createEmployee("Insurance Enterprise Admin");
-        insuranceEnt.getUserAccountDirectory().createUserAccount(
-                "insuranceAdmin",
-                "Insurance@123",
-                insuranceAdminEmp,
-                new EnterpriseAdminRole()
+        .createEmployee("Insurance Enterprise Admin");
+        UserAccount insuranceAdminAccount = insuranceEnt.getUserAccountDirectory().createUserAccount(
+        "insuranceAdmin",
+        "Insurance@123",
+        insuranceAdminEmp,
+        new EnterpriseAdminRole()
         );
+
 
         // 4. 给每个 Enterprise 创建 Organizations（要求你已经有 OrganizationDirectory.createOrganization(Type)）
         // 4.1 Boarding enterprise
@@ -165,9 +172,9 @@ public class ConfigureABusiness {
             boardingServiceOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new BoardingManagerRole());
         }
-        Employee bmEmp = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Boarding Manager");
+        Employee pct1 = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Pet Care Taker");
         boardingServiceOrg.getUserAccountDirectory().createUserAccount(
-                "bm1", "1234", bmEmp, new BoardingManagerRole());
+                "pct1", "pct1", pct1, new PetCareTakerRole());
 
         // 6.4 Vet Doctor
         for (int i = 0; i < 3; i++) {
@@ -209,6 +216,16 @@ public class ConfigureABusiness {
                     username, password, e, new ClaimProcessorRole());
         }
 
+        // 固定的 Claim Processor 测试账号
+        Employee cpTestEmp = claimOrg.getEmployeeDirectory()
+                                     .createEmployee("Test Claim Processor");
+        claimOrg.getUserAccountDirectory().createUserAccount(
+                "claim",          // 用户名
+                "12345",         // 密码
+                cpTestEmp,
+                new ClaimProcessorRole()
+        );
+        
         // 7. 用 Faker 生成 WorkRequest 测试数据
         
     PetOwnerDirectory petOwnerDirectory = system.getPetOwnerDirectory();
@@ -273,12 +290,33 @@ public class ConfigureABusiness {
         }
 
         // 7.3 Insurance Claim 请求
-        for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) {
+
             InsuranceClaimRequest req = new InsuranceClaimRequest();
+
+            // 基础信息
             req.setMessage("Claim for " + faker.name().fullName());
-            req.setClaimAmount(
-                    faker.number().randomDouble(2, 100, 3000));
+            req.setClaimAmount(faker.number().randomDouble(2, 100, 3000));
             req.setStatus("Pending");
+
+            // 用于表格 / 详情展示的字段
+            req.setPatientId("PT" + faker.number().digits(4));
+            req.setPolicyId("PL" + faker.number().digits(4));
+            req.setPetName(faker.dog().name());
+            req.setSymptom(faker.medical().symptoms());
+            req.setLabResult(faker.medical().diseaseName());
+            req.setTreatmentCost(faker.number().randomDouble(2, 50, 500));
+
+            // 保险相关三项
+            req.setInsuranceCompany(faker.company().name());
+            req.setCoverageLevel(faker.options().option("Basic", "Standard", "Premium"));
+            req.setExpirationDate(
+                    faker.date().future(365, java.util.concurrent.TimeUnit.DAYS).toString()
+            );
+
+            // Sender
+            req.setSender(insuranceAdminAccount);
+
             claimOrg.getWorkQueue().getWorkRequestList().add(req);
         }
 

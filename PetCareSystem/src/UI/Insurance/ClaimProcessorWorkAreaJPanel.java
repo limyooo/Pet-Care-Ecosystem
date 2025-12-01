@@ -3,19 +3,72 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package UI.Insurance;
+import Business.UserAccount.UserAccount;
+import Business.Petsystem;
+import Business.Enterprise.PetInsuranceEnterprise;
+import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
+import Business.WorkQueue.InsuranceClaimRequest;
+import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Eve Dou
  */
 public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private InsuranceClaimOrganization organization;
+    private PetInsuranceEnterprise enterprise;
+    private Petsystem system;
+    private InsuranceClaimOrganization claimOrg; 
 
     /**
      * Creates new form ClaimProcessorWorkAreaJPanel
      */
-    public ClaimProcessorWorkAreaJPanel() {
+    public ClaimProcessorWorkAreaJPanel(JPanel userProcessContainer,
+                                        UserAccount account,
+                                        InsuranceClaimOrganization organization,
+                                        PetInsuranceEnterprise enterprise,
+                                        Petsystem system) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.claimOrg = organization; 
+        this.enterprise = enterprise;
+        this.system = system;
+        
+        populateTable();
     }
+    
+     private void populateTable() {
+    DefaultTableModel model = (DefaultTableModel) tblInsuranceClaim.getModel();
+    model.setRowCount(0);
+
+    for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
+
+        if (req instanceof InsuranceClaimRequest) {
+            InsuranceClaimRequest claim = (InsuranceClaimRequest) req;
+
+            Object[] row = new Object[9];
+            row[0] = claim.getPatientId();
+            row[1] = claim.getPolicyId();
+            row[2] = claim.getPetName();
+            row[3] = claim.getSymptom();
+            row[4] = claim.getLabResult();
+            row[5] = claim.getTreatmentCost();
+            row[6] = claim.getClaimAmount();
+            row[7] = claim.getSender();
+            row[8] = claim.getStatus();
+
+            model.addRow(row);
+        }
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +89,9 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         btnApprove = new javax.swing.JButton();
         btnReject = new javax.swing.JButton();
 
-        lblInsuranceClaimProcess.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        setBackground(new java.awt.Color(204, 204, 255));
+
+        lblInsuranceClaimProcess.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblInsuranceClaimProcess.setText("Welcome Insurance Claim Management ");
 
         btnLogOut.setText("LogOut");
@@ -59,17 +114,26 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblInsuranceClaim);
 
+        btnPolicyRecord.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnPolicyRecord.setText("View Policy Record");
+        btnPolicyRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPolicyRecordActionPerformed(evt);
+            }
+        });
 
-        btnViewDetail.setText("View Details");
+        btnViewDetail.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        btnViewDetail.setText("View Claim Details");
         btnViewDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewDetailActionPerformed(evt);
             }
         });
 
+        lblClaimList.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
         lblClaimList.setText("Claim List:");
 
+        btnApprove.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnApprove.setText("Approve");
         btnApprove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +141,7 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnReject.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnReject.setText("Reject");
         btnReject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,24 +157,27 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblClaimList, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(764, 764, 764))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnViewDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPolicyRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnReject, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(200, 200, 200))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblInsuranceClaimProcess)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLogOut)
-                        .addGap(61, 61, 61))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblClaimList, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(btnPolicyRecord, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnReject, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(btnViewDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(22, Short.MAX_VALUE))))
+                        .addGap(54, 54, 54))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,9 +196,9 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnApprove))
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPolicyRecord)
-                    .addComponent(btnReject))
-                .addContainerGap(100, Short.MAX_VALUE))
+                    .addComponent(btnReject)
+                    .addComponent(btnPolicyRecord))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -139,16 +207,213 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void btnViewDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailActionPerformed
-        // TODO add your handling code here:
+        // 1. 检查有没有选中表格行
+        int selectedRow = tblInsuranceClaim.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please select a claim first.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        // 2. 通过 Policy ID 在 workQueue 里找到对应的 InsuranceClaimRequest
+        String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
+
+        InsuranceClaimRequest targetClaim = null;
+        for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
+            if (req instanceof InsuranceClaimRequest) {
+                InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
+                if (policyId.equals(ic.getPolicyId())) {
+                    targetClaim = ic;
+                    break;
+                }
+            }
+        }
+
+        if (targetClaim == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Cannot find this claim in work queue.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // 3. 跳转到 ClaimDetailJPanel，并把这条 claim 传过去
+        ClaimDetailJPanel detailPanel = new ClaimDetailJPanel(userProcessContainer, targetClaim);
+        userProcessContainer.add("ClaimDetailJPanel", detailPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnViewDetailActionPerformed
 
     private void btnApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveActionPerformed
-        // TODO add your handling code here:
+            // 1. 看看有没有选中行
+            int selectedRow = tblInsuranceClaim.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Please select a claim first.",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            // 2. 从表格里拿到 policyId（第二列，索引 1）
+            String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
+
+            // 3. 在 claimOrg 的 workQueue 里找到这一条 InsuranceClaimRequest
+            InsuranceClaimRequest targetClaim = null;
+            for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
+                if (req instanceof InsuranceClaimRequest) {
+                    InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
+                    if (policyId.equals(ic.getPolicyId())) {
+                        targetClaim = ic;
+                        break;
+                    }
+                }
+            }
+
+            if (targetClaim == null) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Cannot find this claim in work queue.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            // 4. 如果已经处理过，就不重复处理
+            if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "This claim is already approved.",
+                        "Info",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+                return;
+            }
+            if ("Rejected".equalsIgnoreCase(targetClaim.getStatus())) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "This claim has been rejected.",
+                        "Info",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+                return;
+            }
+
+            // 5. 修改状态 + 决策
+            targetClaim.setStatus("Approved");
+            targetClaim.setClaimDecision("Approved");
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Claim approved successfully.",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            // 6. 刷新表格
+            populateTable();
     }//GEN-LAST:event_btnApproveActionPerformed
 
     private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
-        // TODO add your handling code here:
+    // 1. 看看有没有选中行
+    int selectedRow = tblInsuranceClaim.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Please select a claim first.",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+
+    // 2. 从表格里拿到 policyId（第二列，索引 1）
+    String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
+
+    // 3. 在 claimOrg 的 workQueue 里找到这一条 InsuranceClaimRequest
+    InsuranceClaimRequest targetClaim = null;
+    for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
+        if (req instanceof InsuranceClaimRequest) {
+            InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
+            if (policyId.equals(ic.getPolicyId())) {
+                targetClaim = ic;
+                break;
+            }
+        }
+    }
+
+    if (targetClaim == null) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Cannot find this claim in work queue.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+        );
+        return;
+    }
+
+    // 4. 如果已经处理过，就不重复处理
+    if ("Rejected".equalsIgnoreCase(targetClaim.getStatus())) {
+        JOptionPane.showMessageDialog(
+                this,
+                "This claim is already rejected.",
+                "Info",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        return;
+    }
+    if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
+        JOptionPane.showMessageDialog(
+                this,
+                "This claim has been approved and cannot be rejected.",
+                "Info",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        return;
+    }
+
+    // 5. 二次确认（可选）
+    int result = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure to reject this claim?",
+            "Confirm",
+            JOptionPane.YES_NO_OPTION
+    );
+    if (result != JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    // 6. 修改状态 + 决策
+    targetClaim.setStatus("Rejected");
+    targetClaim.setClaimDecision("Rejected");
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Claim rejected.",
+            "Success",
+            JOptionPane.INFORMATION_MESSAGE
+    );
+
+    // 7. 刷新表格
+    populateTable();
     }//GEN-LAST:event_btnRejectActionPerformed
+
+    private void btnPolicyRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolicyRecordActionPerformed
+            ClaimPolicyRecordJPanel panel =
+            new ClaimPolicyRecordJPanel(userProcessContainer, claimOrg);
+    userProcessContainer.add("ClaimPolicyRecordJPanel", panel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnPolicyRecordActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

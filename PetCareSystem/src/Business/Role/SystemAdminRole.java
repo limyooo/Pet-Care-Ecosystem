@@ -44,7 +44,7 @@ public class SystemAdminRole extends Role { // <--- 关键：必须继承 Role
                              Enterprise enterprise,
                              Petsystem business) {
 
-    return null;//创建UI面板之后再补充
+   return new SystemAdminWorkAreaJPanel(business);
 }
 
 }

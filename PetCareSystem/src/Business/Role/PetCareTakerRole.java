@@ -3,7 +3,9 @@ package Business.Role;
 import Business.Petsystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
+import Business.PetBoardingOrganization.BoardingServiceOrganization;
 import Business.UserAccount.UserAccount;
+import UI.Boarding.WelcomJpanel;
 import javax.swing.JPanel;
 
 /**
@@ -12,10 +14,10 @@ import javax.swing.JPanel;
 public class PetCareTakerRole extends Role {
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account,
+    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, 
             Organization organization, Enterprise enterprise, Petsystem system) {
         
-        // 现在返回 null，等写UIPanel再改
-        return null;
+        // ⭐ Pet Care Taker 的工作区就是 WelcomJpanel
+        return new WelcomJpanel(userProcessContainer, account, (BoardingServiceOrganization) organization, enterprise, system);
     }
-}
+    }

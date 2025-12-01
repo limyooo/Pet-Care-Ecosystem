@@ -23,6 +23,7 @@ public class HealthCareCheckRequest extends WorkRequest {
     private UserAccount labAssistant;
 
     //Constructor：create new patientId
+    
     public HealthCareCheckRequest() {
         this.patientId = ++counter;  
     }

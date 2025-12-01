@@ -94,7 +94,7 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         lblInsuranceClaimProcess.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblInsuranceClaimProcess.setText("Welcome Insurance Claim Management ");
 
-        btnLogOut.setText("LogOut");
+        btnLogOut.setText("Logout");
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLogOutActionPerformed(evt);
@@ -103,13 +103,13 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
 
         tblInsuranceClaim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Patient ID", "Policy ID", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Claim Amount", "Sender", "Status"
+                "Patient ID", "Policy ID", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Claim Amount", "Sender", "Status", "Decision"
             }
         ));
         jScrollPane1.setViewportView(tblInsuranceClaim);

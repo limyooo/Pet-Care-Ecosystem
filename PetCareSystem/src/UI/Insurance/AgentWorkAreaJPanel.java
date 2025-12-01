@@ -26,19 +26,99 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnLogout = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPolicyList = new javax.swing.JTable();
+        lblPolicyList = new javax.swing.JLabel();
+        btnCreateNew = new javax.swing.JButton();
+        btnViewPolicy = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(255, 204, 204));
+        setForeground(new java.awt.Color(242, 242, 242));
+
+        btnLogout.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        btnLogout.setText("Logout");
+
+        lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
+        lblTitle.setText("Welcome Insurance Policy Management");
+
+        tblPolicyList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Policy ID", "Pet Name", "Owner Name", "Coverage Level", "Start Date", "Expiration Date", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(tblPolicyList);
+
+        lblPolicyList.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        lblPolicyList.setText("Policy List:");
+
+        btnCreateNew.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        btnCreateNew.setText("Create New Policy");
+        btnCreateNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateNewActionPerformed(evt);
+            }
+        });
+
+        btnViewPolicy.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        btnViewPolicy.setText("View Policy");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogout))
+                    .addComponent(lblPolicyList)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 853, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnViewPolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCreateNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitle)
+                    .addComponent(btnLogout))
+                .addGap(18, 18, 18)
+                .addComponent(lblPolicyList)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btnCreateNew)
+                .addGap(40, 40, 40)
+                .addComponent(btnViewPolicy)
+                .addContainerGap(127, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCreateNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCreateNewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreateNew;
+    private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnViewPolicy;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPolicyList;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblPolicyList;
     // End of variables declaration//GEN-END:variables
 }

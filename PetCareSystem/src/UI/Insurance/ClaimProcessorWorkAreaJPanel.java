@@ -51,28 +51,69 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
     model.setRowCount(0);
 
     for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
-
         if (req instanceof InsuranceClaimRequest) {
             InsuranceClaimRequest claim = (InsuranceClaimRequest) req;
 
-            Object[] row = new Object[11];
-            row[0]  = claim.getHolderName();        // Holder Name
-            row[1]  = claim.getPatientId();         // Patient ID
-            row[2]  = claim.getPolicyId();          // Policy ID
-            row[3]  = claim.getPetName();           // Pet Name
-            row[4]  = claim.getSymptom();           // Symptom
-            row[5]  = claim.getLabResult();         // Lab Result
-            row[6]  = claim.getTreatmentCost();     // Treatment Cost
-            row[7]  = claim.getClaimAmount();       // Claim Amount
-            row[8]  = claim.getSender();            // Sender
-            row[9]  = claim.getStatus();            // Status (Pending/Approved/Rejected)
-            row[10] = claim.getCoverageDecision();  // Decision 全保/半保
+            // ⭐ 一共 12 列，对应表头：
+            // Patient ID, Policy ID, Holder Name, Pet Name, Symptom,
+            // Lab Result, Treatment Cost, Coverage Type,
+            // Claim Amount, Sender, Status, Decision
+            Object[] row = new Object[12];
+
+            row[0]  = claim.getPatientId();          // Patient ID
+            row[1]  = claim.getPolicyId();           // Policy ID
+            row[2]  = claim.getHolderName();         // Holder Name
+            row[3]  = claim.getPetName();            // Pet Name
+            row[4]  = claim.getSymptom();            // Symptom
+            row[5]  = claim.getLabResult();          // Lab Result
+            row[6]  = claim.getTreatmentCost();      // Treatment Cost
+            row[7]  = claim.getCoverageLevel();      // ⭐ Coverage Type (Basic/Standard/Premium)
+            row[8]  = claim.getClaimAmount();        // Claim Amount
+            row[9]  = claim.getSender();             // Sender
+            row[10] = claim.getStatus();             // Status
+            row[11] = claim.getCoverageDecision();   // Decision (Full/Partial/No Coverage)
 
             model.addRow(row);
         }
     }
 
+    
+
 }
+            private void autoDecideCoverage(InsuranceClaimRequest claim) {
+
+           // 目前先不真判断过期，有需要再加 isPolicyExpired
+           // if (isPolicyExpired(claim.getExpirationDate())) { ... }
+
+           double ratio;
+           String level = claim.getCoverageLevel();
+
+           if ("Premium".equalsIgnoreCase(level)) {
+               ratio = 1.0;   // 全保
+           } else if ("Standard".equalsIgnoreCase(level)) {
+               ratio = 0.7;   // 标准保
+           } else { // Basic 或其他
+               ratio = 0.5;   // 基本保
+           }
+
+           double approvedAmount = claim.getTreatmentCost() * ratio;
+           claim.setClaimAmount(approvedAmount);
+
+           if (ratio == 0.0) {
+               claim.setStatus("Rejected");
+               claim.setCoverageDecision("No Coverage");
+               claim.setClaimDecision("Rejected");
+           } else if (ratio == 1.0) {
+               claim.setStatus("Approved");
+               claim.setCoverageDecision("Full Coverage");
+               claim.setClaimDecision("Approved");
+           } else {
+               claim.setStatus("Approved");
+               claim.setCoverageDecision("Partial Coverage");
+               claim.setClaimDecision("Approved");
+           }
+       }
+
 
 
     /**
@@ -108,13 +149,13 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
 
         tblInsuranceClaim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Patient ID", "Policy ID", "Holder Name", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Claim Amount", "Sender", "Status", "Decision"
+                "Patient ID", "Policy ID", "Holder Name", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Coverage Type", "Claim Amount", "Sender", "Status", "Decision"
             }
         ));
         jScrollPane1.setViewportView(tblInsuranceClaim);
@@ -324,19 +365,20 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 return;
             }
 
-            // 5. 修改状态 + 决策
-            targetClaim.setStatus("Approved");
-            targetClaim.setClaimDecision("Approved");
+               autoDecideCoverage(targetClaim);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Claim approved successfully.",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Claim processed.\n"
+                        + "Status: " + targetClaim.getStatus() + "\n"
+                        + "Decision: " + targetClaim.getCoverageDecision() + "\n"
+                        + "Amount: " + targetClaim.getClaimAmount(),
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
 
-            // 6. 刷新表格
-            populateTable();
+                populateTable();
+
     }//GEN-LAST:event_btnApproveActionPerformed
 
     private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
@@ -408,9 +450,11 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         return;
     }
 
-    // 6. 修改状态 + 决策
-    targetClaim.setStatus("Rejected");
-    targetClaim.setClaimDecision("Rejected");
+        // 6. 修改状态 + 决策
+        targetClaim.setStatus("Rejected");
+        targetClaim.setClaimDecision("Rejected");
+        targetClaim.setCoverageDecision("No Coverage");   // 明确：不赔
+
 
     JOptionPane.showMessageDialog(
             this,

@@ -316,38 +316,48 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
 
             InsuranceClaimRequest req = new InsuranceClaimRequest();
 
-            // 基础信息
+            // ===== 基础信息 =====
             req.setMessage("Claim for " + faker.name().fullName());
-            req.setClaimAmount(faker.number().randomDouble(2, 100, 3000));
-            req.setStatus("Pending");
+            req.setStatus("Pending");              // 初始都是 Pending
+            req.setClaimAmount(0);                 // 先设为 0，等 Claim Processor 审批时再按规则计算
 
             // 用于表格 / 详情展示的字段
             req.setPatientId("PT" + faker.number().digits(4));
             req.setPolicyId("PL" + faker.number().digits(4));
+            req.setHolderName(faker.name().fullName());   // 宠物主人
             req.setPetName(faker.dog().name());
             req.setSymptom(faker.medical().symptoms());
             req.setLabResult(faker.medical().diseaseName());
-            req.setTreatmentCost(faker.number().randomDouble(2, 50, 500));
 
-            // 保险相关三项
+            double treatmentCost = faker.number()
+                    .randomDouble(2, 50, 500);             // 治疗费用
+            req.setTreatmentCost(treatmentCost);
+
+            // ===== 保险相关三项 =====
             req.setInsuranceCompany(faker.company().name());
-            req.setCoverageLevel(faker.options().option("Basic", "Standard", "Premium"));
-            req.setExpirationDate(
-                    faker.date().future(365, java.util.concurrent.TimeUnit.DAYS).toString()
-            );
 
-            // ⭐ 新增：Holder Name + Decision
-            req.setHolderName(faker.name().fullName());  // 先用 faker 生成一个主人名字
-            req.setCoverageDecision(
-                faker.options().option("Full Coverage", "Partial Coverage")
-                // 或者 "全保", "半保"
-            );
+            // Basic / Standard / Premium 随机一个，将来按它算 50%/70%/100%
+            String level = faker.options().option("Basic", "Standard", "Premium");
+            req.setCoverageLevel(level);
+
+            // 生成未来 365 天内的到期日（格式好看一点）
+            java.util.Date futureDate =
+                    faker.date().future(365, java.util.concurrent.TimeUnit.DAYS);
+            java.text.SimpleDateFormat sdf =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd");
+            req.setExpirationDate(sdf.format(futureDate));
+
+            // ===== 决策相关：一开始不决定，全交给 Claim Processor =====
+            req.setCoverageDecision(null);         // 或者写成 "Pending" 也可以
+            req.setClaimDecision(null);           // 如果你还用这个字段，也一起清空
 
             // Sender
             req.setSender(insuranceAdminAccount);
 
+            // 加入 Insurance Claim Org 的工作队列
             claimOrg.getWorkQueue().getWorkRequestList().add(req);
         }
+
 
 
         // 7.4 Compensation 通知

@@ -34,7 +34,6 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         this.userProcessContainer = userProcessContainer;
         this.account = account;
         this.frontDeskOrg = frontDeskOrg;
-        this.account = account;
         this.enterprise = enterprise;
 
         populateTable();
@@ -70,17 +69,17 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
 
         tblFrontDesk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Patient ID", "Message", "Sender", "Symptom", "Assigned Doctor", "Lab result", "Health Care Check Request"
+                "Patient ID", "Message", "Sender", "Symptom", "Assigned Doctor", "Health Check Status "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -136,17 +135,17 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
                 .addComponent(title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addGap(33, 33, 33))
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 956, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnViewDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnViewMedicalStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnViewMedicalStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                        .addComponent(btnViewDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,14 +231,13 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
             //if the work request belongs to health care check request populate table
             if (request instanceof HealthCareCheckRequest req) {
 
-                Object[] row = new Object[7];
+                Object[] row = new Object[6];
                 row[0] = req;
                 row[1] = req.getMessage();
                 row[2] = req.getSender() == null ? "Unknown" : req.getSender().getUsername();
                 row[3] = req.getSymptom();
                 row[4] = req.getAssignedDoctor() == null ? "Not Assigned" : req.getAssignedDoctor();
-                row[5] = req.getLabResult() == null ? "Pending" : req.getLabResult();
-                row[6] = req.getStatus();   // or insuranceClaim status
+                row[5] = req.getStatus();  
 
                 model.addRow(row);
             }

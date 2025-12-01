@@ -17,6 +17,12 @@ public class PetOwner {
     private String email;
     private String address;
     private String emergencyContact;
+    
+    private String insuranceCompany;
+    private String policyId;
+    private String coverageLevel;
+    private String expirationDate;
+    
     private PetDirectory petDirectory; // 新增成员变量
     
     //constructor
@@ -24,14 +30,24 @@ public class PetOwner {
         petDirectory = new PetDirectory(); // 初始化
     }
 
-    public PetOwner(String ownerId, String ownerName, String phone, String email, String address, String emergencyContact) {
+    public PetOwner(String ownerId, String ownerName, String phone,
+                String email, String address, String emergencyContact,
+                String insuranceCompany, String policyId,
+                String coverageLevel, String expirationDate) {
+
         this.ownerId = ownerId;
         this.ownerName = ownerName;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.emergencyContact = emergencyContact;
-        petDirectory = new PetDirectory(); // 初始化
+
+        this.insuranceCompany = insuranceCompany;
+        this.policyId = policyId;
+        this.coverageLevel = coverageLevel;
+        this.expirationDate = expirationDate;
+
+        this.petDirectory = new PetDirectory();
     }
     //getter and setter method
     // 新增 getPetDirectory 方法
@@ -85,6 +101,39 @@ public class PetOwner {
     public void setEmergencyContact(String emergencyContact) {
         this.emergencyContact = emergencyContact;
     }
+    
+    public String getInsuranceCompany() {
+        return insuranceCompany;
+    }
+
+    public void setInsuranceCompany(String insuranceCompany) {
+        this.insuranceCompany = insuranceCompany;
+    }
+
+    public String getPolicyId() {
+        return policyId;
+    }
+
+    public void setPolicyId(String policyId) {
+        this.policyId = policyId;
+    }
+
+    public String getCoverageLevel() {
+        return coverageLevel;
+    }
+
+    public void setCoverageLevel(String coverageLevel) {
+        this.coverageLevel = coverageLevel;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+       
     /* 暂时不确定干啥的
     @Override
     public String toString() {

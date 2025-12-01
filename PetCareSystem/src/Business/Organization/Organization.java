@@ -14,6 +14,7 @@ public abstract class Organization {
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
     private static int counter = 1;
+    
 
     /*Enum representing all possible organization types.
       This helps identify specific organization categories when creating them.
@@ -25,8 +26,9 @@ public abstract class Organization {
         VetLab("Vet Lab Organization"),
         FrontDesk("Front Desk Organization"),
         InsurancePolicy("Insurance Policy Organization"),
-        InsuranceClaim("Insurance Claim Organization");
-
+        InsuranceClaim("Insurance Claim Organization"),
+        CustomerService("Customer Service");  // ⭐ 新增这行
+        
         private String value;
 
         private Type(String value) {

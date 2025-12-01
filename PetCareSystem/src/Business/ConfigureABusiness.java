@@ -113,7 +113,9 @@ public class ConfigureABusiness {
                 .createOrganization(Type.PetCare);
         Organization boardingServiceOrg = boardingEnt.getOrganizationDirectory()
                 .createOrganization(Type.BoardingService);
-
+        Organization boardingCustomerServiceOrg = boardingEnt.getOrganizationDirectory()
+        .createOrganization(Type.CustomerService);  
+        
         // 4.2 Clinic enterprise
         Organization frontDeskOrg = clinicEnt.getOrganizationDirectory()
                 .createOrganization(Type.FrontDesk);
@@ -146,13 +148,14 @@ public class ConfigureABusiness {
             frontDeskOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new FrontDeskAgentRole());
         }
-        
+        //pet boarding 客服账号
         // 固定 Front Desk 测试账号
         Employee frontDeskTest = frontDeskOrg.getEmployeeDirectory().createEmployee("Test Front Desk");
         frontDeskOrg.getUserAccountDirectory().createUserAccount(
                 "fd1", "1111", frontDeskTest, new FrontDeskAgentRole());
         
-
+// ⭐ 新增：固定 Customer Service 测试账号 (cs1)
+        
         // 6.2 Pet Care 员工
         for (int i = 0; i < 3; i++) {
             String name = faker.name().fullName();
@@ -162,6 +165,9 @@ public class ConfigureABusiness {
             petCareOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new PetCareTakerRole());
         }
+        Employee pct1 = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Pet Care Taker");
+        boardingServiceOrg.getUserAccountDirectory().createUserAccount(
+                "pct1", "pct1", pct1, new PetCareTakerRole());
 
         // 6.3 Boarding Service 员工
         for (int i = 0; i < 2; i++) {
@@ -172,10 +178,19 @@ public class ConfigureABusiness {
             boardingServiceOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new BoardingManagerRole());
         }
-        Employee pct1 = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Pet Care Taker");
+        Employee bmTestEmp = boardingServiceOrg.getEmployeeDirectory().createEmployee("Test Boarding Manager");
         boardingServiceOrg.getUserAccountDirectory().createUserAccount(
-                "pct1", "pct1", pct1, new PetCareTakerRole());
-
+                "bm1", "bm1", bmTestEmp, new BoardingManagerRole());
+        
+        // ⭐ Pet Boarding Customer Service 固定测试账号
+Employee boardingCSTestEmp = boardingCustomerServiceOrg.getEmployeeDirectory()
+        .createEmployee("Test Customer Service");
+boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
+        "cs1",           // 用户名
+        "cs1",           // 密码
+        boardingCSTestEmp,
+        new FrontDeskAgentRole()
+);
         // 6.4 Vet Doctor
         for (int i = 0; i < 3; i++) {
             String name = "Dr. " + faker.name().lastName();

@@ -240,9 +240,16 @@ public class ConfigureABusiness {
         String email = faker.internet().emailAddress();
         String address = faker.address().fullAddress();
         String emergencyContact = faker.phoneNumber().phoneNumber();
+        String insuranceCompany = faker.company().name() + " Insurance"; // 随便生成公司 + Insurance
+        String policyId = "PL" + faker.number().digits(6);                // 保单号
+        String coverageLevel = faker.options().option("Full Coverage", "Partial Coverage"); // 两种任选
+        String expirationDate = faker.date().future(300, java.util.concurrent.TimeUnit.DAYS).toString();
 
         PetOwner owner = petOwnerDirectory.addOwner(
-                ownerId, name, phone, email, address, emergencyContact);
+                ownerId, name, phone, email, address, emergencyContact,
+                insuranceCompany, policyId, coverageLevel, expirationDate);
+        
+        
 
         // 创建 Pet
         PetDirectory petDirectory = owner.getPetDirectory();

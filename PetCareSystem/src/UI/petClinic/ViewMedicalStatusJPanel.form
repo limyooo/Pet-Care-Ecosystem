@@ -50,7 +50,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnSubmitInsuranceClaimRequest" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCreateInsuranceClaimRequest" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                   <Component id="fieldLabTestResult" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="75" max="32767" attributes="0"/>
-              <Component id="btnSubmitInsuranceClaimRequest" min="-2" max="-2" attributes="0"/>
+              <Component id="btnCreateInsuranceClaimRequest" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -179,12 +179,12 @@
     </Component>
     <Component class="javax.swing.JTextField" name="fieldPatientID">
     </Component>
-    <Component class="javax.swing.JButton" name="btnSubmitInsuranceClaimRequest">
+    <Component class="javax.swing.JButton" name="btnCreateInsuranceClaimRequest">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Submit Insurance Claim Request"/>
+        <Property name="text" type="java.lang.String" value="Create Insurance Claim Request"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubmitInsuranceClaimRequestActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateInsuranceClaimRequestActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

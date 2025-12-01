@@ -3,7 +3,9 @@ package Business.Role;
 import Business.Petsystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
+import Business.PetClinicOrganization.FrontDeskOrganization;
 import Business.UserAccount.UserAccount;
+import UI.petClinic.FrontDeskManagementJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -13,13 +15,8 @@ import javax.swing.JPanel;
 public class FrontDeskAgentRole extends Role {
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer,
-                                 UserAccount account,
-                                 Organization organization,
-                                 Enterprise enterprise,
-                                 Petsystem system) {
-        // TODO: replace with real Front Desk work area panel
-        // return new FrontDeskAgentWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
-        return null;
+    public JPanel createWorkArea(JPanel userProcessContainer,UserAccount account,Organization organization,Enterprise enterprise,Petsystem system) {
+        
+        return new FrontDeskManagementJPanel(userProcessContainer,account,(FrontDeskOrganization) organization,enterprise);
     }
 }

@@ -4,8 +4,11 @@
  */
 package UI.petClinic;
 
+import Business.Pet.Pet;
+import Business.Pet.PetOwner;
 import Business.WorkQueue.HealthCareCheckRequest;
 import java.awt.CardLayout;
+import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -27,6 +30,7 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
         this.request = request;
         
         populateData();
+        setViewMode(); 
     }
 
     /**
@@ -355,6 +359,15 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         userProcessContainer.remove(this);
+
+        Component[] componentArray = userProcessContainer.getComponents();
+        Component previousComponent = componentArray[componentArray.length - 1];
+
+        if (previousComponent instanceof FrontDeskManagementJPanel) {
+            FrontDeskManagementJPanel panel = (FrontDeskManagementJPanel) previousComponent;
+            panel.populateTable();   
+        }
+
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -408,23 +421,62 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
         
         fieldSymptom.setText(request.getSymptom());
         fieldMessage.setText(request.getMessage());
-        
-        // 其他 pet / owner / insurance 的 field 先留空（因为现在 request 没有这些数据）
-        fieldPetName.setText("");
-        fieldSpieces.setText("");
-        fieldAge.setText("");
-        fieldWeight.setText("");
-        fieldFoodAllergy.setText("");
 
-        fieldPetOwnerName.setText("");
-        fieldPhone.setText("");
-        fieldEmail.setText("");
-        fieldAddress.setText("");
-        fieldEmergencyContact.setText("");
+        //1.Pet 
+        if (request.getPet() != null) {
+        Pet pet = request.getPet();
 
+        fieldPetName.setText(pet.getPetName());
+        fieldSpieces.setText(pet.getSpecies());
+        fieldAge.setText(String.valueOf(pet.getAge()));
+        fieldWeight.setText(String.valueOf(pet.getWeight()));
+        fieldFoodAllergy.setText(pet.getFoodAllergy());
+
+        //2.Pet Owner
+        if (pet.getPetOwner() != null) {
+            PetOwner owner = pet.getPetOwner();
+
+            fieldPetOwnerName.setText(owner.getOwnerName());
+            fieldPhone.setText(owner.getPhone());
+            fieldEmail.setText(owner.getEmail());
+            fieldAddress.setText(owner.getAddress());
+            fieldEmergencyContact.setText(owner.getEmergencyContact());
+        }
+    }
+        //3.Insurance
         fieldInsuranceCompany.setText("");
         fieldPolicyID.setText("");
         fieldCoverageLevel.setText("");
         fieldExpirationDate.setText("");
+        }
+
+    private void setViewMode() {
+        
+        fieldPetName.setEnabled(false);
+        fieldSpieces.setEnabled(false);
+        fieldAge.setEnabled(false);
+        fieldWeight.setEnabled(false);
+        fieldFoodAllergy.setEnabled(false);
+
+        
+        fieldPetOwnerName.setEnabled(false);
+        fieldPhone.setEnabled(false);
+        fieldEmail.setEnabled(false);
+        fieldAddress.setEnabled(false);
+        fieldEmergencyContact.setEnabled(false);
+
+        
+        fieldInsuranceCompany.setEnabled(false);
+        fieldPolicyID.setEnabled(false);
+        fieldCoverageLevel.setEnabled(false);
+        fieldExpirationDate.setEnabled(false);
+
+        
+        fieldSymptom.setEnabled(false);
+        fieldMessage.setEnabled(false);
+        
+        comboDoctors.setEnabled(true);
+        fieldAssignDoctor.setEnabled(true);
+        
+        }
     }
-}

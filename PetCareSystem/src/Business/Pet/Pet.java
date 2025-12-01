@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business.Pet;
+import Business.Pet.PetOwner;
 
 /**
  *
@@ -119,6 +120,7 @@ public class Pet {
         return insurancePolicy;
     }
 
+    
     public void setInsurancePolicy(InsurancePolicy insurancePolicy) {
         this.insurancePolicy = insurancePolicy;
     }

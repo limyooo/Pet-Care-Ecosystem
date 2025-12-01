@@ -1,4 +1,6 @@
 package Business.WorkQueue;
+import Business.Pet.Pet;
+import Business.Pet.PetOwner;
 
 /**
  * Work request for an insurance claim.
@@ -31,6 +33,8 @@ public class InsuranceClaimRequest extends WorkRequest {
 
     // ===== 你新加的“全保/半保” 决策 =====
     private String coverageDecision;  // 全保 / 半保 / Pending 等
+    private Pet pet;
+    private PetOwner owner;
 
     public InsuranceClaimRequest() {
         this.claimId = ++claimCounter;
@@ -165,6 +169,25 @@ public class InsuranceClaimRequest extends WorkRequest {
 
     public void setCoverageDecision(String coverageDecision) {
         this.coverageDecision = coverageDecision;
+    }
+
+        // ===== 关联对象：直接挂 Pet / PetOwner =====
+   
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public PetOwner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(PetOwner owner) {
+        this.owner = owner;
     }
 
     @Override

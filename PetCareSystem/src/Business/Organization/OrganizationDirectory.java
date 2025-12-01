@@ -58,6 +58,9 @@ public class OrganizationDirectory {
             case InsuranceClaim:
                 organization = new InsuranceClaimOrganization();
                 break;
+             case CustomerService:
+                organization = new Business.PetBoardingOrganization.CustomerService();
+            break;
             default:
                 // no-op
                 break;

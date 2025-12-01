@@ -476,6 +476,7 @@ public class ViewJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "保存过程中发生错误: " + e.getMessage(), "系统错误", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
 
@@ -580,25 +581,17 @@ public class ViewJPanel extends javax.swing.JPanel {
     fieldSD.setText(record.getStartDate());
     fieldED.setText(record.getEndDate());
     
-    // ⭐ 核心修正：填充保险信息 (Insurance)
-    if (policy != null) {
-    // 修正：将 getInsuranceCompany() 替换为 getProvider()
-    fieldCompany.setText(policy.getProvider()); // 保险公司 (Provider)
-    
-    // 保单号的 getter 方法是正确的
-    fieldPolicy.setText(policy.getPolicyId());        // 保单号
-    
-    // 修正：将 getCoverageLevel() 替换为 getCoverageType()
-    fieldCL.setText(policy.getCoverageType());       // 承保级别 (CoverageType)
-    
-    // 修正：将 getExpirationDate() 替换为 getEndDate()
-    fieldEp.setText(policy.getEndDate());      // 有效期/结束日期 (EndDate)
-} else {
-    // 如果没有保险，清空字段或显示默认值
-    fieldCompany.setText("None / N/A");
-    fieldPolicy.setText("");
-    fieldCL.setText("");
-    fieldEp.setText("");
-}
+   // ⭐ 修正：从 PetOwner 读取保险信息（不是从 Pet）
+    if (owner != null) {
+        fieldCompany.setText(owner.getInsuranceCompany() != null ? owner.getInsuranceCompany() : "N/A");
+        fieldPolicy.setText(owner.getPolicyId() != null ? owner.getPolicyId() : "N/A");
+        fieldCL.setText(owner.getCoverageLevel() != null ? owner.getCoverageLevel() : "N/A");
+        fieldEp.setText(owner.getExpirationDate() != null ? owner.getExpirationDate() : "N/A");
+    } else {
+        fieldCompany.setText("N/A");
+        fieldPolicy.setText("");
+        fieldCL.setText("");
+        fieldEp.setText("");
+    }
     }
 }

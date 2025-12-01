@@ -20,8 +20,20 @@ public class HealthCareCheckRequest extends WorkRequest {
     //添加pet之后request就可以携带宠物资料
     private Pet pet;
     private UserAccount labAssistant;
-
+    
+    // ⭐ 新增字段
+    private String boardingRecordId;
+    
     //Constructor：create new patientId
+    
+    // ⭐ 新增 getter 和 setter
+    public String getBoardingRecordId() {
+        return boardingRecordId;
+    }
+    
+    public void setBoardingRecordId(String boardingRecordId) {
+        this.boardingRecordId = boardingRecordId;
+    }
     
     public HealthCareCheckRequest() {
         this.patientId = ++counter;  

@@ -184,34 +184,35 @@ public class SubmitJPanel extends javax.swing.JPanel {
         }
 
         // 5. 创建 Work Request
-        HealthCareCheckRequest request = new HealthCareCheckRequest();
-        
-        // 设置基本信息
-        request.setMessage(finalMessage); 
-        request.setSymptom(symptom);      
-        request.setSender(account);
-        request.setBoardingRecordId(recordId); 
+    HealthCareCheckRequest request = new HealthCareCheckRequest();
+    request.setMessage(finalMessage); 
+    request.setSymptom(symptom);      
+    request.setSender(account);
+    request.setBoardingRecordId(recordId); 
 
-        // ⭐ 6. 查找目标 Clinic 组织并发送请求 (发送给队列)
-        Organization targetOrganization = findTargetFrontDeskOrganization();
+        // 6. 查找目标 Clinic 组织
+    Organization targetOrganization = findTargetFrontDeskOrganization();
+    
+    if (targetOrganization != null) {
+        request.setReceiver(null); 
+        request.setStatus("Sent to Clinic Queue"); 
         
-        if (targetOrganization != null) {
-            // 设置接收人为 null (表示发送给组织 Work Queue)
-            request.setReceiver(null); 
-            request.setStatus("Sent to Clinic Queue"); 
-            
-            // 将请求添加到目标组织的 Work Queue 中
-            targetOrganization.getWorkQueue().getWorkRequestList().add(request);
+        // ⭐ 修改：将请求添加到目标组织的队列
+        targetOrganization.getWorkQueue().getWorkRequestList().add(request);
+        
+        // ⭐ 新增：同时将请求添加到当前组织的队列（这样本页面表格能显示）
+        organization.getWorkQueue().getWorkRequestList().add(request);
 
-            JOptionPane.showMessageDialog(this, 
-                "The health check request for Record ID [" + recordId + "] has been submitted to the " + targetOrganization.getName() + " Work Queue.", 
-                "Request Sent to Queue", JOptionPane.INFORMATION_MESSAGE);
-            
-        } else {
-            // 找不到目标组织，请求无法发送
-            JOptionPane.showMessageDialog(this, "Error: Could not find a Pet Clinic Front Desk Organization to send the request to. The request was not submitted.", "System Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        JOptionPane.showMessageDialog(this, 
+            "The health check request for Record ID [" + recordId + "] has been submitted.", 
+            "Request Sent", JOptionPane.INFORMATION_MESSAGE);
+        
+    } else {
+        JOptionPane.showMessageDialog(this, 
+            "Error: Could not find a Pet Clinic Front Desk Organization.", 
+            "System Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
         
         // 7. 刷新表格
         populateTable();

@@ -50,17 +50,22 @@
             <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/admin/ManageNetworkJPanel.java</file>
             <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/Business/Role/EnterpriseAdminRole.java</file>
             <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/enterpriseAdmin/EnterpriseAdminWorkAreaJPanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/enterpriseAdmin/ManageOrganizationJPanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/enterpriseAdmin/ManageEmployeeJPanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/enterpriseAdmin/ManageUserAccountJPanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/RegisterJpanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/FiveJPanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/RecordJPanel.java</file>
             <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/SubmitJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/ClaimProcessorWorkAreaJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/FiveJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/RegisterJpanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/petClinic/FrontDeskManagementJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/petClinic/SubmitInsuranceClaimRequestJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/petClinic/ViewDetailsJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/petClinic/ViewMedicalStatusJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/RecordJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/ClaimDetailJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/ClaimPolicyRecordJPanel.java</file>
             <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/ViewJPanel.java</file>
             <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Boarding/WelcomJpanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/ClaimProcessorWorkAreaJPanel.java</file>
-            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/ViewDetailsJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/AgentCreatePolicyJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/AgentManagePolicyJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/25%20Fall/INFO%205100/本地Github/FinalProject/Pet-Care-Ecosystem/PetCareSystem/src/UI/Insurance/AgentWorkAreaJPanel.java</file>
         </group>
     </open-files>
 </project-private>

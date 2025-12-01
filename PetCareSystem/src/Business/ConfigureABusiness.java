@@ -297,7 +297,7 @@ public class ConfigureABusiness {
         }
 
         // 7.3 Insurance Claim 请求
-            for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
 
             InsuranceClaimRequest req = new InsuranceClaimRequest();
 
@@ -321,11 +321,19 @@ public class ConfigureABusiness {
                     faker.date().future(365, java.util.concurrent.TimeUnit.DAYS).toString()
             );
 
+            // ⭐ 新增：Holder Name + Decision
+            req.setHolderName(faker.name().fullName());  // 先用 faker 生成一个主人名字
+            req.setCoverageDecision(
+                faker.options().option("Full Coverage", "Partial Coverage")
+                // 或者 "全保", "半保"
+            );
+
             // Sender
             req.setSender(insuranceAdminAccount);
 
             claimOrg.getWorkQueue().getWorkRequestList().add(req);
         }
+
 
         // 7.4 Compensation 通知
         for (int i = 0; i < 3; i++) {

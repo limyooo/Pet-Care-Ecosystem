@@ -7,37 +7,41 @@ package Business.WorkQueue;
  */
 public class InsuranceClaimRequest extends WorkRequest {
 
-    // 自增的 claim 编号
-    private static int claimCounter = 2000;
+    private static int claimCounter = 2000;  // 自增的理赔单号
 
-    // 核心字段
-    private int claimId;
-    private double claimAmount;
-    private String claimDecision;
-    private HealthCareCheckRequest healthRequest;
+    // ===== 基本理赔信息 =====
+    private int claimId;              // 理赔编号（唯一）
+    private double claimAmount;       // 理赔金额
+    private String claimDecision;     // 审批结果：Approved / Rejected / Pending
+    private HealthCareCheckRequest healthRequest; // 关联的健康检查请求（如果有）
 
-    // ======= 为 UI 新增的字段 =======
-    private String patientId;        // 患者/病历 ID
-    private String policyId;         // 保单号
-    private String petName;          // 宠物名
-    private String symptom;          // 症状
-    private String labResult;        // 检验结果
-    private double treatmentCost;    // 治疗费用
+    // ===== 展示在 Claim 列表 / 明细里的字段 =====
+    private String holderName;        // 宠物主人名字（你新加的）
+    private String patientId;         // 患者/病历 ID
+    private String policyId;          // 保单号
+    private String petName;           // 宠物名
+    private String symptom;           // 症状
+    private String labResult;         // 检验结果
+    private double treatmentCost;     // 治疗费用
 
-    private String insuranceCompany; // 保险公司
-    private String coverageLevel;    // 保障等级
-    private String expirationDate;   // 到期日（用 String 存就够）
+    // ===== 保险相关信息 =====
+    private String insuranceCompany;  // 保险公司
+    private String coverageLevel;     // 保障等级：Basic / Standard / Premium
+    private String expirationDate;    // 保单到期日（String 存就够）
 
-    // 构造方法：自动生成 claimId
+    // ===== 你新加的“全保/半保” 决策 =====
+    private String coverageDecision;  // 全保 / 半保 / Pending 等
+
     public InsuranceClaimRequest() {
         this.claimId = ++claimCounter;
     }
 
-    // ========== 原有 getter / setter ==========
+    // ---------- claimId ----------
     public int getClaimId() {
         return claimId;
     }
 
+    // ---------- claimAmount ----------
     public double getClaimAmount() {
         return claimAmount;
     }
@@ -46,6 +50,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.claimAmount = claimAmount;
     }
 
+    // ---------- claimDecision ----------
     public String getClaimDecision() {
         return claimDecision;
     }
@@ -54,6 +59,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.claimDecision = claimDecision;
     }
 
+    // ---------- healthRequest ----------
     public HealthCareCheckRequest getHealthRequest() {
         return healthRequest;
     }
@@ -62,7 +68,16 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.healthRequest = healthRequest;
     }
 
-    // ========== 新增字段的 getter / setter ==========
+    // ---------- holderName ----------
+    public String getHolderName() {
+        return holderName;
+    }
+
+    public void setHolderName(String holderName) {
+        this.holderName = holderName;
+    }
+
+    // ---------- patientId ----------
     public String getPatientId() {
         return patientId;
     }
@@ -71,6 +86,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.patientId = patientId;
     }
 
+    // ---------- policyId ----------
     public String getPolicyId() {
         return policyId;
     }
@@ -79,6 +95,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.policyId = policyId;
     }
 
+    // ---------- petName ----------
     public String getPetName() {
         return petName;
     }
@@ -87,6 +104,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.petName = petName;
     }
 
+    // ---------- symptom ----------
     public String getSymptom() {
         return symptom;
     }
@@ -95,6 +113,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.symptom = symptom;
     }
 
+    // ---------- labResult ----------
     public String getLabResult() {
         return labResult;
     }
@@ -103,6 +122,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.labResult = labResult;
     }
 
+    // ---------- treatmentCost ----------
     public double getTreatmentCost() {
         return treatmentCost;
     }
@@ -111,6 +131,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.treatmentCost = treatmentCost;
     }
 
+    // ---------- insuranceCompany ----------
     public String getInsuranceCompany() {
         return insuranceCompany;
     }
@@ -119,6 +140,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.insuranceCompany = insuranceCompany;
     }
 
+    // ---------- coverageLevel ----------
     public String getCoverageLevel() {
         return coverageLevel;
     }
@@ -127,6 +149,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.coverageLevel = coverageLevel;
     }
 
+    // ---------- expirationDate ----------
     public String getExpirationDate() {
         return expirationDate;
     }
@@ -135,9 +158,17 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.expirationDate = expirationDate;
     }
 
+    // ---------- coverageDecision（全保 / 半保） ----------
+    public String getCoverageDecision() {
+        return coverageDecision;
+    }
+
+    public void setCoverageDecision(String coverageDecision) {
+        this.coverageDecision = coverageDecision;
+    }
+
     @Override
     public String toString() {
-        // 用 claimId 在表格里显示
         return String.valueOf(this.claimId);
     }
 }

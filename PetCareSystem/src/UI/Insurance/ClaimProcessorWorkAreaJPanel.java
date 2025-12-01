@@ -9,9 +9,11 @@ import Business.Enterprise.PetInsuranceEnterprise;
 import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
 import Business.WorkQueue.InsuranceClaimRequest;
 import Business.WorkQueue.WorkRequest;
+import UI.admin.MainJFrame;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -53,20 +55,23 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         if (req instanceof InsuranceClaimRequest) {
             InsuranceClaimRequest claim = (InsuranceClaimRequest) req;
 
-            Object[] row = new Object[9];
-            row[0] = claim.getPatientId();
-            row[1] = claim.getPolicyId();
-            row[2] = claim.getPetName();
-            row[3] = claim.getSymptom();
-            row[4] = claim.getLabResult();
-            row[5] = claim.getTreatmentCost();
-            row[6] = claim.getClaimAmount();
-            row[7] = claim.getSender();
-            row[8] = claim.getStatus();
+            Object[] row = new Object[11];
+            row[0]  = claim.getHolderName();        // Holder Name
+            row[1]  = claim.getPatientId();         // Patient ID
+            row[2]  = claim.getPolicyId();          // Policy ID
+            row[3]  = claim.getPetName();           // Pet Name
+            row[4]  = claim.getSymptom();           // Symptom
+            row[5]  = claim.getLabResult();         // Lab Result
+            row[6]  = claim.getTreatmentCost();     // Treatment Cost
+            row[7]  = claim.getClaimAmount();       // Claim Amount
+            row[8]  = claim.getSender();            // Sender
+            row[9]  = claim.getStatus();            // Status (Pending/Approved/Rejected)
+            row[10] = claim.getCoverageDecision();  // Decision 全保/半保
 
             model.addRow(row);
         }
     }
+
 }
 
 
@@ -103,13 +108,13 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
 
         tblInsuranceClaim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Patient ID", "Policy ID", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Claim Amount", "Sender", "Status", "Decision"
+                "Patient ID", "Policy ID", "Holder Name", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Claim Amount", "Sender", "Status", "Decision"
             }
         ));
         jScrollPane1.setViewportView(tblInsuranceClaim);
@@ -157,12 +162,8 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblClaimList, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(764, 764, 764))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblClaimList, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(1056, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(111, 111, 111)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,6 +179,9 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLogOut)
                         .addGap(54, 54, 54))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +207,19 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-        // TODO add your handling code here:
+   // 找到这个 panel 所在的顶层窗口（JFrame）
+    java.awt.Window window = SwingUtilities.getWindowAncestor(this);
+
+    if (window instanceof MainJFrame) {
+        MainJFrame mainFrame = (MainJFrame) window;
+        // 复用 MainJFrame 里已经写好的登出逻辑
+        mainFrame.triggerLogout();
+    } else {
+        // 兜底：如果拿不到 MainJFrame，就仅仅从 CardLayout 返回上一页
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+    }
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void btnViewDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailActionPerformed

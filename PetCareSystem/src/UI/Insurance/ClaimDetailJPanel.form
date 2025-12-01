@@ -27,6 +27,37 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblCost" min="-2" pref="108" max="-2" attributes="0"/>
+                          <Component id="lblDiagnosis" min="-2" pref="108" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="txtCost" min="-2" pref="157" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblDoctor" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblLabResult" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="txtLabResult" min="-2" pref="157" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtDiagnosis" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Component id="txtDoctor" alignment="1" min="-2" pref="157" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
                   <Group type="102" attributes="0">
                       <Component id="btnBack" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
@@ -36,83 +67,39 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblClaimInfo" min="-2" pref="115" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblClaimID" min="-2" pref="90" max="-2" attributes="0"/>
-                                  <Component id="lblPatientID" min="-2" pref="90" max="-2" attributes="0"/>
-                                  <Component id="lblClaimReason" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                                  <Component id="lblClaimAmount" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="lblClaimID" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="lblPatientID" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="lblClaimReason" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="lblClaimAmount" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPetName" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
+                          <Component id="lblSpecies" min="-2" pref="108" max="-2" attributes="0"/>
+                          <Component id="lblAge" min="-2" pref="108" max="-2" attributes="0"/>
+                          <Component id="lblWeight" min="-2" pref="108" max="-2" attributes="0"/>
+                          <Component id="lblAllergy" min="-2" pref="108" max="-2" attributes="0"/>
+                          <Component id="lblMedicalInfo" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtPatientID" min="-2" pref="165" max="-2" attributes="0"/>
-                          <Component id="txtClaimID" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
-                          <Component id="txtClaimReason" alignment="0" pref="168" max="32767" attributes="0"/>
-                          <Component id="txtClaimAmount" max="32767" attributes="0"/>
-                          <Component id="txtPetName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtSpecies" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtAge" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtWeight" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtAllergy" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="19" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lblMedicalInfo" min="-2" pref="115" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="txtWeight" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtAllergy" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtAge" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtSpecies" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtPetName" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtClaimAmount" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtClaimReason" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtClaimID" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="txtDoctor" pref="157" max="32767" attributes="0"/>
-                                  <Component id="txtDiagnosis" max="32767" attributes="0"/>
-                                  <Component id="txtLabResult" max="32767" attributes="0"/>
-                                  <Component id="txtCost" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblPolicyID" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCompany" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCoverageLevel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblExpirationDate" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtPolicyID" min="-2" pref="107" max="-2" attributes="0"/>
-                          <Component id="txtInsuranceCompany" min="-2" pref="107" max="-2" attributes="0"/>
-                          <Component id="txtCoverageLevel" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
-                          <Component id="txtExpirationDate" min="-2" pref="107" max="-2" attributes="0"/>
+                          <Component id="txtPatientID" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="0" pref="166" max="32767" attributes="0"/>
+              <EmptySpace pref="369" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="lblLabResult" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblWeight" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblSpecies" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblPetName" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblAge" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                                  <Component id="lblAllergy" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="lblDiagnosis" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="lblCost" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="lblDoctor" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="249" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblOwner" min="-2" pref="115" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
@@ -134,7 +121,6 @@
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="txtOwnerName" pref="107" max="32767" attributes="0"/>
                                               <Component id="txtSender" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="txtStatus" alignment="0" max="32767" attributes="0"/>
                                               <Component id="txtRequestDate" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="txtEmail" alignment="1" min="-2" pref="107" max="-2" attributes="0"/>
@@ -145,9 +131,28 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="txtEmergency" min="-2" pref="107" max="-2" attributes="0"/>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txtStatus" min="-2" pref="107" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Component id="lblInsuranceInfo" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblPolicyID" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCompany" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCoverageLevel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblExpirationDate" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtPolicyID" min="-2" pref="107" max="-2" attributes="0"/>
+                                  <Component id="txtInsuranceCompany" min="-2" pref="107" max="-2" attributes="0"/>
+                                  <Component id="txtCoverageLevel" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                                  <Component id="txtExpirationDate" min="-2" pref="107" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
                   </Group>
@@ -192,23 +197,23 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblPatientID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtPatientID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPatientID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblClaimID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtClaimID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClaimID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblClaimReason" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtClaimReason" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClaimReason" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblClaimAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtClaimAmount" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClaimAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -228,81 +233,107 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblSpecies" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblPhone" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtPhone" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAge" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblWeight" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAllergy" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblEmergency" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtEmergency" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="txtSpecies" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtSpecies" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSpecies" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtAge" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtAge" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAge" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtWeight" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtWeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblWeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtAllergy" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtAllergy" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAllergy" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblMedicalInfo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblInsuranceInfo" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblDoctor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtDoctor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblCompany" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtInsuranceCompany" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblDiagnosis" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtDiagnosis" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblPolicyID" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtPolicyID" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblLabResult" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtLabResult" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblCost" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtCost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="lblInsuranceInfo" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="lblExpirationDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtExpirationDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblMedicalInfo" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblCompany" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtInsuranceCompany" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblPolicyID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPolicyID" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblExpirationDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtExpirationDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtDiagnosis" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDoctor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblLabResult" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtLabResult" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtDoctor" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDiagnosis" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblCost" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCost" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Component id="btnModify" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnSave" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -423,7 +454,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblDiagnosis">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Diagnosis: "/>
+        <Property name="text" type="java.lang.String" value="Treatment Needed:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLabResult">

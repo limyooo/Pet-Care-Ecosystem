@@ -18,6 +18,9 @@ import Business.Role.LabAssistantRole;
 import Business.Role.InsuranceAgentRole;
 import Business.Role.ClaimProcessorRole;
 import Business.Role.EnterpriseAdminRole;
+import Business.Pet.Pet;
+import Business.Pet.PetOwner;
+
 
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.CompensationNotificationRequest;
@@ -312,51 +315,70 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
         }
 
         // 7.3 Insurance Claim 请求
-        for (int i = 0; i < 5; i++) {
+for (int i = 0; i < 5; i++) {
 
-            InsuranceClaimRequest req = new InsuranceClaimRequest();
+    InsuranceClaimRequest req = new InsuranceClaimRequest();
+
+    // ===== 先从 createdPets 找一个宠物 + 宠物主人 =====
+    if (!createdPets.isEmpty()) {
+        // 简单一点：循环使用 createdPets
+        Pet pet = createdPets.get(i % createdPets.size());
+        PetOwner owner = pet.getPetOwner();   // Pet 里应该有 getOwner()
+
+        // 挂到 claim 上（⭐关键）
+        req.setPet(pet);
+        req.setOwner(owner);
+
+        // 把已有字段也用 owner 的真实信息来填，更一致
+        if (owner != null) {
+            req.setHolderName(owner.getOwnerName());
+            req.setInsuranceCompany(owner.getInsuranceCompany());
+            req.setPolicyId(owner.getPolicyId());
+            req.setCoverageLevel(owner.getCoverageLevel());
+            req.setExpirationDate(owner.getExpirationDate());
+        }
+    }
 
             // ===== 基础信息 =====
-            req.setMessage("Claim for " + faker.name().fullName());
-            req.setStatus("Pending");              // 初始都是 Pending
-            req.setClaimAmount(0);                 // 先设为 0，等 Claim Processor 审批时再按规则计算
+            req.setMessage("Claim for " + req.getHolderName()); // 没有就还是 random name
+            req.setStatus("Pending");
+            req.setClaimAmount(0);
 
-            // 用于表格 / 详情展示的字段
-            req.setPatientId("PT" + faker.number().digits(4));
-            req.setPolicyId("PL" + faker.number().digits(4));
-            req.setHolderName(faker.name().fullName());   // 宠物主人
-            req.setPetName(faker.dog().name());
+            // 展示字段（如果上面已经从 owner 拿了，也可以只补充没填的）
+            if (req.getPatientId() == null) {
+                req.setPatientId("PT" + faker.number().digits(4));
+            }
+            if (req.getPetName() == null) {
+                req.setPetName(faker.dog().name());
+            }
             req.setSymptom(faker.medical().symptoms());
             req.setLabResult(faker.medical().diseaseName());
 
             double treatmentCost = faker.number()
-                    .randomDouble(2, 50, 500);             // 治疗费用
+                    .randomDouble(2, 50, 500);
             req.setTreatmentCost(treatmentCost);
 
-            // ===== 保险相关三项 =====
-            req.setInsuranceCompany(faker.company().name());
+            // 如果上面没有从 owner 那里 set 过 coverageLevel，就走原来的随机逻辑
+            if (req.getCoverageLevel() == null) {
+                String level = faker.options().option("Basic", "Standard", "Premium");
+                req.setCoverageLevel(level);
+            }
+            if (req.getExpirationDate() == null) {
+                java.util.Date futureDate =
+                        faker.date().future(365, java.util.concurrent.TimeUnit.DAYS);
+                java.text.SimpleDateFormat sdf =
+                        new java.text.SimpleDateFormat("yyyy-MM-dd");
+                req.setExpirationDate(sdf.format(futureDate));
+            }
 
-            // Basic / Standard / Premium 随机一个，将来按它算 50%/70%/100%
-            String level = faker.options().option("Basic", "Standard", "Premium");
-            req.setCoverageLevel(level);
+            // 决策相关一开始不填
+            req.setCoverageDecision(null);
+            req.setClaimDecision(null);
 
-            // 生成未来 365 天内的到期日（格式好看一点）
-            java.util.Date futureDate =
-                    faker.date().future(365, java.util.concurrent.TimeUnit.DAYS);
-            java.text.SimpleDateFormat sdf =
-                    new java.text.SimpleDateFormat("yyyy-MM-dd");
-            req.setExpirationDate(sdf.format(futureDate));
-
-            // ===== 决策相关：一开始不决定，全交给 Claim Processor =====
-            req.setCoverageDecision(null);         // 或者写成 "Pending" 也可以
-            req.setClaimDecision(null);           // 如果你还用这个字段，也一起清空
-
-            // Sender
             req.setSender(insuranceAdminAccount);
-
-            // 加入 Insurance Claim Org 的工作队列
             claimOrg.getWorkQueue().getWorkRequestList().add(req);
         }
+
 
 
 

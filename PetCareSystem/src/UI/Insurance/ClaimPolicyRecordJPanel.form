@@ -93,7 +93,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="84" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="83" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
@@ -162,7 +162,7 @@
                   <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="77" max="32767" attributes="0"/>
+              <EmptySpace pref="76" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

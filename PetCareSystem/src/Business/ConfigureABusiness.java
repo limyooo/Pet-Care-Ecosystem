@@ -20,6 +20,7 @@ import Business.Role.ClaimProcessorRole;
 import Business.Role.EnterpriseAdminRole;
 import Business.Pet.Pet;
 import Business.Pet.PetOwner;
+import Business.Pet.InsurancePolicyDirectory;
 
 
 import Business.UserAccount.UserAccount;
@@ -46,6 +47,7 @@ public class ConfigureABusiness {
         // 1. 获取唯一系统实例
         Petsystem system = Petsystem.getInstance();
         
+        InsurancePolicyDirectory policyDir = system.getInsurancePolicyDirectory();
         // ⭐ 关键修正：检查是否已经配置过数据。如果系统中的 Network 列表不为空，则直接返回。
         if (!system.getNetworkList().isEmpty()) {
             return system; 
@@ -334,7 +336,35 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
         );
 
         createdPets.add(pet);
+        
+        // ⭐⭐⭐ 为这个 owner + pet 创建一条 InsurancePolicy，加到 system 的 policyDir 里
+        // 生成开始和结束日期（格式：yyyy-MM-dd）
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date startDate = faker.date().past(60, java.util.concurrent.TimeUnit.DAYS);
+        java.util.Date endDate   = faker.date().future(300, java.util.concurrent.TimeUnit.DAYS);
+
+        String startDateStr = sdf.format(startDate);
+        String endDateStr   = sdf.format(endDate);
+
+        // 覆盖类型、状态用和 UI 对得上的选项
+        String coverageType = faker.options().option("Basic", "Standard", "Premium");
+        double premium      = faker.number().randomDouble(2, 50, 300);
+        String status       = faker.options().option("Active", "Expired", "Cancelled");
+
+        policyDir.addPolicy(
+                policyId,           // 上面已经生成的保单号
+                insuranceCompany,   // 保险公司
+                coverageType,       // Basic / Standard / Premium
+                startDateStr,       // StartDate
+                endDateStr,         // EndDate
+                premium,            // Premium
+                status,             // Status
+                pet,                // 关联宠物
+                owner               // 关联主人
+    );
     }
+    
+    
     // ⭐⭐⭐ 在这里添加 Customer Service 测试数据 ⭐⭐⭐
 for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
     Pet pet = createdPets.get(i);

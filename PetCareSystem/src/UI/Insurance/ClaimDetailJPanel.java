@@ -59,20 +59,44 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
     }
 
     // -------- Pet Info --------
-    // 目前 request 里只有 petName，其他先空着
-    txtPetName.setText(claim.getPetName() == null ? "" : claim.getPetName());
-    txtSpecies.setText("");
-    txtAge.setText("");
-    txtWeight.setText("");
-    txtAllergy.setText("");
+    Pet pet = claim.getPet();
+    if (pet != null) {
+        txtPetName.setText(pet.getPetName() == null ? "" : pet.getPetName());
+        txtSpecies.setText(pet.getSpecies() == null ? "" : pet.getSpecies());
+        txtAge.setText(String.valueOf(pet.getAge()));
+        txtWeight.setText(String.valueOf(pet.getWeight()));
+        txtAllergy.setText(pet.getFoodAllergy() == null ? "" : pet.getFoodAllergy());
+    } else {
+        // 如果 request 里没挂 Pet，就退回到以前的逻辑，只用 petName 字符串
+        txtPetName.setText(claim.getPetName() == null ? "" : claim.getPetName());
+        txtSpecies.setText("");
+        txtAge.setText("");
+        txtWeight.setText("");
+        txtAllergy.setText("");
+    }
 
     // -------- Owner Info --------
-    // 现在只有 holderName 这个字段
-    txtOwnerName.setText(claim.getHolderName() == null ? "" : claim.getHolderName());
-    txtPhone.setText("");
-    txtEmail.setText("");
-    txtAddress.setText("");
-    txtEmergency.setText("");
+    PetOwner owner = claim.getOwner();
+    if (owner == null && pet != null) {
+        // 有些时候你可能只给 Pet 里挂了 owner，这里兜底一下
+        owner = pet.getPetOwner();
+    }
+
+    if (owner != null) {
+        txtOwnerName.setText(owner.getOwnerName() == null ? "" : owner.getOwnerName());
+        txtPhone.setText(owner.getPhone() == null ? "" : owner.getPhone());
+        txtEmail.setText(owner.getEmail() == null ? "" : owner.getEmail());
+        txtAddress.setText(owner.getAddress() == null ? "" : owner.getAddress());
+        txtEmergency.setText(owner.getEmergencyContact() == null ? "" : owner.getEmergencyContact());
+    } else {
+        // 退回之前只用 holderName 的方式
+        txtOwnerName.setText(claim.getHolderName() == null ? "" : claim.getHolderName());
+        txtPhone.setText("");
+        txtEmail.setText("");
+        txtAddress.setText("");
+        txtEmergency.setText("");
+    }
+
 
     // -------- Medical Info --------
     txtDoctor.setText(""); // 目前没有 doctor 字段，先留空
@@ -90,7 +114,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
     txtPolicyID.setText(
             claim.getPolicyId() == null ? "" : claim.getPolicyId()
     );
-    txtCoverageLevel.setText(
+    txtCoverageType.setText(
             claim.getCoverageLevel() == null ? "" : claim.getCoverageLevel()
     );
     txtExpirationDate.setText(
@@ -160,11 +184,11 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         lblOwner = new javax.swing.JLabel();
         lblCompany = new javax.swing.JLabel();
         lblPolicyID = new javax.swing.JLabel();
-        lblCoverageLevel = new javax.swing.JLabel();
+        lblCoverageType = new javax.swing.JLabel();
         lblExpirationDate = new javax.swing.JLabel();
         txtInsuranceCompany = new javax.swing.JTextField();
         txtPolicyID = new javax.swing.JTextField();
-        txtCoverageLevel = new javax.swing.JTextField();
+        txtCoverageType = new javax.swing.JTextField();
         txtExpirationDate = new javax.swing.JTextField();
         btnModify = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
@@ -261,7 +285,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
 
         lblPolicyID.setText("Policy ID:");
 
-        lblCoverageLevel.setText("Coverage Level:");
+        lblCoverageType.setText("Coverage Type:");
 
         lblExpirationDate.setText("Expiration Date:");
 
@@ -373,13 +397,13 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPolicyID)
                                     .addComponent(lblCompany)
-                                    .addComponent(lblCoverageLevel)
+                                    .addComponent(lblCoverageType)
                                     .addComponent(lblExpirationDate))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtPolicyID, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtInsuranceCompany, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCoverageLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCoverageType, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtExpirationDate, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(131, 131, 131))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -490,8 +514,8 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
                             .addComponent(txtPolicyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCoverageLevel)
-                            .addComponent(txtCoverageLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblCoverageType)
+                            .addComponent(txtCoverageType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblExpirationDate)
@@ -559,7 +583,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblClaimReason;
     private javax.swing.JLabel lblCompany;
     private javax.swing.JLabel lblCost;
-    private javax.swing.JLabel lblCoverageLevel;
+    private javax.swing.JLabel lblCoverageType;
     private javax.swing.JLabel lblDiagnosis;
     private javax.swing.JLabel lblDoctor;
     private javax.swing.JLabel lblEmail;
@@ -588,7 +612,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtClaimID;
     private javax.swing.JTextField txtClaimReason;
     private javax.swing.JTextField txtCost;
-    private javax.swing.JTextField txtCoverageLevel;
+    private javax.swing.JTextField txtCoverageType;
     private javax.swing.JTextField txtDiagnosis;
     private javax.swing.JTextField txtDoctor;
     private javax.swing.JTextField txtEmail;

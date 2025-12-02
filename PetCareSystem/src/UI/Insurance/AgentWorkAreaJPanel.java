@@ -14,6 +14,10 @@ import javax.swing.JOptionPane;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingUtilities;
+import UI.admin.MainJFrame;
+
+
 
 public class AgentWorkAreaJPanel extends javax.swing.JPanel {
 
@@ -57,7 +61,7 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
     }
     
     /** 把 policyDirectory 里的数据塞到表格里 */
-    private void populatePolicyTable() {
+    public void populatePolicyTable() {
         DefaultTableModel model = (DefaultTableModel) tblPolicyList.getModel();
         model.setRowCount(0);
 
@@ -88,8 +92,10 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
             row[4] = policy.getStartDate();
             row[5] = policy.getEndDate();
 
-            // 你现在的 InsurancePolicy 里还没有 status 字段，先给个占位
-            row[6] = "Active";
+            row[6] = (policy.getStatus() == null || policy.getStatus().isEmpty())
+            ? "Active"
+            : policy.getStatus();
+
 
             model.addRow(row);
         }
@@ -118,6 +124,11 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
 
         btnLogout.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setText("Welcome Insurance Policy Management");
@@ -233,6 +244,16 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
     CardLayout layout = (CardLayout) userProcessContainer.getLayout();
     layout.show(userProcessContainer, "AgentManagePolicyJPanel");
     }//GEN-LAST:event_btnViewPolicyActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+    // 找到这个 panel 所在的顶层窗口（就是 MainJFrame）
+    java.awt.Window window = SwingUtilities.getWindowAncestor(this);
+    if (window instanceof MainJFrame) {
+        MainJFrame frame = (MainJFrame) window;
+        // 调用你在 MainJFrame 里写好的登出逻辑
+        frame.triggerLogout();
+    }
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -238,19 +238,24 @@ public class ProcessLabTestJPanel extends javax.swing.JPanel {
     private void populateFields() {
         
        fieldTestID.setText(request.getTestId());
+       fieldTestID.setEnabled(false);
 
         if (request.getPet() != null) {
             fieldPatientID.setText(request.getPet().getPetId());
         }
+        fieldPatientID.setEnabled(false);
 
         if (request.getSender() != null) {
             fieldDoctor.setText(request.getSender().getEmployee().getName());
         }
+        fieldDoctor.setEnabled(false);
 
         if (request.getHealthCareRequest() != null) {
             fieldSymptom.setText(request.getHealthCareRequest().getSymptom());
         }
+        fieldSymptom.setEnabled(false);
 
         fieldDoctorMessage.setText(request.getMessage());
+        fieldDoctorMessage.setEnabled(false);
     }
 }

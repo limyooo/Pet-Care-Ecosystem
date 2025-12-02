@@ -60,6 +60,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
         btnView = new javax.swing.JButton();
         btnCall = new javax.swing.JButton();
         btnSend = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel1.setText("Welcom to Pet Boarding Customer Service Work Area");
@@ -106,6 +107,13 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,7 +122,9 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(94, 94, 94)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addGap(200, 200, 200)
+                        .addComponent(btnLogout))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1087, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -130,7 +140,9 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnLogout))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
@@ -139,7 +151,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
                 .addComponent(btnCall)
                 .addGap(31, 31, 31)
                 .addComponent(btnSend)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -211,9 +223,32 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
     layout.next(userProcessContainer);
     }//GEN-LAST:event_btnSendActionPerformed
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        java.awt.Component comp = this;
+
+        // 向上遍历组件树，直到找到 MainJFrame
+        while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
+            comp = comp.getParent();
+        }
+
+        if (comp instanceof UI.admin.MainJFrame) {
+            // ⭐ 关键修正：调用新的公共代理方法
+            ((UI.admin.MainJFrame) comp).triggerLogout();
+        } else {
+            // 找不到 MainJFrame，执行后备方案
+            if (userProcessContainer != null) {
+                userProcessContainer.removeAll();
+                userProcessContainer.revalidate();
+                userProcessContainer.repaint();
+            }
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCall;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnSend;
     private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;

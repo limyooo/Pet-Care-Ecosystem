@@ -17,14 +17,25 @@ import UI.Boarding.CustomerServiceJPanel;
  * Handles patient registration, appointment scheduling and basic triage.
  */
 public class FrontDeskAgentRole extends Role {
-
+    
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer,UserAccount account,
-                             Organization organization,Enterprise enterprise,
-                             Petsystem system) {
-
-    return new FrontDeskManagementJPanel(userProcessContainer,account,
-            (FrontDeskOrganization) organization, enterprise,
-            (MainJFrame) userProcessContainer.getTopLevelAncestor());
-            }
+    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account,
+                                 Organization organization, Enterprise enterprise, Petsystem system) {
+        
+        // ⭐ 关键：先判断组织类型，再进行强制转换
+        if (organization instanceof CustomerService) {
+            // Pet Boarding 的客服
+            return new CustomerServiceJPanel(userProcessContainer, account,
+                    (CustomerService) organization, enterprise, system);
+        } else if (organization instanceof FrontDeskOrganization) {
+            // Pet Clinic 的前台
+            return new FrontDeskManagementJPanel(userProcessContainer, account,
+                    (FrontDeskOrganization) organization, enterprise);
+        } else {
+            // 默认情况（不应该发生）
+            System.out.println("Warning: Unknown organization type for FrontDeskAgentRole: " 
+                    + organization.getClass().getName());
+            return null;
+        }
+    }
 }

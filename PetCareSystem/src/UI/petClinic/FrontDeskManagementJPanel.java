@@ -31,8 +31,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
     /**
      * Creates new form FrontDeskManagementJPanel
      */
-    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, 
-            FrontDeskOrganization frontDeskOrg,Enterprise enterprise,MainJFrame mainJFrame) {
+    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, FrontDeskOrganization frontDeskOrg, Enterprise enterprise) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;

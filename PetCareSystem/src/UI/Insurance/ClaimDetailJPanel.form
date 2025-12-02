@@ -140,14 +140,14 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblPolicyID" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblCompany" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCoverageLevel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCoverageType" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblExpirationDate" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtPolicyID" min="-2" pref="107" max="-2" attributes="0"/>
                                   <Component id="txtInsuranceCompany" min="-2" pref="107" max="-2" attributes="0"/>
-                                  <Component id="txtCoverageLevel" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                                  <Component id="txtCoverageType" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
                                   <Component id="txtExpirationDate" min="-2" pref="107" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -296,8 +296,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCoverageType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCoverageType" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -559,9 +559,9 @@
         <Property name="text" type="java.lang.String" value="Policy ID:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCoverageLevel">
+    <Component class="javax.swing.JLabel" name="lblCoverageType">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Coverage Level:"/>
+        <Property name="text" type="java.lang.String" value="Coverage Type:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblExpirationDate">
@@ -573,7 +573,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtPolicyID">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtCoverageLevel">
+    <Component class="javax.swing.JTextField" name="txtCoverageType">
     </Component>
     <Component class="javax.swing.JTextField" name="txtExpirationDate">
     </Component>

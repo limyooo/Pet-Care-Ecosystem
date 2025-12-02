@@ -3,7 +3,9 @@ package Business.Role;
 import Business.Petsystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
+import Business.PetClinicOrganization.VetLabOrganization;
 import Business.UserAccount.UserAccount;
+import UI.petClinic.LabAssistantWorkAreaJpanel;
 import javax.swing.JPanel;
 
 /**
@@ -13,13 +15,13 @@ import javax.swing.JPanel;
 public class LabAssistantRole extends Role {
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer,
-                                 UserAccount account,
-                                 Organization organization,
-                                 Enterprise enterprise,
+    public JPanel createWorkArea(JPanel userProcessContainer,UserAccount account,
+                                 Organization organization,Enterprise enterprise,
                                  Petsystem system) {
-        // TODO: replace with real Lab Assistant work area panel
-        // return new LabAssistantWorkAreaJPanel(userProcessContainer, account, organization, enterprise, system);
-        return null;
+
+        // 确保 organization 是 VetLabOrganization
+        VetLabOrganization labOrg = (VetLabOrganization) organization;
+
+        return new LabAssistantWorkAreaJpanel(userProcessContainer,account,labOrg);
     }
 }

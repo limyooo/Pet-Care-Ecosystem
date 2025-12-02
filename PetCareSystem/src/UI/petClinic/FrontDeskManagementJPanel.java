@@ -10,6 +10,7 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
 import Business.WorkQueue.InsuranceClaimRequest;
 import Business.WorkQueue.WorkRequest;
+import UI.admin.MainJFrame;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,16 +26,20 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
     private UserAccount account;
     private FrontDeskOrganization frontDeskOrg;
     private Enterprise enterprise;
+    private MainJFrame mainJFrame;
+    
     /**
      * Creates new form FrontDeskManagementJPanel
      */
-    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, FrontDeskOrganization frontDeskOrg,Enterprise enterprise) {
+    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, 
+            FrontDeskOrganization frontDeskOrg,Enterprise enterprise,MainJFrame mainJFrame) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
         this.account = account;
         this.frontDeskOrg = frontDeskOrg;
         this.enterprise = enterprise;
+        this.mainJFrame = mainJFrame;
 
         populateTable();
         populateClaimTable();
@@ -186,7 +191,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
 
         //connect to next jpanel
-        ViewDetailsJPanel panel = new ViewDetailsJPanel(userProcessContainer, request);
+        ViewDetailsJPanel panel = new ViewDetailsJPanel(userProcessContainer, request,enterprise);
         userProcessContainer.add("ViewDetailsJPanel", panel);
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
@@ -214,6 +219,24 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
+        java.awt.Component comp = this;
+
+        // 向上遍历组件树，直到找到 MainJFrame
+        while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
+            comp = comp.getParent();
+        }
+
+        if (comp instanceof UI.admin.MainJFrame) {
+            // ⭐ 关键修正：调用新的公共代理方法
+            ((UI.admin.MainJFrame) comp).triggerLogout(); 
+        } else {
+            // 找不到 MainJFrame，执行后备方案
+            if (userProcessContainer != null) {
+                userProcessContainer.removeAll();
+                userProcessContainer.revalidate();
+                userProcessContainer.repaint();
+        }
+    }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
 

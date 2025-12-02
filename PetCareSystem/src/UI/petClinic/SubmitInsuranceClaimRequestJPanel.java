@@ -431,10 +431,10 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     comboCoverageLevel.setSelectedItem(p.getPetOwner().getCoverageLevel());
     fieldExpirationDate.setText(p.getPetOwner().getExpirationDate());
 
-    // Boarding info
+    /*// Boarding info
     fieldServiceProvider.setText(Request.getServiceProvider());
     fieldStartDate.setText(Request.getStartDate());
-    fieldEndDate.setText(Request.getEndDate());
+    fieldEndDate.setText(Request.getEndDate()); */
 
     // Medical Result (来自 Pet Clinic)
     fieldLabTestResult.setText(Request.getLabResult());

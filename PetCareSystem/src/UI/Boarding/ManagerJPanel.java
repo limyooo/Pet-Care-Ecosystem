@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import Business.PetBoardingOrganization.CustomerService;
 
 /**
  *
@@ -165,7 +166,59 @@ public class ManagerJPanel extends javax.swing.JPanel {
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-        
+        // 1. 检查是否选中了表格中的一行
+    int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // 2. 获取选中行的 Record ID
+    String recordId = (String) jTable1.getValueAt(selectedRow, 0);
+
+    // 3. 根据 Record ID 查找对应的 PetBoardingRecord
+    PetBoardingRecord selectedRecord = findRecordById(recordId);
+
+    if (selectedRecord == null) {
+        JOptionPane.showMessageDialog(this, "未找到对应的记录。", "错误", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // 4. 创建 ManagerViewJPanel 并传递数据
+    ManagerViewJPanel viewPanel = new ManagerViewJPanel(
+            userProcessContainer, 
+            account, 
+            organization, 
+            enterprise, 
+            system
+    );
+
+    // 5. 加载记录详情
+    viewPanel.loadRecordDetails(selectedRecord);
+
+    // 6. 添加到容器并切换显示
+    userProcessContainer.add("ManagerViewJPanel", viewPanel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
+}
+
+// ⭐ 辅助方法：根据 Record ID 查找 PetBoardingRecord
+private PetBoardingRecord findRecordById(String recordId) {
+    if (!(enterprise instanceof PetBoardingEnterprise)) {
+        return null;
+    }
+    
+    PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) enterprise;
+    BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
+    
+    if (recordDirectory != null && recordDirectory.getRecordList() != null) {
+        for (PetBoardingRecord record : recordDirectory.getRecordList()) {
+            if (record.getRecordId().equals(recordId)) {
+                return record;
+            }
+        }
+    }
+    return null;
     }//GEN-LAST:event_btnViewActionPerformed
 
 

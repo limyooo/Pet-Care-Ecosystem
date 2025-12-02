@@ -9,6 +9,8 @@ import Business.Network.Network;
 import Business.Pet.PetOwnerDirectory;
 import Business.UserAccount.UserAccountDirectory;
 import java.util.ArrayList;
+import Business.Pet.InsurancePolicyDirectory;
+
 
 /**
  *
@@ -22,6 +24,7 @@ public class Petsystem {
     private UserAccountDirectory userAccountDirectory;
     private ArrayList<Network> networkList; // 用于存储网络列表
     private PetOwnerDirectory petOwnerDirectory; // 新增成员变量
+    private InsurancePolicyDirectory insurancePolicyDirectory;
     
     // 3. 公共静态方法：用于获取唯一的系统实例 (getInstance())
     // 确保只有当实例不存在时才创建它
@@ -38,6 +41,7 @@ public class Petsystem {
         userAccountDirectory = new UserAccountDirectory();
         networkList = new ArrayList<>();
         petOwnerDirectory = new PetOwnerDirectory();
+        insurancePolicyDirectory = new InsurancePolicyDirectory();
     }
     // 5. Getter 方法：允许访问子目录和列表
     // 新增 getPetOwnerDirectory 方法
@@ -59,6 +63,14 @@ public class Petsystem {
     }
     public UserAccountDirectory getUserAccountDirectory() {
         return userAccountDirectory;
+    }
+
+    public static Petsystem getBusiness() {
+        return business;
+    }
+
+    public InsurancePolicyDirectory getInsurancePolicyDirectory() {
+        return insurancePolicyDirectory;
     }
     
     

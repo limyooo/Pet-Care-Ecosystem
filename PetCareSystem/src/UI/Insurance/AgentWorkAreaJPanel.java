@@ -1,21 +1,100 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package UI.Insurance;
 
-/**
- *
- * @author Eve Dou
- */
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetInsuranceEnterprise;
+import Business.Organization.Organization;
+import Business.Pet.InsurancePolicy;
+import Business.Pet.InsurancePolicyDirectory;
+import Business.Pet.Pet;
+import Business.Pet.PetOwner;
+import Business.Petsystem;
+import Business.PetInsuranceOrganization.InsurancePolicyOrganization;
+import Business.UserAccount.UserAccount;
+import javax.swing.JOptionPane;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 public class AgentWorkAreaJPanel extends javax.swing.JPanel {
 
+    // ===== 我们自己加的字段 =====
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private InsurancePolicyOrganization organization;
+    private PetInsuranceEnterprise insuranceEnterprise;
+    private Petsystem system;
+    private InsurancePolicyDirectory policyDirectory;
+
     /**
-     * Creates new form AgentWorkAreaJPanel
+     * 设计器用的无参构造（保持不动）
      */
     public AgentWorkAreaJPanel() {
         initComponents();
     }
+
+    /**
+     * 真正运行时用的构造函数（Role 里会调用这个）
+     */
+    public AgentWorkAreaJPanel(JPanel userProcessContainer,
+                               UserAccount account,
+                               Organization organization,
+                               Enterprise enterprise,
+                               Petsystem system) {
+
+        initComponents();   // 先把 UI 画出来
+
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.organization = (InsurancePolicyOrganization) organization;
+        this.insuranceEnterprise = (PetInsuranceEnterprise) enterprise;
+        this.system = system;
+
+        // ⭐ 假设 Petsystem 里有一个 InsurancePolicyDirectory
+        // 如果你实际是别的名字，就改成你真实的 getter
+        this.policyDirectory = system.getInsurancePolicyDirectory();
+
+        populatePolicyTable();
+    }
+    
+    /** 把 policyDirectory 里的数据塞到表格里 */
+    private void populatePolicyTable() {
+        DefaultTableModel model = (DefaultTableModel) tblPolicyList.getModel();
+        model.setRowCount(0);
+
+        if (policyDirectory == null) {
+            return;  // 还没挂目录就先不显示
+        }
+
+        for (InsurancePolicy policy : policyDirectory.getPolicyList()) {
+            Object[] row = new Object[7];
+
+            row[0] = policy;                  // toString() -> policyId
+
+            Pet pet = policy.getPet();
+            String petName = "";
+            String ownerName = "";
+
+            if (pet != null) {
+                petName = pet.getPetName();
+                PetOwner owner = pet.getPetOwner();
+                if (owner != null) {
+                    ownerName = owner.getOwnerName();
+                }
+            }
+
+            row[1] = petName;
+            row[2] = ownerName;
+            row[3] = policy.getCoverageType();
+            row[4] = policy.getStartDate();
+            row[5] = policy.getEndDate();
+
+            // 你现在的 InsurancePolicy 里还没有 status 字段，先给个占位
+            row[6] = "Active";
+
+            model.addRow(row);
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,7 +130,7 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Policy ID", "Pet Name", "Owner Name", "Coverage Level", "Start Date", "Expiration Date", "Status"
+                "Policy ID", "Pet Name", "Owner Name", "Coverage Type", "Start Date", "Expiration Date", "Status"
             }
         ));
         jScrollPane1.setViewportView(tblPolicyList);
@@ -69,6 +148,11 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
 
         btnViewPolicy.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnViewPolicy.setText("View Policy");
+        btnViewPolicy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewPolicyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -85,7 +169,7 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 853, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnViewPolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCreateNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)))
+                        .addComponent(btnCreateNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -108,8 +192,47 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewActionPerformed
-        // TODO add your handling code here:
+    // 打开创建保单页面
+       AgentCreatePolicyJPanel createPanel = new AgentCreatePolicyJPanel(
+               userProcessContainer,
+               account,
+               organization,
+               insuranceEnterprise,   // 也可以写成 (Enterprise) insuranceEnterprise
+               system
+       );
+
+       userProcessContainer.add("AgentCreatePolicyJPanel", createPanel);
+       CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+       layout.show(userProcessContainer, "AgentCreatePolicyJPanel");
     }//GEN-LAST:event_btnCreateNewActionPerformed
+
+    private void btnViewPolicyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPolicyActionPerformed
+     int selectedRow = tblPolicyList.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this,
+                "Please select a policy from the table first.",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // 第一列我们放的是 InsurancePolicy 对象本身
+    InsurancePolicy selectedPolicy =
+            (InsurancePolicy) tblPolicyList.getValueAt(selectedRow, 0);
+
+    AgentManagePolicyJPanel managePanel = new AgentManagePolicyJPanel(
+            userProcessContainer,
+            account,
+            organization,
+            insuranceEnterprise,
+            system,
+            selectedPolicy
+    );
+
+    userProcessContainer.add("AgentManagePolicyJPanel", managePanel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.show(userProcessContainer, "AgentManagePolicyJPanel");
+    }//GEN-LAST:event_btnViewPolicyActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

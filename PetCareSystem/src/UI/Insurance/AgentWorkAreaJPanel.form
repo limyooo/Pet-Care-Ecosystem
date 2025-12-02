@@ -36,7 +36,7 @@
                   <Component id="jScrollPane1" min="-2" pref="853" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Component id="btnViewPolicy" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btnCreateNew" alignment="0" pref="219" max="32767" attributes="0"/>
+                      <Component id="btnCreateNew" alignment="0" pref="250" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -95,7 +95,7 @@
                 <Column editable="true" title="Policy ID" type="java.lang.Object"/>
                 <Column editable="true" title="Pet Name" type="java.lang.Object"/>
                 <Column editable="true" title="Owner Name" type="java.lang.Object"/>
-                <Column editable="true" title="Coverage Level" type="java.lang.Object"/>
+                <Column editable="true" title="Coverage Type" type="java.lang.Object"/>
                 <Column editable="true" title="Start Date" type="java.lang.Object"/>
                 <Column editable="true" title="Expiration Date" type="java.lang.Object"/>
                 <Column editable="true" title="Status" type="java.lang.Object"/>
@@ -131,6 +131,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="View Policy"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewPolicyActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

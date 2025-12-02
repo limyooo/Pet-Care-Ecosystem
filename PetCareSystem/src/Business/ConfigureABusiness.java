@@ -251,6 +251,17 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
             policyOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new InsuranceAgentRole());
         }
+        
+                    // ⭐ 固定 Insurance Agent 测试账号：agent / agent123
+            Employee testAgentEmp = policyOrg.getEmployeeDirectory()
+                                             .createEmployee("Test Insurance Agent");
+            policyOrg.getUserAccountDirectory().createUserAccount(
+                    "agent",          // 登录用户名
+                    "12345",       // 登录密码
+                    testAgentEmp,
+                    new InsuranceAgentRole()
+            );
+
 
         // 6.7 Insurance Claim Specialist
         for (int i = 0; i < 3; i++) {

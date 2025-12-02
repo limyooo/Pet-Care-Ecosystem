@@ -119,6 +119,7 @@ public class ConfigureABusiness {
         Organization boardingCustomerServiceOrg = boardingEnt.getOrganizationDirectory()
         .createOrganization(Type.CustomerService);  
         
+        
         // 4.2 Clinic enterprise
         Organization frontDeskOrg = clinicEnt.getOrganizationDirectory()
                 .createOrganization(Type.FrontDesk);
@@ -323,6 +324,20 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
 
         createdPets.add(pet);
     }
+    // ⭐⭐⭐ 在这里添加 Customer Service 测试数据 ⭐⭐⭐
+for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
+    Pet pet = createdPets.get(i);
+    
+    HealthCareCheckRequest csRequest = new HealthCareCheckRequest();
+    csRequest.setMessage("Customer notification needed for: " + pet.getPetName());
+    csRequest.setStatus("Pending CS Review");
+    csRequest.setPet(pet);
+    csRequest.setSymptom(faker.medical().symptoms());
+    csRequest.setBoardingRecordId("BR" + faker.number().digits(4));
+    csRequest.setCheckResult("Health check completed");
+    
+    boardingCustomerServiceOrg.getWorkQueue().getWorkRequestList().add(csRequest);
+}
 
         // 7.1 Boarding -> Clinic：健康检查
         for (int i = 0; i < createdPets.size(); i++) {

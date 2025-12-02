@@ -4,17 +4,45 @@
  */
 package UI.Boarding;
 
+import Business.Enterprise.Enterprise;
+import Business.PetBoardingOrganization.CustomerService;
+import Business.Pet.Pet;
+import Business.Pet.PetOwner;
+import Business.Petsystem;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HealthCareCheckRequest;
+import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hanlinyao
  */
 public class CustomerServiceJPanel extends javax.swing.JPanel {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private CustomerService organization;  // 或者用 Organization
+    private Enterprise enterprise;
+    private Petsystem system;
 
     /**
      * Creates new form CustomerServiceJPanel
      */
-    public CustomerServiceJPanel() {
+    public CustomerServiceJPanel(JPanel userProcessContainer, UserAccount account,
+                                  CustomerService organization, Enterprise enterprise, 
+                                  Petsystem system) {
         initComponents();
+         this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.system = system;
+        
+        // 初始化表格
+        populateTable();
     }
 
     /**
@@ -26,19 +54,220 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnView = new javax.swing.JButton();
+        btnCall = new javax.swing.JButton();
+        btnSend = new javax.swing.JButton();
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel1.setText("Welcom to Pet Boarding Customer Service Work Area");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Record ID", "Pet Owner", "Pet Owner Phone", "Pet Owner Email", "Symptom", "Insurance claim result", "Health check result"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        btnView.setText("View Details");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
+        btnCall.setText("Call Request");
+        btnCall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCallActionPerformed(evt);
+            }
+        });
+
+        btnSend.setText("Send Email");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1087, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCall, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnView)
+                            .addComponent(btnSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 425, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnView)
+                .addGap(31, 31, 31)
+                .addComponent(btnCall)
+                .addGap(31, 31, 31)
+                .addComponent(btnSend)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+         int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 获取选中的请求并跳转到详情页面
+        String recordId = (String) jTable1.getValueAt(selectedRow, 0);
+        
+        // 查找对应的 WorkRequest
+        HealthCareCheckRequest selectedRequest = findRequestByRecordId(recordId);
+        
+        if (selectedRequest != null) {
+            CSViewJPanel viewPanel = new CSViewJPanel(userProcessContainer, account,
+                    organization, enterprise, system);
+            viewPanel.loadRequestDetails(selectedRequest);
+            
+            userProcessContainer.add("CSViewJPanel", viewPanel);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            layout.next(userProcessContainer);
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnCallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCallActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String ownerPhone = (String) jTable1.getValueAt(selectedRow, 2);
+        String ownerName = (String) jTable1.getValueAt(selectedRow, 1);
+        
+        JOptionPane.showMessageDialog(this, 
+                "正在拨打电话给: " + ownerName + "\n电话号码: " + ownerPhone, 
+                "拨打电话", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnCallActionPerformed
+
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        // TODO add your handling code here:
+       int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    String recordId = (String) jTable1.getValueAt(selectedRow, 0);
+    
+    // 查找对应的请求
+    HealthCareCheckRequest selectedRequest = findRequestByRecordId(recordId);
+    
+    // 创建发送邮件页面
+    SendEmailJPanel emailPanel = new SendEmailJPanel(userProcessContainer, account,
+            organization, enterprise, system);
+    
+    // 预填充收件人信息
+    if (selectedRequest != null) {
+        emailPanel.loadRequestDetails(selectedRequest);
+    }
+    
+    userProcessContainer.add("SendEmailJPanel", emailPanel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnSendActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCall;
+    private javax.swing.JButton btnSend;
+    private javax.swing.JButton btnView;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        if (organization == null || organization.getWorkQueue() == null) {
+            return;
+        }
+        
+        // 遍历 Customer Service 组织的 Work Queue
+        for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
+            if (request instanceof HealthCareCheckRequest) {
+                HealthCareCheckRequest healthRequest = (HealthCareCheckRequest) request;
+                
+                Pet pet = healthRequest.getPet();
+                PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+                
+                Object[] row = new Object[7];
+                row[0] = healthRequest.getBoardingRecordId() != null ? healthRequest.getBoardingRecordId() : "N/A";
+                row[1] = (owner != null) ? owner.getOwnerName() : "N/A";
+                row[2] = (owner != null) ? owner.getPhone() : "N/A";
+                row[3] = (owner != null) ? owner.getEmail() : "N/A";
+                row[4] = healthRequest.getSymptom() != null ? healthRequest.getSymptom() : "N/A";
+                row[5] = "Pending";  // Insurance claim result
+                row[6] = healthRequest.getCheckResult() != null ? healthRequest.getCheckResult() : "Pending";
+                
+                model.addRow(row);
+            }
+        }
+    }
+    // ⭐ 刷新表格
+    public void refreshTable() {
+        populateTable();
+    }
+    private HealthCareCheckRequest findRequestByRecordId(String recordId) {
+        if (organization == null || organization.getWorkQueue() == null) {
+            return null;
+        }
+        
+        for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
+            if (request instanceof HealthCareCheckRequest) {
+                HealthCareCheckRequest healthRequest = (HealthCareCheckRequest) request;
+                if (recordId.equals(healthRequest.getBoardingRecordId())) {
+                    return healthRequest;
+                }
+            }
+        }
+        return null;
+    }
+        
 }

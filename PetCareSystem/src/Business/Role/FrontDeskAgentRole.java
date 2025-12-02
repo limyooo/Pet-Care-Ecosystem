@@ -3,11 +3,14 @@ package Business.Role;
 import Business.Petsystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
+import static Business.Organization.Organization.Type.CustomerService;
 import Business.PetClinicOrganization.FrontDeskOrganization;
 import Business.UserAccount.UserAccount;
 import UI.admin.MainJFrame;
 import UI.petClinic.FrontDeskManagementJPanel;
 import javax.swing.JPanel;
+import Business.PetBoardingOrganization.CustomerService;
+import UI.Boarding.CustomerServiceJPanel;
 
 /**
  * FrontDeskAgentRole:

@@ -233,14 +233,24 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
         }
 
         // 6.5 Lab Assistant
-        for (int i = 0; i < 2; i++) {
+        /*for (int i = 0; i < 2; i++) {
             String name = faker.name().fullName();
             Employee e = vetLabOrg.getEmployeeDirectory().createEmployee(name);
             String username = "lab_" + faker.name().username();
             String password = "lab" + faker.number().digits(3);
             vetLabOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new LabAssistantRole());
-        }
+        }*/
+        
+        //固定的 Lab Assistant 测试账号
+        Employee labTestEmp = vetLabOrg.getEmployeeDirectory()
+                .createEmployee("Test Lab Assistant");
+        vetLabOrg.getUserAccountDirectory().createUserAccount(
+                "lab1",          
+                "lab1",          
+                labTestEmp,
+                new LabAssistantRole()
+        );
 
         // 6.6 Insurance Policy Advisor
         for (int i = 0; i < 2; i++) {
@@ -364,7 +374,7 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
             LabTestRequest req = new LabTestRequest();
             req.setMessage("Lab test for pet: " + faker.dog().name());
             req.setStatus("Pending");
-            vetDoctorOrg.getWorkQueue().getWorkRequestList().add(req);
+            vetLabOrg.getWorkQueue().getWorkRequestList().add(req);
         }
 
         // 7.3 Insurance Claim 请求

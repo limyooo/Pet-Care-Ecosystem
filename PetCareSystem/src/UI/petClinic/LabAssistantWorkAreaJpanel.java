@@ -4,17 +4,37 @@
  */
 package UI.petClinic;
 
+import Business.PetClinicOrganization.VetLabOrganization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.LabTestRequest;
+import Business.WorkQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jingyangwang
  */
 public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
-
+    
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private VetLabOrganization labOrg;
+    
     /**
      * Creates new form LabAssistantWorkAreaJpanel
      */
-    public LabAssistantWorkAreaJpanel() {
+    public LabAssistantWorkAreaJpanel(JPanel userProcessContainer,UserAccount account,VetLabOrganization labOrg) {
+        
         initComponents();
+        
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.labOrg = labOrg;
+        
+        populateTable();
     }
 
     /**
@@ -40,7 +60,7 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Test ID", "Patient ID", "Doctor", "Symptom", "Message", "Status"
+                "Test ID", "Patient ID", "Doctor", "Symptom", "Message", "Lab Test Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -54,11 +74,21 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblLabTest);
 
         btnLogout.setText("<<< Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         lblTitle.setText("Welcome Lab Assistant Work Area");
 
         btnProcessLabTest.setText("Process Lab Test");
+        btnProcessLabTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcessLabTestActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -66,15 +96,16 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
+                .addComponent(lblTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout)
+                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnProcessLabTest)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblTitle)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnLogout))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,17 +113,63 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(lblTitle))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(btnLogout)))
-                .addGap(30, 30, 30)
+                        .addComponent(lblTitle)
+                        .addGap(47, 47, 47))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnLogout)
+                        .addGap(27, 27, 27)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(btnProcessLabTest)
                 .addContainerGap(124, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        java.awt.Component comp = this;
+
+        // 向上遍历组件树，直到找到 MainJFrame
+        while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
+            comp = comp.getParent();
+        }
+
+        if (comp instanceof UI.admin.MainJFrame) {
+            //修正：调用新的公共代理方法
+            ((UI.admin.MainJFrame) comp).triggerLogout(); 
+        } else {
+            // 找不到 MainJFrame，执行后备方案
+            if (userProcessContainer != null) {
+                userProcessContainer.removeAll();
+                userProcessContainer.revalidate();
+                userProcessContainer.repaint();
+        }
+    }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnProcessLabTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessLabTestActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblLabTest.getSelectedRow();
+
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row first!");
+            return;
+        }
+
+        //get LabTestRequest object
+        LabTestRequest request = (LabTestRequest) tblLabTest.getValueAt(selectedRow, 0);
+
+        //Set status as Processing
+        request.setStatus("Processing");
+
+        //swithc to ProcessLabTestJPanel
+        ProcessLabTestJPanel panel = new ProcessLabTestJPanel(userProcessContainer,account,labOrg,request);
+
+        userProcessContainer.add("ProcessLabTestJPanel", panel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnProcessLabTestActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -102,4 +179,29 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblLabTest;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        //get the table and clean it
+        DefaultTableModel model = (DefaultTableModel) tblLabTest.getModel();
+        model.setRowCount(0);
+
+        for (WorkRequest wr : labOrg.getWorkQueue().getWorkRequestList()) {
+            if (!(wr instanceof LabTestRequest)) continue;
+
+            LabTestRequest req = (LabTestRequest) wr;
+            Object[] row = new Object[6];
+
+            row[0] = req;                       
+            row[1] = req.getPet() != null ? req.getPet().getPetId() : "";
+            row[2] = req.getSender() != null ? 
+                     req.getSender().getEmployee().getName() : "";
+            row[3] = req.getHealthCareRequest() != null ?
+                     req.getHealthCareRequest().getSymptom() : "";
+            row[4] = req.getMessage();
+            row[5] = req.getStatus();
+
+            model.addRow(row);
+        }
+    }
+    
 }

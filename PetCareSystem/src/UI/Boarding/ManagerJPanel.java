@@ -64,6 +64,7 @@ public class ManagerJPanel extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         btnView = new javax.swing.JButton();
         btnSend = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel1.setText("Welcome to Pet Boarding Manager Work Area");
@@ -92,15 +93,19 @@ public class ManagerJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -110,12 +115,20 @@ public class ManagerJPanel extends javax.swing.JPanel {
                         .addGap(196, 196, 196)
                         .addComponent(btnSend)))
                 .addContainerGap(68, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout)
+                .addGap(82, 82, 82))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(60, 60, 60)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnLogout))
+                .addGap(58, 58, 58)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -221,8 +234,31 @@ private PetBoardingRecord findRecordById(String recordId) {
     return null;
     }//GEN-LAST:event_btnViewActionPerformed
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        java.awt.Component comp = this;
+
+        // 向上遍历组件树，直到找到 MainJFrame
+        while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
+            comp = comp.getParent();
+        }
+
+        if (comp instanceof UI.admin.MainJFrame) {
+            // ⭐ 关键修正：调用新的公共代理方法
+            ((UI.admin.MainJFrame) comp).triggerLogout();
+        } else {
+            // 找不到 MainJFrame，执行后备方案
+            if (userProcessContainer != null) {
+                userProcessContainer.removeAll();
+                userProcessContainer.revalidate();
+                userProcessContainer.repaint();
+            }
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnSend;
     private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;

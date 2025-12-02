@@ -196,13 +196,40 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
         new FrontDeskAgentRole()
 );
         // 6.4 Vet Doctor
-        for (int i = 0; i < 3; i++) {
+        /*for (int i = 0; i < 3; i++) {
             String name = "Dr. " + faker.name().lastName();
             Employee e = vetDoctorOrg.getEmployeeDirectory().createEmployee(name);
             String username = "doc_" + faker.name().username();
             String password = "doc" + faker.number().digits(3);
             vetDoctorOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new VetDoctorRole());
+        }*/
+        // 6.4.1固定的Doctor账号
+        String[][] fixedDoctors = {
+            {"Doctor William Hanks", "Surgery", "doc1", "doc1"},
+            {"Doctor Hanna King", "Internal Medicine", "doc2", "doc2"},
+            {"Doctor July Oven", "Orthopedics", "doc3", "doc3"},
+            {"Doctor Anna Watterson", "Gynecology", "doc4", "doc4"},
+            {"Doctor Bella Stone", "Dermatology", "doc5", "doc5"},
+            {"Doctor Kevin Harper", "General Vet", "doc6", "doc6"}
+        };
+
+        for (String[] d : fixedDoctors) {
+            String fullName = d[0];
+            String specialty = d[1];
+            String username = d[2];
+            String password = d[3];
+
+            // 创建 Employee
+            Employee doctorEmp = vetDoctorOrg.getEmployeeDirectory().createEmployee(fullName + " - " + specialty);
+
+            // 创建账号
+            vetDoctorOrg.getUserAccountDirectory().createUserAccount(
+                username,
+                password,
+                doctorEmp,
+                new VetDoctorRole()
+            );
         }
 
         // 6.5 Lab Assistant

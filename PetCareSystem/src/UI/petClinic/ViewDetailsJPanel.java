@@ -4,8 +4,11 @@
  */
 package UI.petClinic;
 
+import Business.Enterprise.Enterprise;
 import Business.Pet.Pet;
 import Business.Pet.PetOwner;
+import Business.PetClinicOrganization.VetDoctorOrganization;
+import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -20,14 +23,17 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
     
     private JPanel userProcessContainer;
     private HealthCareCheckRequest request;
+    private Enterprise enterprise;
+    
     /**
      * Creates new form ViewDetailsJPanel
      */
-    public ViewDetailsJPanel(JPanel userProcessContainer, HealthCareCheckRequest request) {
+    public ViewDetailsJPanel(JPanel userProcessContainer, HealthCareCheckRequest request,Enterprise enterprise) {
         
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.request = request;
+        this.enterprise = enterprise;
         
         populateData();
         setViewMode(); 
@@ -341,19 +347,37 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
 
     private void fieldAssignDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldAssignDoctorActionPerformed
         // TODO add your handling code here:
-        String doctor = (String) comboDoctors.getSelectedItem();
-        //check if its selected
-        if (doctor == null || doctor.isEmpty()) {
+        String doctorName = (String) comboDoctors.getSelectedItem();
+        if (doctorName == null || doctorName.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please select a doctor.");
             return;
         }
 
-        //Update request
-        request.setAssignedDoctor(doctor);
+        // 1.Update request itself
+        request.setAssignedDoctor(doctorName);
         request.setStatus("Doctor Assigned");
 
+        // 2. 找到 VetDoctorOrganization
+        VetDoctorOrganization doctorOrg = enterprise.getOrganizationDirectory().getOrganizationList()
+            .stream().filter(org -> org instanceof VetDoctorOrganization).map(org -> (VetDoctorOrganization) org)
+            .findFirst().orElse(null);
+
+        if (doctorOrg == null) {
+            JOptionPane.showMessageDialog(null, "Doctor organization not found.");
+            return;
+        }
+
+        // 3. 在医生账号列表中找到这个医生并把 request 加进去
+        doctorOrg.getUserAccountDirectory().getUserAccountList().stream()
+            .filter(ua -> ua.getEmployee().getName().equals(doctorName)).findFirst().ifPresent(ua -> {
+            ua.getWorkQueue().getWorkRequestList().add(request);
+                
+            System.out.println("Assigned request to doctor: " + doctorName);
+            });
+
         JOptionPane.showMessageDialog(null, 
-                "Doctor assigned successfully:\n" + doctor);
+            "Doctor assigned successfully:\n" + doctorName);
+
     }//GEN-LAST:event_fieldAssignDoctorActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed

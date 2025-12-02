@@ -273,7 +273,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblHealthCheckRequest.getModel();
         model.setRowCount(0);
 
-    for (WorkRequest request : doctorOrg.getWorkQueue().getWorkRequestList()) {
+    for (WorkRequest request : account.getWorkQueue().getWorkRequestList()) {
         if (request instanceof HealthCareCheckRequest) {
             HealthCareCheckRequest req = (HealthCareCheckRequest) request;
 

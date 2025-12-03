@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="cc" green="ff" red="cc" type="rgb"/>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblPolicy" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="btnBack" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="lblTitle" min="-2" pref="403" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="txtPartialCoverage" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="lblPartialCoverage" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblCoverageOverview" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblFullCoverage" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblTotalPolicy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblAcitivePolicy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblExpiredPolicy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblClaimOverview" min="-2" pref="120" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="txtActivePolicy" alignment="0" pref="100" max="32767" attributes="0"/>
+                                  <Component id="txtTotalPolicy" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtExpiredPolicy" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtFullCoverage" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblTotalClaims" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblApprovedClaims" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblRejectedClaims" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPendingClaims" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="txtApprovedClaims" alignment="0" pref="100" max="32767" attributes="0"/>
+                                  <Component id="txtTotalClaims" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtRejectedClaims" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txtPendingClaims" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblApprovalRate" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblActiveRate" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCancelledPolicy" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblActivePartial" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="txtActivePartial" min="-2" pref="101" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblActiveFull" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblAverageClaimAmount" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="44" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtActiveRate" min="-2" pref="101" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="txtActiveFull" pref="101" max="32767" attributes="0"/>
+                                              <Component id="txtApprovalRate" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txtAverageClaimAmount" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="txtCancelledPolicy" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="51" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBack" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Component id="lblPolicy" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtTotalPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTotalPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCancelledPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtCancelledPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtActivePolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAcitivePolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblActiveRate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtActiveRate" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtExpiredPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblExpiredPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="lblClaimOverview" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTotalClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTotalClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblApprovalRate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtApprovalRate" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtApprovedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblApprovedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAverageClaimAmount" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtAverageClaimAmount" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblRejectedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtRejectedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblPendingClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPendingClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Component id="lblCoverageOverview" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblFullCoverage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFullCoverage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblActiveFull" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtActiveFull" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblPartialCoverage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPartialCoverage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblActivePartial" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtActivePartial" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblTitle">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="24" style="3"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Insurance Operation Dashboard"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnBack">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;&lt;Back"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPolicy">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Policy Overview:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTotalPolicy">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAcitivePolicy">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Active Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblExpiredPolicy">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Expired Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtTotalPolicy">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtActivePolicy">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtExpiredPolicy">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtExpiredPolicyActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblClaimOverview">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Claim Overview:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTotalClaims">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Claims:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtTotalClaims">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblApprovedClaims">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Approved Claims:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtApprovedClaims">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblRejectedClaims">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rejected Claims:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtRejectedClaims">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPendingClaims">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pending Claims:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtPendingClaims">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCoverageOverview">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Coverage Overview:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFullCoverage">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Full Coverage Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtFullCoverage">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPartialCoverage">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Partial Coverage Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtPartialCoverage">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCancelledPolicy">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelled Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtCancelledPolicy">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblActiveRate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Active Rate:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtActiveRate">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblApprovalRate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Approval Rate:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtApprovalRate">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAverageClaimAmount">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Average Claim Amount:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtAverageClaimAmount">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblActiveFull">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Active Full Coverage Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtActiveFull">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblActivePartial">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Active Partial Coverage Policies:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtActivePartial">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

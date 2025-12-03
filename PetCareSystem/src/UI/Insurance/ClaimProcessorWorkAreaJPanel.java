@@ -83,44 +83,19 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         private void autoDecideCoverage(InsuranceClaimRequest claim) {
 
             String level = claim.getCoverageLevel();
-            if (level == null) {
-                level = "";
-            }
-            level = level.trim();
-
             double ratio;
 
-            // ====== 100% 赔付 ======
-            if ("Premium".equalsIgnoreCase(level)
-                    || "Full Coverage".equalsIgnoreCase(level)) {
-
-                ratio = 1.0;   // 全额赔付
-
-            // ====== 70% 赔付（如果你不需要 70%，可以删掉这一档） ======
-            } else if ("Standard".equalsIgnoreCase(level)) {
-
-                ratio = 0.7;
-
-            // ====== 50% 赔付 ======
-            } else if ("Basic".equalsIgnoreCase(level)
-                    || "Partial Coverage".equalsIgnoreCase(level)) {
-
-                ratio = 0.5;
-
-            // ====== 其它情况：不赔 ======
+            // 只要是 Full Coverage 就 100%，其他一律 50%
+            if (level != null && level.toLowerCase().contains("full")) {
+                ratio = 1.0;   // 全保
             } else {
-                ratio = 0.0;
+                ratio = 0.5;   // 半保
             }
 
             double approvedAmount = claim.getTreatmentCost() * ratio;
             claim.setClaimAmount(approvedAmount);
 
-            // 根据 ratio 设置状态 & 决策
-            if (ratio == 0.0) {
-                claim.setStatus("Rejected");
-                claim.setCoverageDecision("No Coverage");
-                claim.setClaimDecision("Rejected");
-            } else if (ratio == 1.0) {
+            if (ratio == 1.0) {
                 claim.setStatus("Approved");
                 claim.setCoverageDecision("Full Coverage");
                 claim.setClaimDecision("Approved");
@@ -129,6 +104,8 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 claim.setCoverageDecision("Partial Coverage");
                 claim.setClaimDecision("Approved");
             }
+
+
 }
 
 
@@ -172,7 +149,7 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Patient ID", "Policy ID", "Holder Name", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Coverage Type", "Claim Amount", "Sender", "Status", "Decision"
+                "Patient ID", "Policy ID", "Holder Name", "Pet Name", "Symptom", "Lab Result", "Treatment Cost", "Coverage Level", "Claim Amount", "Sender", "Status", "Decision"
             }
         ));
         jScrollPane1.setViewportView(tblInsuranceClaim);

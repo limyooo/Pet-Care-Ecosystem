@@ -53,6 +53,7 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageOrg = new javax.swing.JButton();
         btnManageEmployees = new javax.swing.JButton();
         btnManageUsers = new javax.swing.JButton();
+        btnViewReports = new javax.swing.JButton();
 
         setLayout(new java.awt.CardLayout());
 
@@ -98,12 +99,19 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnViewReports.setText("View Reports");
+        btnViewReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewReportsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout enterpriseJPanelLayout = new javax.swing.GroupLayout(enterpriseJPanel);
         enterpriseJPanel.setLayout(enterpriseJPanelLayout);
         enterpriseJPanelLayout.setHorizontalGroup(
             enterpriseJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, enterpriseJPanelLayout.createSequentialGroup()
-                .addContainerGap(166, Short.MAX_VALUE)
+                .addContainerGap(167, Short.MAX_VALUE)
                 .addGroup(enterpriseJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, enterpriseJPanelLayout.createSequentialGroup()
                         .addComponent(lblWelcome)
@@ -115,14 +123,16 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
                         .addGap(157, 157, 157))
                     .addGroup(enterpriseJPanelLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(enterpriseJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnManageOrg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(enterpriseJPanelLayout.createSequentialGroup()
-                                .addComponent(lblEnterprise)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnManageEmployees, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnManageUsers, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(enterpriseJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(enterpriseJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnManageOrg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(enterpriseJPanelLayout.createSequentialGroup()
+                                    .addComponent(lblEnterprise)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtEnterprise, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnManageEmployees, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnManageUsers, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnViewReports, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
             .addGroup(enterpriseJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE))
@@ -146,7 +156,9 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnManageEmployees)
                 .addGap(36, 36, 36)
                 .addComponent(btnManageUsers)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(btnViewReports)
+                .addContainerGap(72, Short.MAX_VALUE))
             .addGroup(enterpriseJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, enterpriseJPanelLayout.createSequentialGroup()
                     .addContainerGap(65, Short.MAX_VALUE)
@@ -207,12 +219,22 @@ public class EnterpriseAdminWorkAreaJPanel extends javax.swing.JPanel {
     layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageUsersActionPerformed
 
+    private void btnViewReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewReportsActionPerformed
+        // TODO add your handling code here:
+        ViewReportsJPanel panel = new ViewReportsJPanel(userProcessContainer, enterprise, system);
+
+        userProcessContainer.add("ViewReportsJPanel", panel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnViewReportsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnManageEmployees;
     private javax.swing.JButton btnManageOrg;
     private javax.swing.JButton btnManageUsers;
+    private javax.swing.JButton btnViewReports;
     private javax.swing.JPanel enterpriseJPanel;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblEnterprise;

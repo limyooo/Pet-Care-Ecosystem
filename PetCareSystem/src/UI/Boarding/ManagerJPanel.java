@@ -52,7 +52,7 @@ public class ManagerJPanel extends javax.swing.JPanel {
         
         // 初始化表格
         populateTable();
-        //现实运营数据
+         //现实运营数据
         calculateOperationIndicators();
       
     }
@@ -72,20 +72,21 @@ public class ManagerJPanel extends javax.swing.JPanel {
         btnView = new javax.swing.JButton();
         btnSend = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        lblor = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         fieldor = new javax.swing.JTextField();
+        fieldir = new javax.swing.JTextField();
         lblnc = new javax.swing.JLabel();
+        fields = new javax.swing.JTextField();
         lbldd = new javax.swing.JLabel();
         lbltr = new javax.swing.JLabel();
-        lblir = new javax.swing.JLabel();
-        lbls = new javax.swing.JLabel();
         fieldnc = new javax.swing.JTextField();
+        lblir = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lbls = new javax.swing.JLabel();
         fielddd = new javax.swing.JTextField();
+        lblor = new javax.swing.JLabel();
         fieldtr = new javax.swing.JTextField();
-        fieldir = new javax.swing.JTextField();
-        fields = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel1.setText("Welcome to Pet Boarding Manager Work Area");
@@ -121,10 +122,12 @@ public class ManagerJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jLabel2.setText("Operation Indicators Report");
-
-        lblor.setText("Occupancy Rate");
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         lblnc.setText("New Check-ins");
 
@@ -134,7 +137,12 @@ public class ManagerJPanel extends javax.swing.JPanel {
 
         lblir.setText("Incident Rate");
 
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel2.setText("Operation Indicators Report");
+
         lbls.setText("Staff-to-Dog Ratio");
+
+        lblor.setText("Occupancy Rate");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -146,10 +154,6 @@ public class ManagerJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(82, 82, 82))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -161,10 +165,13 @@ public class ManagerJPanel extends javax.swing.JPanel {
                         .addGap(202, 202, 202)
                         .addComponent(btnSend))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(232, 232, 232)
-                        .addComponent(jLabel2))
+                        .addContainerGap()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 809, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblor)
@@ -186,8 +193,14 @@ public class ManagerJPanel extends javax.swing.JPanel {
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(fieldir)
-                            .addComponent(fields, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(156, Short.MAX_VALUE))
+                            .addComponent(fields, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,10 +215,12 @@ public class ManagerJPanel extends javax.swing.JPanel {
                     .addComponent(btnView)
                     .addComponent(btnSend))
                 .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblor)
                     .addComponent(fieldor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +240,7 @@ public class ManagerJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbltr)
                     .addComponent(fieldtr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -347,6 +362,14 @@ private PetBoardingRecord findRecordById(String recordId) {
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
@@ -358,6 +381,7 @@ private PetBoardingRecord findRecordById(String recordId) {
     private javax.swing.JTextField fieldor;
     private javax.swing.JTextField fields;
     private javax.swing.JTextField fieldtr;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -456,68 +480,100 @@ private PetBoardingRecord findRecordById(String recordId) {
     }
 
     private void calculateOperationIndicators() {
+        // 添加调试信息
+        System.out.println("=== Debug: calculateOperationIndicators ===");
+        System.out.println("Enterprise: " + enterprise);
+        System.out.println("Organization: " + organization);
+        
+        // 检查 enterprise 是否为 null
+        if (enterprise == null) {
+            System.out.println("❌ Enterprise is NULL!");
+            clearOperationFields();
+            // 显示默认值以便调试
+            fieldor.setText("0.00%");
+            fieldnc.setText("0");
+            fielddd.setText("0");
+            fieldtr.setText("$0");
+            fieldir.setText("0.00%");
+            fields.setText("N/A");
+            return;
+        }
+        
         if (!(enterprise instanceof PetBoardingEnterprise)) {
+            System.out.println("❌ Enterprise is not PetBoardingEnterprise: " + enterprise.getClass().getName());
             clearOperationFields();
             return;
         }
+        
         PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) this.enterprise;
         BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
         
-        if (recordDirectory == null || recordDirectory.getRecordList() == null) {
+        if (recordDirectory == null) {
+            System.out.println("❌ BoardingRecordDirectory is NULL!");
+            clearOperationFields();
+            return;
+        }
+        
+        if (recordDirectory.getRecordList() == null) {
+            System.out.println("❌ RecordList is NULL!");
             clearOperationFields();
             return;
         }
 
         // 1. 获取所有记录
         java.util.List<PetBoardingRecord> allRecords = recordDirectory.getRecordList();
+        System.out.println("✅ Total records: " + allRecords.size());
         
-        // 2. 计算简单指标 (修正 Occupancy Rate)
-        // 统计所有处于活动状态的宠物数量 (Checked In 或 Pending Check-out)
+        // 2. 计算指标
+        // 统计活动宠物数量
         long activelyBoardingCount = allRecords.stream()
-            .filter(r -> "Checked In".equals(r.getStatus()) || "Pending Check-out".equals(r.getStatus()))
+            .filter(r -> "Active".equalsIgnoreCase(r.getStatus()) || 
+                        "Checked In".equalsIgnoreCase(r.getStatus()))
             .count();
+        
+        System.out.println("Active boarding count: " + activelyBoardingCount);
         
         int totalRecords = allRecords.size();
+        int totalRooms = 20; // 假设总房位数
         
-        // 假设总房位数是 20
-        int totalRooms = 20; 
-        
-        // --- Occupancy Rate (活动宠物数 / 总房位数) ---
-        // 使用 activelyBoardingCount
-        double occupancyRateValue = (activelyBoardingCount * 100.0 / totalRooms);
+        // --- Occupancy Rate ---
+        double occupancyRateValue = (totalRooms > 0) ? (activelyBoardingCount * 100.0 / totalRooms) : 0.0;
         String occupancyRate = String.format("%.2f%%", occupancyRateValue);
         
-        // --- New Check-ins (简化为总记录数) ---
-        String newCheckins = String.valueOf(totalRecords); 
+        // --- New Check-ins ---
+        String newCheckins = String.valueOf(totalRecords);
         
-        // --- Dog/Cat-Days (假设所有宠物都入住 3 天) ---
-        String dogCatDays = String.valueOf(totalRecords * 3); 
+        // --- Dog/Cat-Days ---
+        String dogCatDays = String.valueOf(totalRecords * 3);
         
-        // --- Incident Rate (假设有健康请求的记录为 Incident) ---
-        long incidentCount = organization.getWorkQueue().getWorkRequestList().stream()
-            .filter(wr -> wr instanceof HealthCareCheckRequest)
-            .count();
-        // 分母使用活动宠物数量 (activelyBoardingCount)
-        double incidentRateValue = (activelyBoardingCount > 0) ? (incidentCount * 100.0 / activelyBoardingCount) : 0.0;
+        // --- Incident Rate ---
+        long incidentCount = 0;
+        if (organization != null && organization.getWorkQueue() != null) {
+            incidentCount = organization.getWorkQueue().getWorkRequestList().stream()
+                .filter(wr -> wr instanceof HealthCareCheckRequest)
+                .count();
+        }
+        double incidentRateValue = (activelyBoardingCount > 0) ? 
+            (incidentCount * 100.0 / activelyBoardingCount) : 0.0;
         String incidentRate = String.format("%.2f%%", incidentRateValue);
-
-        // --- Customer Retention Rate (简化为 N/A) ---
-        String retentionRate = "N/A"; 
         
-        // --- Total Revenue (简化为每条记录 500 块) ---
-        String totalRevenue = "$" + (totalRecords * 500); 
-
-        // --- Staff-to-Dog Ratio (简化为 1:5) ---
-        String staffToDogRatio = "1:5"; 
-
+        // --- Total Revenue ---
+        String totalRevenue = "$" + (totalRecords * 500);
+        
+        // --- Staff-to-Dog Ratio ---
+        String staffToDogRatio = "1:5";
+        
         // 3. 更新字段
         fieldor.setText(occupancyRate);
         fieldnc.setText(newCheckins);
         fielddd.setText(dogCatDays);
-        
         fieldtr.setText(totalRevenue);
         fieldir.setText(incidentRate);
         fields.setText(staffToDogRatio);
+        
+        System.out.println("✅ Fields updated successfully!");
+        System.out.println("Occupancy Rate: " + occupancyRate);
+        System.out.println("New Check-ins: " + newCheckins);
     }
     
     // ⭐ 新增：清除运营指标字段的方法
@@ -530,6 +586,8 @@ private PetBoardingRecord findRecordById(String recordId) {
         fieldir.setText("");
         fields.setText("");
     }
+
+    
         
     }
         

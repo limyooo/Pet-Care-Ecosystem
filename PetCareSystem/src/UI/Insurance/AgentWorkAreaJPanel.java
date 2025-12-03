@@ -118,6 +118,7 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
         lblPolicyList = new javax.swing.JLabel();
         btnCreateNew = new javax.swing.JButton();
         btnViewPolicy = new javax.swing.JButton();
+        btnDashboard = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 204, 204));
         setForeground(new java.awt.Color(242, 242, 242));
@@ -165,22 +166,32 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnDashboard.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        btnDashboard.setText("View Insurance Dashboard");
+        btnDashboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDashboardActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogout))
-                    .addComponent(lblPolicyList)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 853, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnViewPolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCreateNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLogout))
+                        .addComponent(lblPolicyList)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 853, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnViewPolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCreateNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
+                    .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -192,13 +203,15 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnLogout))
                 .addGap(18, 18, 18)
                 .addComponent(lblPolicyList)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(40, 40, 40)
                 .addComponent(btnCreateNew)
                 .addGap(40, 40, 40)
                 .addComponent(btnViewPolicy)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(btnDashboard)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -255,9 +268,23 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
+                AgentDashboardJPanel panel = new AgentDashboardJPanel(
+                userProcessContainer,
+                account,
+                organization,
+                insuranceEnterprise,
+                system
+        );
+        userProcessContainer.add("AgentDashboardJPanel", panel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.show(userProcessContainer, "AgentDashboardJPanel");
+    }//GEN-LAST:event_btnDashboardActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateNew;
+    private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnViewPolicy;
     private javax.swing.JScrollPane jScrollPane1;

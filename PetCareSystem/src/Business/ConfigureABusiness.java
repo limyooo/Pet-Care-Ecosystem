@@ -309,7 +309,7 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
         String emergencyContact = faker.phoneNumber().phoneNumber();
         String insuranceCompany = faker.company().name() + " Insurance"; // 随便生成公司 + Insurance
         String policyId = "PL" + faker.number().digits(6);                // 保单号
-        String coverageLevel = faker.options().option("Full Coverage", "Partial Coverage"); // 两种任选
+        String coverageLevel = faker.options().option("Full Coverage 100%", "Partial Coverage 50%"); 
         String expirationDate = faker.date().future(300, java.util.concurrent.TimeUnit.DAYS).toString();
 
        PetOwner owner = petOwnerDirectory.addOwner(
@@ -370,12 +370,13 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
         }
 
         // 7.2 Doctor -> Lab：实验室检查
+        /*
         for (int i = 0; i < 5; i++) {
             LabTestRequest req = new LabTestRequest();
             req.setMessage("Lab test for pet: " + faker.dog().name());
             req.setStatus("Pending");
             vetLabOrg.getWorkQueue().getWorkRequestList().add(req);
-        }
+        }*/
 
         // 7.3 Insurance Claim 请求
 for (int i = 0; i < 5; i++) {

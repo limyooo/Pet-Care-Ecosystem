@@ -355,7 +355,7 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
 
         // 1.Update request itself
         request.setAssignedDoctor(doctorName);
-        request.setStatus("Doctor Assigned");
+        request.setStatus(HealthCareCheckRequest.STATUS_ASSIGNED_DOCTOR);
 
         // 2. 找到 VetDoctorOrganization
         VetDoctorOrganization doctorOrg = enterprise.getOrganizationDirectory().getOrganizationList()
@@ -503,5 +503,11 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
         comboDoctors.setEnabled(true);
         fieldAssignDoctor.setEnabled(true);
         
+        // 如果已经有assigned doctor，就不允许再分配
+        if (request.getAssignedDoctor() != null) {
+            comboDoctors.setEnabled(false);
+            fieldAssignDoctor.setEnabled(false);
+        }
+
         }
     }

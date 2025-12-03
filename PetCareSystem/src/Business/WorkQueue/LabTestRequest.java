@@ -10,6 +10,7 @@ public class LabTestRequest extends WorkRequest {
     private static int counter = 4000;   
     private String testId; 
     private String testResult;   
+    private String testStatus;  // Pending / Processing / Completed
     private HealthCareCheckRequest healthCareRequest;
     private Pet pet;
 
@@ -18,6 +19,7 @@ public class LabTestRequest extends WorkRequest {
         super();            
         counter++;          
         this.testId = "T" + counter;
+        this.testStatus = "Pending";   //默认状态
     }
     
     public String getTestId() {
@@ -35,9 +37,13 @@ public class LabTestRequest extends WorkRequest {
     public HealthCareCheckRequest getHealthCareRequest() {
         return healthCareRequest;
     }
-
+    //自动反向绑定：让healthReq 也有 labReq
     public void setHealthCareRequest(HealthCareCheckRequest healthCareRequest) {
         this.healthCareRequest = healthCareRequest;
+        
+        if (healthCareRequest != null) {
+        healthCareRequest.setLabTestRequest(this);
+        }
     }
 
     public Pet getPet() {
@@ -47,6 +53,16 @@ public class LabTestRequest extends WorkRequest {
     public void setPet(Pet pet) {
         this.pet = pet;
     }
+
+    public String getTestStatus() {
+        return testStatus;
+    }
+
+    public void setTestStatus(String testStatus) {
+        this.testStatus = testStatus;
+    }
+    
+    
 
     //display Test ID
     @Override

@@ -26,6 +26,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     private HealthCareCheckRequest Request;
     private UserAccount account;
     private Enterprise enterprise;
+    private final java.util.Map<String, Double> treatmentPriceMap = new java.util.HashMap<>();
     
     /**
      * Creates new form SubmitInsuranceClaimRequestJPanel
@@ -39,7 +40,12 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         this.account = account;
         this.enterprise = enterprise;
         
+        initTreatmentPrice();
         populateData();
+        
+        
+        
+      
     }
 
     /**
@@ -140,6 +146,11 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         lblTreatmentCost.setText("Treatment Cost");
 
         comboTreatmentNeeded.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medication Only ", "IV Fluids & Supportive Care ", "Diagnostic Imaging (X-ray / Ultrasound) ", "Surgery ", "Hospitalization " }));
+        comboTreatmentNeeded.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTreatmentNeededActionPerformed(evt);
+            }
+        });
 
         comboCoverageLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Coverage 100%", "Partial Coverage 50%", " ", " " }));
 
@@ -371,6 +382,12 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnSubmitInsuranceClaimRequestActionPerformed
 
+    private void comboTreatmentNeededActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTreatmentNeededActionPerformed
+        // TODO add your handling code here:
+         updateTreatmentCost();
+
+    }//GEN-LAST:event_comboTreatmentNeededActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -418,28 +435,28 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     
     //获取宠物对象    
     Pet p = Request.getPet();
-    // Pet info
+    //Pet info
     fieldPetName.setText(p.getPetName());
     fieldSpieces.setText(p.getSpecies());
     fieldAge.setText(String.valueOf(p.getAge()));
     fieldWeight.setText(String.valueOf(p.getWeight()));
     fieldFoodAllergy.setText(p.getFoodAllergy());
 
-    // Insurance info
+    //Insurance info
     fieldInsuranceCompany.setText(p.getPetOwner().getInsuranceCompany());
     fieldPolicyID.setText(p.getPetOwner().getPolicyId());
     comboCoverageLevel.setSelectedItem(p.getPetOwner().getCoverageLevel());
     fieldExpirationDate.setText(p.getPetOwner().getExpirationDate());
 
-    /*// Boarding info
+    /*//Boarding info
     fieldServiceProvider.setText(Request.getServiceProvider());
     fieldStartDate.setText(Request.getStartDate());
     fieldEndDate.setText(Request.getEndDate()); */
 
-    // Medical Result (来自 Pet Clinic)
+    //Medical Result (来自Pet Clinic)
     fieldLabTestResult.setText(Request.getLabResult());
     comboTreatmentNeeded.setSelectedItem(Request.getTreatmentNeeded());
-    fieldTreatmentCost.setText(String.valueOf(Request.getTreatmentCost()));
+    updateTreatmentCost(); //自动根据 map 设置价格
     
     
     disableAllFields();
@@ -448,23 +465,39 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     
     private void disableAllFields() {
     
-    fieldPetName.setEditable(false);
-    fieldSpieces.setEditable(false);
-    fieldAge.setEditable(false);
-    fieldWeight.setEditable(false);
-    fieldFoodAllergy.setEditable(false);
+    fieldPetName.setEnabled(false);
+    fieldSpieces.setEnabled(false);
+    fieldAge.setEnabled(false);
+    fieldWeight.setEnabled(false);
+    fieldFoodAllergy.setEnabled(false);
 
-    fieldInsuranceCompany.setEditable(false);
-    fieldPolicyID.setEditable(false);
-    fieldExpirationDate.setEditable(false);
+    fieldInsuranceCompany.setEnabled(false);
+    fieldPolicyID.setEnabled(false);
+    fieldExpirationDate.setEnabled(false);
     comboCoverageLevel.setEnabled(false);
 
-    fieldServiceProvider.setEditable(false);
-    fieldStartDate.setEditable(false);
-    fieldEndDate.setEditable(false);
+    fieldServiceProvider.setEnabled(false);
+    fieldStartDate.setEnabled(false);
+    fieldEndDate.setEnabled(false);
 
-    fieldLabTestResult.setEditable(false);
+    fieldLabTestResult.setEnabled(false);
     comboTreatmentNeeded.setEnabled(false);
-    fieldTreatmentCost.setEditable(false);
+    fieldTreatmentCost.setEnabled(false);
+    }
+
+    private void initTreatmentPrice() {
+        
+        treatmentPriceMap.put("Medication Only ", 80.0);
+        treatmentPriceMap.put("IV Fluids & Supportive Care ", 250.0);
+        treatmentPriceMap.put("Diagnostic Imaging (X-ray / Ultrasound) ", 400.0);
+        treatmentPriceMap.put("Surgery ", 1200.0);
+        treatmentPriceMap.put("Hospitalization ", 600.0);
+    }
+
+    private void updateTreatmentCost() {
+        String selected = (String) comboTreatmentNeeded.getSelectedItem();
+        if (selected != null && treatmentPriceMap.containsKey(selected)) {
+            fieldTreatmentCost.setText(String.valueOf(treatmentPriceMap.get(selected)));
+        }
     }
 }

@@ -38,7 +38,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         this.account = account;
         this.frontDeskOrg = frontDeskOrg;
         this.enterprise = enterprise;
-        this.mainJFrame = mainJFrame;
+        
 
         populateTable();
         populateClaimTable();
@@ -279,19 +279,19 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblClaims.getModel();
         model.setRowCount(0);
 
-        for (WorkRequest wr : account.getWorkQueue().getWorkRequestList()) {
+        for (WorkRequest wr : frontDeskOrg.getWorkQueue().getWorkRequestList()) {
             if (wr instanceof InsuranceClaimRequest claim) {
 
                 Object[] row = new Object[5];
 
                 row[0] = claim.getClaimId();       
-                row[1] = claim.getHealthRequest().getPatientId();    
+                row[1] = claim.getHealthRequest() == null ? "Unknown" : claim.getHealthRequest().getPatientId();  
                 row[2] = claim.getClaimAmount();   
                 row[3] = claim.getClaimDecision(); 
                 row[4] = claim.getStatus();        
 
                 model.addRow(row);
+                }
             }
-        }
     }
 }

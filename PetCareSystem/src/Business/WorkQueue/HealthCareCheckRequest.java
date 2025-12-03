@@ -9,10 +9,16 @@ import Business.UserAccount.UserAccount;
  */
 public class HealthCareCheckRequest extends WorkRequest {
     
+    public static final String STATUS_PENDING_DOCTOR = "Pending Doctor Assignment";
+    public static final String STATUS_ASSIGNED_DOCTOR = "Assigned to Doctor";
+    public static final String STATUS_IN_LAB = "In Lab";
+    public static final String STATUS_LAB_COMPLETED = "Lab Completed";
+    public static final String STATUS_TREATMENT_COMPLETED = "Treatment Completed";
+    
     //messsage and sender has been providede by work request父类
     //patient ID 从 1001 开始
     private static int counter = 1000; 
-    private int patientId;
+    private String patientId;
     private String symptom;
     private String assignedDoctor;
     private String labResult;
@@ -23,10 +29,12 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String boardingRecordId;
     private String treatmentNeeded;
     private double treatmentCost;
+    private LabTestRequest labTestRequest;
+    
     
     //Constructor：create new patientId
     
-    // ⭐ 新增 getter 和 setter
+    //getter 和 setter
     public String getBoardingRecordId() {
         return boardingRecordId;
     }
@@ -36,10 +44,11 @@ public class HealthCareCheckRequest extends WorkRequest {
     }
     
     public HealthCareCheckRequest() {
-        this.patientId = ++counter;  
+        this.patientId = String.valueOf(++counter);
+        this.setStatus(STATUS_PENDING_DOCTOR);   //defautlt setting:等待分配医生
     }
     
-    public int getPatientId() {
+    public String getPatientId() {
         return patientId;
     }
 
@@ -106,10 +115,17 @@ public class HealthCareCheckRequest extends WorkRequest {
     public void setTreatmentCost(double treatmentCost) {
         this.treatmentCost = treatmentCost;
     }
-    
-    
+
+    public LabTestRequest getLabTestRequest() {
+        return labTestRequest;
+    }
+
+    public void setLabTestRequest(LabTestRequest labTestRequest) {
+        this.labTestRequest = labTestRequest;
+    }
+   
     @Override
-    public String toString() {
-        return String.valueOf(this.patientId);
+        public String toString() {
+        return String.valueOf(patientId);
     }
 }

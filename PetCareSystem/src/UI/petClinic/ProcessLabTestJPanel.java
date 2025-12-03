@@ -8,8 +8,11 @@ import Business.PetClinicOrganization.VetLabOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestRequest;
 import java.awt.CardLayout;
+import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import UI.petClinic.LabAssistantWorkAreaJPanel;
+
 
 /**
  *
@@ -194,9 +197,11 @@ public class ProcessLabTestJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        // remove current panel
         userProcessContainer.remove(this);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
+        
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
@@ -206,12 +211,30 @@ public class ProcessLabTestJPanel extends javax.swing.JPanel {
         request.setTestResult(result);
         request.setStatus("Completed");
 
+        //更新 Doctor 那边 HealthCareRequest 的 lab result
+        if (request.getHealthCareRequest() != null) {
+            request.getHealthCareRequest().setLabResult(result);
+        }
+
         JOptionPane.showMessageDialog(null, "Lab Test Result Submitted!");
 
-        //fresh table on previos ui
+        //移除当前 panel
         userProcessContainer.remove(this);
+
+        //获取上一页 panel
+        Component[] componentArray = userProcessContainer.getComponents();
+        Component previousComponent = componentArray[componentArray.length - 1];
+
+        //刷新上一页
+        if (previousComponent instanceof LabAssistantWorkAreaJPanel) {
+            LabAssistantWorkAreaJPanel labPanel = (LabAssistantWorkAreaJPanel) previousComponent;
+            labPanel.populateTable();
+        }
+
+        //返回上一页
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
+
    
     }//GEN-LAST:event_btnSubmitActionPerformed
 
@@ -237,7 +260,7 @@ public class ProcessLabTestJPanel extends javax.swing.JPanel {
 
     private void populateFields() {
         
-       fieldTestID.setText(request.getTestId());
+       fieldTestID.setText(String.valueOf(request.getTestId()));
        fieldTestID.setEnabled(false);
 
         if (request.getPet() != null) {

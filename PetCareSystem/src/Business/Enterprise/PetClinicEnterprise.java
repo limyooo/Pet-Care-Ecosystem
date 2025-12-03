@@ -15,6 +15,7 @@ public class PetClinicEnterprise extends Enterprise {
     @Override
     public ArrayList<Organization.Type> getSupportedOrganizationTypes() {
         ArrayList<Organization.Type> list = new ArrayList<>();
+        list.add(Organization.Type.FrontDesk);
         list.add(Organization.Type.VetDoctor);
         list.add(Organization.Type.VetLab);
         return list;

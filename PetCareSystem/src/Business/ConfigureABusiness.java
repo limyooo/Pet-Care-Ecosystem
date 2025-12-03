@@ -94,8 +94,8 @@ public class ConfigureABusiness {
         Employee clinicAdminEmp = clinicEnt.getEmployeeDirectory()
                 .createEmployee("Clinic Enterprise Admin");
         clinicEnt.getUserAccountDirectory().createUserAccount(
-                "clinicAdmin",
-                "Clinic@123",
+                "ClinicAdmin",
+                "ClinicAdmin",
                 clinicAdminEmp,
                 new EnterpriseAdminRole()
         );

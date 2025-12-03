@@ -38,26 +38,26 @@ public class ViewReportsJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnPetBoardingReport = new javax.swing.JButton();
+        btnPetClinicReport = new javax.swing.JButton();
+        btnPetInsuranceReport = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
-        jButton1.setText("Pet Boarding Report");
+        btnPetBoardingReport.setText("Pet Boarding Report");
 
-        jButton2.setText("Pet Clinic Report");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnPetClinicReport.setText("Pet Clinic Report");
+        btnPetClinicReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnPetClinicReportActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Pet Insurance Report");
+        btnPetInsuranceReport.setText("Pet Insurance Report");
 
-        jButton4.setText("<<< Back");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("<<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -68,47 +68,50 @@ public class ViewReportsJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addComponent(btnPetInsuranceReport)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnPetClinicReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPetBoardingReport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(353, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(btnBack)
                 .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jButton4)
+                .addComponent(btnBack)
                 .addGap(46, 46, 46)
-                .addComponent(jButton1)
+                .addComponent(btnPetBoardingReport)
                 .addGap(34, 34, 34)
-                .addComponent(jButton2)
+                .addComponent(btnPetClinicReport)
                 .addGap(33, 33, 33)
-                .addComponent(jButton3)
+                .addComponent(btnPetInsuranceReport)
                 .addContainerGap(223, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         userProcessContainer.remove(this);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnPetClinicReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetClinicReportActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        PetClinicReportJPanel panel = new PetClinicReportJPanel(userProcessContainer, enterprise, system);
+        userProcessContainer.add("ClinicReportJPanel", panel);
+        ((CardLayout) userProcessContainer.getLayout()).next(userProcessContainer);
+    }//GEN-LAST:event_btnPetClinicReportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnPetBoardingReport;
+    private javax.swing.JButton btnPetClinicReport;
+    private javax.swing.JButton btnPetInsuranceReport;
     // End of variables declaration//GEN-END:variables
 }

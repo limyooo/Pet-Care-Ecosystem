@@ -5,7 +5,7 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.PetClinicOrganization.VetLabOrganization;
 import Business.UserAccount.UserAccount;
-import UI.petClinic.LabAssistantWorkAreaJpanel;
+import UI.petClinic.LabAssistantWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -22,6 +22,6 @@ public class LabAssistantRole extends Role {
         // 确保 organization 是 VetLabOrganization
         VetLabOrganization labOrg = (VetLabOrganization) organization;
 
-        return new LabAssistantWorkAreaJpanel(userProcessContainer,account,labOrg);
+        return new LabAssistantWorkAreaJPanel(userProcessContainer,account,labOrg);
     }
 }

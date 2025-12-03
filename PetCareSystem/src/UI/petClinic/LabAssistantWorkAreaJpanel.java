@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author jingyangwang
  */
-public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
+public class LabAssistantWorkAreaJPanel extends javax.swing.JPanel {
     
     private JPanel userProcessContainer;
     private UserAccount account;
@@ -26,7 +26,7 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
     /**
      * Creates new form LabAssistantWorkAreaJpanel
      */
-    public LabAssistantWorkAreaJpanel(JPanel userProcessContainer,UserAccount account,VetLabOrganization labOrg) {
+    public LabAssistantWorkAreaJPanel(JPanel userProcessContainer,UserAccount account,VetLabOrganization labOrg) {
         
         initComponents();
         
@@ -54,17 +54,17 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
 
         tblLabTest.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Test ID", "Patient ID", "Doctor", "Symptom", "Message", "Lab Test Status"
+                "Test ID", "Patient ID", "Doctor", "Symptom", "Message", "Lab Test Status", "Lab Test Result"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -101,28 +101,28 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
                 .addComponent(btnLogout)
                 .addGap(50, 50, 50))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnProcessLabTest)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(lblTitle)
-                        .addGap(47, 47, 47))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnLogout)
-                        .addGap(27, 27, 27)))
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(lblTitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(btnProcessLabTest)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -153,19 +153,30 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
         int selectedRow = tblLabTest.getSelectedRow();
 
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(null, "Please select a row first!");
+            JOptionPane.showMessageDialog(null, "Please select a row.");
             return;
         }
 
-        //get LabTestRequest object
         LabTestRequest request = (LabTestRequest) tblLabTest.getValueAt(selectedRow, 0);
 
-        //Set status as Processing
-        request.setStatus("Processing");
+        //Prevent reprocessing 
+        if ("Completed".equals(request.getTestStatus())) {
+            JOptionPane.showMessageDialog(null, "This test has already been completed!");
+            return;
+        }
 
-        //swithc to ProcessLabTestJPanel
+        //Set status to Processing 
+        request.setTestStatus("Processing");
+
+        //Link Lab Assistant back to HealthCareRequest 
+        if (request.getHealthCareRequest() != null) {
+            request.getHealthCareRequest().setLabAssistant(account);
+        }
+
+        //Jump to Processing Panel 
         ProcessLabTestJPanel panel = new ProcessLabTestJPanel(userProcessContainer,account,labOrg,request);
-
+        
+        //swith to next jpanel
         userProcessContainer.add("ProcessLabTestJPanel", panel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
@@ -180,28 +191,29 @@ public class LabAssistantWorkAreaJpanel extends javax.swing.JPanel {
     private javax.swing.JTable tblLabTest;
     // End of variables declaration//GEN-END:variables
 
-    private void populateTable() {
-        //get the table and clean it
-        DefaultTableModel model = (DefaultTableModel) tblLabTest.getModel();
-        model.setRowCount(0);
+    public void populateTable() {
+    
+    //get the table and clean it
+    DefaultTableModel model = (DefaultTableModel) tblLabTest.getModel();
+    model.setRowCount(0);
 
-        for (WorkRequest wr : labOrg.getWorkQueue().getWorkRequestList()) {
-            if (!(wr instanceof LabTestRequest)) continue;
+    for (WorkRequest wr : labOrg.getWorkQueue().getWorkRequestList()) {
 
-            LabTestRequest req = (LabTestRequest) wr;
-            Object[] row = new Object[6];
+        if (wr instanceof LabTestRequest) {
+            LabTestRequest lab = (LabTestRequest) wr;
 
-            row[0] = req;                       
-            row[1] = req.getPet() != null ? req.getPet().getPetId() : "";
-            row[2] = req.getSender() != null ? 
-                     req.getSender().getEmployee().getName() : "";
-            row[3] = req.getHealthCareRequest() != null ?
-                     req.getHealthCareRequest().getSymptom() : "";
-            row[4] = req.getMessage();
-            row[5] = req.getStatus();
+            Object[] row = new Object[7];
+
+            row[0] = lab;   // test ID (toString)
+            row[1] = (lab.getHealthCareRequest() != null) ? lab.getHealthCareRequest().getPatientId() : "Unknown";
+            row[2] = (lab.getSender() != null && lab.getSender().getEmployee() != null) ?lab.getSender().getEmployee().getName() : "Unknown";
+            row[3] = (lab.getHealthCareRequest() != null) ?lab.getHealthCareRequest().getSymptom() : "";
+            row[4] = lab.getMessage();
+            row[5] = (lab.getTestStatus() == null) ? "Pending" : lab.getTestStatus();
+            row[6] = (lab.getTestResult() == null) ? "Not Set" : lab.getTestResult();
 
             model.addRow(row);
-        }
+            }
+        }    
     }
-    
 }

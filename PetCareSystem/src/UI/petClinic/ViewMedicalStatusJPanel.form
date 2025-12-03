@@ -16,50 +16,61 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="487" max="32767" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="btnCreateInsuranceClaimRequest" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+          </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Component id="lblDoctorAssigned" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblSymptom" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblLabAssistant" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblMessage" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblLabTestResult" alignment="0" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblLabAssistant" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLabTestResult" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTreatmentNeeded" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblHealthCareCheckStatus" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblPatientID" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPetName" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="lblDoctorAssigned" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblMessage" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblSymptom" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblPatientID" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPetName" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="fieldPetName" alignment="0" pref="284" max="32767" attributes="0"/>
+                  <Component id="fieldPetName" alignment="0" max="32767" attributes="0"/>
                   <Component id="fieldSymptom" alignment="0" max="32767" attributes="0"/>
                   <Component id="fieldMessage" alignment="0" max="32767" attributes="0"/>
                   <Component id="fieldDoctorAssigned" alignment="0" max="32767" attributes="0"/>
                   <Component id="fieldLabAssistant" alignment="0" max="32767" attributes="0"/>
                   <Component id="fieldLabTestResult" alignment="0" max="32767" attributes="0"/>
                   <Component id="fieldPatientID" max="32767" attributes="0"/>
+                  <Component id="fieldTreatmentNeeded" max="32767" attributes="0"/>
+                  <Component id="fieldHealthCareCheckStatus" min="-2" pref="284" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnCreateInsuranceClaimRequest" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                      <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="487" max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,7 +82,7 @@
                   <Component id="lblTitle" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblPatientID" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="fieldPatientID" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -101,14 +112,24 @@
                   <Component id="lblLabAssistant" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="fieldLabAssistant" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblLabTestResult" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fieldLabTestResult" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblHealthCareCheckStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldHealthCareCheckStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="75" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fieldLabTestResult" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLabTestResult" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="fieldTreatmentNeeded" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTreatmentNeeded" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="btnCreateInsuranceClaimRequest" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -186,6 +207,20 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateInsuranceClaimRequestActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTreatmentNeeded">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Treatment Needed"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldTreatmentNeeded">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblHealthCareCheckStatus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Health Care Check Status"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldHealthCareCheckStatus">
     </Component>
   </SubComponents>
 </Form>

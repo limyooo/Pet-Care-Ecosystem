@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class LabAssistantWorkAreaJPanel extends javax.swing.JPanel {
     
-    private JPanel userProcessContainer;
+    private JPanel userProcessContainer;     
     private UserAccount account;
     private VetLabOrganization labOrg;
     

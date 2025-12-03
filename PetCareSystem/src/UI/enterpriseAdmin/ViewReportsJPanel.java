@@ -5,9 +5,12 @@
 package UI.enterpriseAdmin;
 
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetInsuranceEnterprise;
 import Business.Petsystem;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import UI.Insurance.AgentDashboardJPanel;
+
 
 /**
  *
@@ -53,6 +56,11 @@ public class ViewReportsJPanel extends javax.swing.JPanel {
         });
 
         btnPetInsuranceReport.setText("Pet Insurance Report");
+        btnPetInsuranceReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPetInsuranceReportActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("<<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +114,31 @@ public class ViewReportsJPanel extends javax.swing.JPanel {
         userProcessContainer.add("ClinicReportJPanel", panel);
         ((CardLayout) userProcessContainer.getLayout()).next(userProcessContainer);
     }//GEN-LAST:event_btnPetClinicReportActionPerformed
+
+    private void btnPetInsuranceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetInsuranceReportActionPerformed
+        // 只能在 PetInsuranceEnterprise 下看这个报表
+    if (!(enterprise instanceof PetInsuranceEnterprise)) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "This dashboard is only available for Pet Insurance Enterprise.");
+        return;
+    }
+
+    PetInsuranceEnterprise insEnt = (PetInsuranceEnterprise) enterprise;
+
+    // 这里我们暂时不需要 account 和 organization，可以先传 null
+    AgentDashboardJPanel panel = new AgentDashboardJPanel(
+            userProcessContainer,
+            null,                      // UserAccount
+            null,                      // InsurancePolicyOrganization
+            insEnt,
+            system
+    );
+
+    userProcessContainer.add("AgentDashboardJPanel", panel);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnPetInsuranceReportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -51,17 +51,18 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
         populateForm();
     }
         // 给 Coverage / Status 设置一个固定的选项
-    private void initComboBoxes() {
-        cbxCoverageType.removeAllItems();
-        cbxCoverageType.addItem("Basic");
-        cbxCoverageType.addItem("Standard");
-        cbxCoverageType.addItem("Premium");
+    // 给 Coverage / Status 设置一个固定的选项
+        private void initComboBoxes() {
+            cbxCoverageType.removeAllItems();
+            cbxCoverageType.addItem("Full Coverage");
+            cbxCoverageType.addItem("Partial Coverage");
 
-        cbxStatus.removeAllItems();
-        cbxStatus.addItem("Active");
-        cbxStatus.addItem("Expired");
-        cbxStatus.addItem("Cancelled");
-    }
+            cbxStatus.removeAllItems();
+            cbxStatus.addItem("Active");
+            cbxStatus.addItem("Expired");
+            cbxStatus.addItem("Cancelled");
+        }
+
 
     // 用 policy -> pet -> owner 的信息填充 UI
     private void populateForm() {
@@ -161,7 +162,7 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
         lblPolicyInfo = new javax.swing.JLabel();
         lblPolicyID = new javax.swing.JLabel();
         txtPolicyID = new javax.swing.JTextField();
-        lblCoverageLevel = new javax.swing.JLabel();
+        lblCoverageType = new javax.swing.JLabel();
         lblStartDate = new javax.swing.JLabel();
         txtExpiration = new javax.swing.JTextField();
         lblStatus = new javax.swing.JLabel();
@@ -246,8 +247,8 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
 
         txtPolicyID.setEditable(false);
 
-        lblCoverageLevel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
-        lblCoverageLevel.setText("CoverageType:");
+        lblCoverageType.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        lblCoverageType.setText("CoverageType:");
 
         lblStartDate.setText("StartDate:");
 
@@ -350,7 +351,7 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(txtPolicyID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(lblCoverageLevel)
+                                            .addComponent(lblCoverageType)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(cbxCoverageType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
@@ -400,7 +401,7 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
                             .addComponent(txtPolicyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCoverageLevel)
+                            .addComponent(lblCoverageType)
                             .addComponent(cbxCoverageType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -527,7 +528,7 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblAge;
-    private javax.swing.JLabel lblCoverageLevel;
+    private javax.swing.JLabel lblCoverageType;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEmergency;
     private javax.swing.JLabel lblExpirationDate;

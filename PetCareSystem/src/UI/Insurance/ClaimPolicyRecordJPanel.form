@@ -47,7 +47,7 @@
                                           <Component id="txtExpiration" pref="118" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblCoverageType" min="-2" pref="125" max="-2" attributes="0"/>
+                                          <Component id="lblCoverageLevel" min="-2" pref="125" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="txtCoverage" pref="118" max="32767" attributes="0"/>
                                       </Group>
@@ -167,7 +167,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblCoverageType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtCoverage" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -182,7 +182,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="113" max="32767" attributes="0"/>
+              <EmptySpace pref="131" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -226,9 +226,9 @@
         <Property name="text" type="java.lang.String" value="Pet Name:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCoverageType">
+    <Component class="javax.swing.JLabel" name="lblCoverageLevel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Coverage Type:"/>
+        <Property name="text" type="java.lang.String" value="Coverage Level:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblStatus">

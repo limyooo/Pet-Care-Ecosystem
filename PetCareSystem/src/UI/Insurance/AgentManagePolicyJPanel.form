@@ -109,7 +109,7 @@
                                           <Component id="txtPolicyID" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblCoverageLevel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblCoverageType" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="cbxCoverageType" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
@@ -177,7 +177,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCoverageType" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxCoverageType" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -397,7 +397,7 @@
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCoverageLevel">
+    <Component class="javax.swing.JLabel" name="lblCoverageType">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Microsoft YaHei UI" size="12" style="1"/>

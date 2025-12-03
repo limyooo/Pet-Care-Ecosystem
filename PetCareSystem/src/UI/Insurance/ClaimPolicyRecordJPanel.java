@@ -92,7 +92,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
         txtPolicyHolderName = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         lblPetName = new javax.swing.JLabel();
-        lblCoverageType = new javax.swing.JLabel();
+        lblCoverageLevel = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         lblExpirationDate = new javax.swing.JLabel();
         txtPetName = new javax.swing.JTextField();
@@ -132,7 +132,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
 
         lblPetName.setText("Pet Name:");
 
-        lblCoverageType.setText("Coverage Type:");
+        lblCoverageLevel.setText("Coverage Level:");
 
         lblStatus.setText("Status:");
 
@@ -194,7 +194,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
                                             .addGap(51, 51, 51)
                                             .addComponent(txtExpiration, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(lblCoverageType, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblCoverageLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(18, 18, 18)
                                             .addComponent(txtCoverage, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
@@ -285,7 +285,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
                             .addComponent(txtPetName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCoverageType)
+                            .addComponent(lblCoverageLevel)
                             .addComponent(txtCoverage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -295,7 +295,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
                             .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -349,7 +349,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblClaimHistory;
     private javax.swing.JLabel lblClaimID;
     private javax.swing.JLabel lblCompany;
-    private javax.swing.JLabel lblCoverageType;
+    private javax.swing.JLabel lblCoverageLevel;
     private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblExpirationDate;
     private javax.swing.JLabel lblPetName;

@@ -46,7 +46,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtCoverageLevel" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="txtCoverageType" min="-2" pref="150" max="-2" attributes="0"/>
                               <Component id="txtExpiration" min="-2" pref="150" max="-2" attributes="0"/>
                               <Component id="txtStart" min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
@@ -193,7 +193,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtCoverageLevel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCoverageType" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblCoverageType" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="117" max="-2" attributes="0"/>
@@ -367,7 +367,7 @@
         <Property name="text" type="java.lang.String" value="CoverageType:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtCoverageLevel">
+    <Component class="javax.swing.JTextField" name="txtCoverageType">
     </Component>
     <Component class="javax.swing.JLabel" name="lblStartDate">
       <Properties>

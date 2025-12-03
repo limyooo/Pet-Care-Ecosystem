@@ -189,9 +189,9 @@ public class ConfigureABusiness {
                 "bm1", "bm1", bmTestEmp, new BoardingManagerRole());
         
         // ⭐ Pet Boarding Customer Service 固定测试账号
-Employee boardingCSTestEmp = boardingCustomerServiceOrg.getEmployeeDirectory()
+        Employee boardingCSTestEmp = boardingCustomerServiceOrg.getEmployeeDirectory()
         .createEmployee("Test Customer Service");
-boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
+        boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
         "cs1",           // 用户名
         "cs1",           // 密码
         boardingCSTestEmp,
@@ -347,7 +347,7 @@ boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
         String endDateStr   = sdf.format(endDate);
 
         // 覆盖类型、状态用和 UI 对得上的选项
-        String coverageType = faker.options().option("Basic", "Standard", "Premium");
+        String coverageType = faker.options().option("Full Coverage", "Partial Coverage");
         double premium      = faker.number().randomDouble(2, 50, 300);
         String status       = faker.options().option("Active", "Expired", "Cancelled");
 

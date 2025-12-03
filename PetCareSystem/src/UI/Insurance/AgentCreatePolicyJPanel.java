@@ -74,7 +74,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
         lblPolicyID = new javax.swing.JLabel();
         txtPolicyID = new javax.swing.JTextField();
         lblCoverageType = new javax.swing.JLabel();
-        txtCoverageLevel = new javax.swing.JTextField();
+        txtCoverageType = new javax.swing.JTextField();
         lblStartDate = new javax.swing.JLabel();
         txtExpiration = new javax.swing.JTextField();
         lblExpirationDate = new javax.swing.JLabel();
@@ -176,7 +176,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                                 .addComponent(lblCoverageType, javax.swing.GroupLayout.Alignment.LEADING))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtCoverageLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCoverageType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtExpiration, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +286,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                                     .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtCoverageLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCoverageType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblCoverageType))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(33, 58, Short.MAX_VALUE))
@@ -366,7 +366,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
 
            // Policy
            String policyId       = txtPolicyID.getText().trim();
-           String coverageType   = txtCoverageLevel.getText().trim();  // basic / premium...
+           String coverageType   = txtCoverageType.getText().trim();  // basic / premium...
            String startDate      = txtStart.getText().trim();
            String expirationDate = txtExpiration.getText().trim();
            String status         = txtStatus.getText().trim();
@@ -522,7 +522,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
            txtEmergency.setText("");
 
            txtPolicyID.setText("");
-           txtCoverageLevel.setText("");
+           txtCoverageType.setText("");
            txtStart.setText("");
            txtExpiration.setText("");
            txtStatus.setText("");
@@ -552,7 +552,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblWeight;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtAge;
-    private javax.swing.JTextField txtCoverageLevel;
+    private javax.swing.JTextField txtCoverageType;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEmergency;
     private javax.swing.JTextField txtExpiration;

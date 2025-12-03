@@ -12,11 +12,8 @@ public class InsurancePolicy {
     private String policyId;       // 保单号，例如 PL1234
     private String provider;       // 保险公司/机构名称，例如 "Happy Paws Insurance"
 
-    // 保障类型（比如 Medical / Accident 等，大类）
-    private String coverageType;
-
-    // 保障等级（比如 Basic / Standard / Premium），对齐你 UI 里的 CoverageLevel
-    private String coverageLevel;
+    // 保障类型（这里统一用 CoverageType 存 Full Coverage / Partial Coverage）
+    private String coverageType;   // "Full Coverage" / "Partial Coverage"
 
     // 生效日期 & 终止日期（可以先用 String 存，后面有时间再改成 Date）
     private String startDate;
@@ -34,27 +31,26 @@ public class InsurancePolicy {
 
     // ====== 构造方法 ======
     public InsurancePolicy(
-    String policyId,
-    String provider,
-    String coverageType,
-    String startDate,
-    String endDate,
-    double premium,
-    String status,
-    Pet pet,
-    PetOwner owner
-) {
-    this.policyId = policyId;
-    this.provider = provider;
-    this.coverageType = coverageType;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.premium = premium;
-    this.status = status;
-    this.pet = pet;
-    this.owner = owner;
-}
-
+        String policyId,
+        String provider,
+        String coverageType,  // 这里直接传 Full Coverage / Partial Coverage
+        String startDate,
+        String endDate,
+        double premium,
+        String status,
+        Pet pet,
+        PetOwner owner
+    ) {
+        this.policyId = policyId;
+        this.provider = provider;
+        this.coverageType = coverageType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.premium = premium;
+        this.status = status;
+        this.pet = pet;
+        this.owner = owner;
+    }
 
     // ====== Getter / Setter ======
     public String getPolicyId() {
@@ -79,14 +75,6 @@ public class InsurancePolicy {
 
     public void setCoverageType(String coverageType) {
         this.coverageType = coverageType;
-    }
-
-    public String getCoverageLevel() {
-        return coverageLevel;
-    }
-
-    public void setCoverageLevel(String coverageLevel) {
-        this.coverageLevel = coverageLevel;
     }
 
     public String getStartDate() {

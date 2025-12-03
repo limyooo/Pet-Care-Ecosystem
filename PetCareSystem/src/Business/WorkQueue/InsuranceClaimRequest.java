@@ -35,6 +35,9 @@ public class InsuranceClaimRequest extends WorkRequest {
     private String coverageDecision;  // 全保 / 半保 / Pending 等
     private Pet pet;
     private PetOwner owner;
+    
+    private String doctorName;        // Doctor Assigned
+    private String treatmentNeeded;   // Treatment Needed / Diagnosis
 
     public InsuranceClaimRequest() {
         this.claimId = ++claimCounter;
@@ -190,6 +193,23 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.owner = owner;
     }
 
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getTreatmentNeeded() {
+        return treatmentNeeded;
+    }
+
+    public void setTreatmentNeeded(String treatmentNeeded) {
+        this.treatmentNeeded = treatmentNeeded;
+    }
+
+    
     @Override
     public String toString() {
         return String.valueOf(this.claimId);

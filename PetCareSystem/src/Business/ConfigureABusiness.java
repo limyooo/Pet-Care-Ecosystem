@@ -104,8 +104,8 @@ public class ConfigureABusiness {
         Employee insuranceAdminEmp = insuranceEnt.getEmployeeDirectory()
         .createEmployee("Insurance Enterprise Admin");
         UserAccount insuranceAdminAccount = insuranceEnt.getUserAccountDirectory().createUserAccount(
-        "insuranceAdmin",
-        "Insurance@123",
+        "insAdmin",
+        "ins@123",
         insuranceAdminEmp,
         new EnterpriseAdminRole()
         );
@@ -409,19 +409,19 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
         }*/
 
         // 7.3 Insurance Claim 请求
-for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
 
-    InsuranceClaimRequest req = new InsuranceClaimRequest();
+        InsuranceClaimRequest req = new InsuranceClaimRequest();
 
-    // ===== 先从 createdPets 找一个宠物 + 宠物主人 =====
-    if (!createdPets.isEmpty()) {
-        // 简单一点：循环使用 createdPets
-        Pet pet = createdPets.get(i % createdPets.size());
-        PetOwner owner = pet.getPetOwner();   // Pet 里应该有 getOwner()
+        // ===== 先从 createdPets 找一个宠物 + 宠物主人 =====
+        if (!createdPets.isEmpty()) {
+            // 简单一点：循环使用 createdPets
+            Pet pet = createdPets.get(i % createdPets.size());
+            PetOwner owner = pet.getPetOwner();   // Pet 里应该有 getOwner()
 
-        // 挂到 claim 上（⭐关键）
-        req.setPet(pet);
-        req.setOwner(owner);
+            // 挂到 claim 上（⭐关键）
+            req.setPet(pet);
+            req.setOwner(owner);
 
         // 把已有字段也用 owner 的真实信息来填，更一致
         if (owner != null) {
@@ -451,7 +451,22 @@ for (int i = 0; i < 5; i++) {
             double treatmentCost = faker.number()
                     .randomDouble(2, 50, 500);
             req.setTreatmentCost(treatmentCost);
+            
+                    req.setDoctorName(
+                faker.options().option(
+                    "Doctor William Hanks",
+                    "Doctor Hanna King",
+                    "Doctor July Oven",
+                    "Doctor Anna Watterson",
+                    "Doctor Bella Stone",
+                    "Doctor Kevin Harper"
+                )
+            );
 
+            req.setTreatmentNeeded(
+                "Treatment plan for " + req.getLabResult()
+                // 你也可以用 faker.medical().symptoms() 或者自定义字符串
+            );
             // 如果上面没有从 owner 那里 set 过 coverageLevel，就走原来的随机逻辑
             if (req.getCoverageLevel() == null) {
                 String level = faker.options().option("Basic", "Standard", "Premium");

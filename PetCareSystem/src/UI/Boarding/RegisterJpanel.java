@@ -382,7 +382,13 @@ public class RegisterJpanel extends javax.swing.JPanel {
         Component[] componentArray = userProcessContainer.getComponents();
         if (componentArray.length > 0) {
             Component component = componentArray[componentArray.length - 1];
-            if (component instanceof WelcomJpanel) {
+            // ⭐ 修正: 检查 ManagerJPanel 并刷新
+            if (component instanceof ManagerJPanel) { 
+                ManagerJPanel managerPanel = (ManagerJPanel) component;
+                managerPanel.refreshTable();
+            }
+            // 原始的 WelcomJpanel 检查 (保留)
+            else if (component instanceof WelcomJpanel) {
                 WelcomJpanel welcomePanel = (WelcomJpanel) component;
                 welcomePanel.refreshTable();
             }
@@ -407,7 +413,7 @@ public class RegisterJpanel extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        // 1. 数据读取
+       // 1. 数据读取
         // Pet Owner Details
         String ownerName = fieldOwnerName.getText();
         String phone = fieldPhone.getText();
@@ -505,16 +511,22 @@ public class RegisterJpanel extends javax.swing.JPanel {
 
             // 6. 成功提示
             JOptionPane.showMessageDialog(this, 
-                    "Foster care service registration successful! \\nRecord ID " + recordId, 
+                    "Foster care service registration successful! \nRecord ID " + recordId, 
                     "Success", 
                     JOptionPane.INFORMATION_MESSAGE);
             
-            // 7. 返回上一个面板并刷新表格 (WelcomJpanel)
+            // 7. 返回上一个面板并刷新表格 (ManagerJPanel 或 WelcomJpanel)
             userProcessContainer.remove(this);
             Component[] componentArray = userProcessContainer.getComponents();
             if (componentArray.length > 0) {
                  Component component = componentArray[componentArray.length - 1];
-                 if (component instanceof WelcomJpanel) {
+                 // ⭐ 修正: 检查 ManagerJPanel 并刷新
+                 if (component instanceof ManagerJPanel) { 
+                     ManagerJPanel managerPanel = (ManagerJPanel) component;
+                     managerPanel.refreshTable(); 
+                 }
+                 // 原始的 WelcomJpanel 检查 (保留)
+                 else if (component instanceof WelcomJpanel) {
                      WelcomJpanel welcomePanel = (WelcomJpanel) component;
                      welcomePanel.refreshTable(); // 调用 WelcomJpanel 的刷新方法
                  }
@@ -527,6 +539,7 @@ public class RegisterJpanel extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "An error occurred during the registration process: " + e.getMessage(), "System Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
+        
         }
     }//GEN-LAST:event_btnAddActionPerformed
 

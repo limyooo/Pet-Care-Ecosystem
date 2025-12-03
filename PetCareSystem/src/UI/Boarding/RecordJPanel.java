@@ -88,7 +88,7 @@ public class RecordJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Record ID", "Message", "Symptom", "Pet Name", "Record Date"
+                "Record ID", "Pet Name", "Room Number", "Status", " End Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {

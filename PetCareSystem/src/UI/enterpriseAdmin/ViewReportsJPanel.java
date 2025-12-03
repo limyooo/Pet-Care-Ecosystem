@@ -47,6 +47,11 @@ public class ViewReportsJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
 
         btnPetBoardingReport.setText("Pet Boarding Report");
+        btnPetBoardingReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPetBoardingReportActionPerformed(evt);
+            }
+        });
 
         btnPetClinicReport.setText("Pet Clinic Report");
         btnPetClinicReport.addActionListener(new java.awt.event.ActionListener() {
@@ -139,6 +144,40 @@ public class ViewReportsJPanel extends javax.swing.JPanel {
     CardLayout layout = (CardLayout) userProcessContainer.getLayout();
     layout.next(userProcessContainer);
     }//GEN-LAST:event_btnPetInsuranceReportActionPerformed
+
+    private void btnPetBoardingReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetBoardingReportActionPerformed
+        // TODO add your handling code here:
+      // 1. 查找 Boarding 相关的 Organization（用于 Incident Rate 的计算）
+    Business.Organization.Organization targetOrganization = null;
+
+    if (enterprise.getOrganizationDirectory() != null) {
+        // Enterprise Admin 可以访问企业下的所有组织
+        for (Business.Organization.Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            
+            // 假设我们查找 Boarding Service 组织或 Pet Care 组织
+            if (org instanceof Business.PetBoardingOrganization.BoardingServiceOrganization || 
+                org instanceof Business.PetBoardingOrganization.PetCareOrganization) {
+                targetOrganization = org;
+                break;
+            }
+        }
+    }
+
+    // 2. 创建并切换到 OperationIndicatorsReportJPanel
+    // 构造函数签名: (JPanel, Organization, Enterprise, Petsystem)
+    OperationIndicatorsReportJPanel panel = new OperationIndicatorsReportJPanel(
+        userProcessContainer, 
+        targetOrganization, // 第二个参数：Organization (可能是 null，但不会导致 enterprise 为 null)
+        enterprise,         // 第三个参数：Enterprise (非 null)
+        system              // 第四个参数：Petsystem
+    );
+    
+    // 步骤 3: 将面板添加到容器中，并为其命名
+    userProcessContainer.add("OperationIndicatorsReportJPanel", panel);
+    
+    // 步骤 4: 切换到新的面板
+    ((CardLayout) userProcessContainer.getLayout()).next(userProcessContainer);  
+    }//GEN-LAST:event_btnPetBoardingReportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

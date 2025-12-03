@@ -44,7 +44,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnLogout.setEnabled(false); // 初始状态禁用登出按钮
         
         // 默认将窗口最大化或设置一个合理大小
-        this.setExtendedState(MAXIMIZED_BOTH);
+        //this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**

@@ -4,6 +4,7 @@
  */
 package UI.Boarding;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetBoardingEnterprise;
 import Business.Pet.Pet;
 import Business.Pet.PetBoardingRecord;
 import Business.Pet.PetOwner;
@@ -156,13 +157,35 @@ public class SubmitJPanel extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-      // 1. 获取 Boarding Record ID (必须)
-        String recordId = JOptionPane.showInputDialog(this, "Please enter the related Boarding Record ID:", "Submit request", JOptionPane.QUESTION_MESSAGE);
+     // 1. 获取 Boarding Record ID (必须)
+    String recordId = JOptionPane.showInputDialog(this, 
+        "Please enter the related Boarding Record ID:", 
+        "Submit request", JOptionPane.QUESTION_MESSAGE);
 
-        if (recordId == null || recordId.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Boarding Record ID is required.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (recordId == null || recordId.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "Boarding Record ID is required.", 
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // ⭐⭐⭐ 新增：根据 recordId 查找 PetBoardingRecord 并获取 Pet ⭐⭐⭐
+    PetBoardingRecord boardingRecord = findBoardingRecordById(recordId.trim());
+    
+    if (boardingRecord == null) {
+        JOptionPane.showMessageDialog(this, 
+            "Boarding Record ID [" + recordId + "] not found.\nPlease check and try again.", 
+            "Record Not Found", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    Pet pet = boardingRecord.getPet();
+    if (pet == null) {
+        JOptionPane.showMessageDialog(this, 
+            "No pet associated with this boarding record.", 
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
         // 2. 获取 Symptom (症状) (必须)
         String symptom = JOptionPane.showInputDialog(this, "Please enter the pet's main symptom:", "Submit request", JOptionPane.QUESTION_MESSAGE);
@@ -189,6 +212,7 @@ public class SubmitJPanel extends javax.swing.JPanel {
     request.setSymptom(symptom);      
     request.setSender(account);
     request.setBoardingRecordId(recordId); 
+     request.setPet(pet);
 
         // 6. 查找目标 Clinic 组织
     Organization targetOrganization = findTargetFrontDeskOrganization();
@@ -215,7 +239,36 @@ public class SubmitJPanel extends javax.swing.JPanel {
     }
         
         // 7. 刷新表格
-        populateTable();
+    populateTable();
+}
+
+// ⭐⭐⭐ 新增辅助方法：根据 recordId 查找 PetBoardingRecord ⭐⭐⭐
+private PetBoardingRecord findBoardingRecordById(String recordId) {
+    // 方法1：从当前 enterprise 获取（如果 enterprise 是 PetBoardingEnterprise）
+    if (enterprise instanceof PetBoardingEnterprise) {
+        PetBoardingEnterprise boardingEnterprise = (PetBoardingEnterprise) enterprise;
+        PetBoardingRecord record = boardingEnterprise.getBoardingRecordDirectory().findRecordById(recordId);
+        if (record != null) {
+            return record;
+        }
+    }
+    
+    // 方法2：遍历所有网络中的 PetBoardingEnterprise 查找
+    for (Network network : system.getNetworkList()) {
+        for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (e instanceof PetBoardingEnterprise) {
+                PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) e;
+                PetBoardingRecord record = boardingEnt.getBoardingRecordDirectory().findRecordById(recordId);
+                if (record != null) {
+                    return record;
+                }
+            }
+        }
+    }
+    
+    return null;
+
+        
         
     
     

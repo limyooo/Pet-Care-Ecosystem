@@ -26,9 +26,7 @@ public class PetClinicReportJPanel extends javax.swing.JPanel {
     /**
      * Creates new form PetClinicReportJPanel
      */
-    public PetClinicReportJPanel() {
-        initComponents();
-    }
+   
     
     public PetClinicReportJPanel(JPanel userProcessContainer, Enterprise enterprise,Petsystem system) {
         initComponents();
@@ -136,16 +134,18 @@ public class PetClinicReportJPanel extends javax.swing.JPanel {
                 HealthCareCheckRequest req = (HealthCareCheckRequest) wr;
                 String t = req.getTreatmentNeeded();
 
-                switch (t) {
-                    case "Medication Only ":
+                if (t == null) continue; // <<< 🔥🔥🔥 防止 crash
+
+                switch (t.trim()) {      // <<< 用 trim() 防止你字符串后面有空格
+                    case "Medication Only":
                         med++; break;
-                    case "IV Fluids & Supportive Care ":
+                    case "IV Fluids & Supportive Care":
                         fluids++; break;
-                    case "Diagnostic Imaging (X-ray / Ultrasound) ":
+                    case "Diagnostic Imaging (X-ray / Ultrasound)":
                         imaging++; break;
-                    case "Surgery ":
+                    case "Surgery":
                         surgery++; break;
-                    case "Hospitalization ":
+                    case "Hospitalization":
                         hosp++; break;
                 }
             }

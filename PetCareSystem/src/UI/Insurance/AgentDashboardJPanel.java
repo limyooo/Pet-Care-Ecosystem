@@ -20,17 +20,16 @@ import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
  *
  * @author Eve Dou
  */
-public class AgentDashboardJPanel extends javax.swing.JPanel {
-
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private InsurancePolicyOrganization organization;
-    private PetInsuranceEnterprise enterprise;
-    private Petsystem system;
-
-    public AgentDashboardJPanel() {
-        initComponents();
-    }
+        public class AgentDashboardJPanel extends javax.swing.JPanel {
+        private JPanel userProcessContainer; // Parent container used for CardLayout navigation.
+        private UserAccount account; // Logged-in user account (agent).
+        private InsurancePolicyOrganization organization; // Policy organization for this agent
+        private PetInsuranceEnterprise enterprise; // Insurance enterprise this agent belongs to.
+        private Petsystem system;
+    
+        public AgentDashboardJPanel() {
+            initComponents();
+        }
     
         public AgentDashboardJPanel(JPanel userProcessContainer,
                                 UserAccount account,
@@ -44,14 +43,14 @@ public class AgentDashboardJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.system = system;
 
-        // ⭐ 关键：填充 Dashboard 数据
+        // Populate dashboard with calculated metrics.
         populateDashboard();
     }
-            private void populateDashboard() {
-
+        
+        private void populateDashboard() {
         if (system == null) return;
 
-        // ============ 1. Policy 相关统计 ============
+        // 1. Policy-related metrics
         InsurancePolicyDirectory policyDir = system.getInsurancePolicyDirectory();
         if (policyDir != null) {
 
@@ -108,40 +107,42 @@ public class AgentDashboardJPanel extends javax.swing.JPanel {
             txtActivePartial.setText(String.valueOf(activePartialPolicies));
         }
 
-        // ============ 2. Claim 相关统计 ============
+        // 2. Claim-related metrics
         int totalClaims = 0;
         int approvedClaims = 0;
         int rejectedClaims = 0;
         int pendingClaims = 0;
         double totalClaimAmount = 0.0;
 
+        /* Traverse all networks → enterprises → organizations
+           and aggregate all InsuranceClaimRequest from InsuranceClaimOrganization. */
         for (Network net : system.getNetworkList()) {
-    for (Enterprise ent : net.getEnterpriseDirectory().getEnterpriseList()) {
+            for (Enterprise ent : net.getEnterpriseDirectory().getEnterpriseList()) {
 
-        if (ent instanceof PetInsuranceEnterprise) {
-            for (Organization org : ent.getOrganizationDirectory().getOrganizationList()) {
+                if (ent instanceof PetInsuranceEnterprise) {
+                    for (Organization org : ent.getOrganizationDirectory().getOrganizationList()) {
 
-                // ⭐ 用 instanceof 来判断是不是理赔组织
-                if (org instanceof InsuranceClaimOrganization) {
+                
+                        if (org instanceof InsuranceClaimOrganization) {
 
-                    for (WorkRequest wr : org.getWorkQueue().getWorkRequestList()) {
-                        if (wr instanceof InsuranceClaimRequest) {
-                            InsuranceClaimRequest req = (InsuranceClaimRequest) wr;
+                            for (WorkRequest wr : org.getWorkQueue().getWorkRequestList()) {
+                             if (wr instanceof InsuranceClaimRequest) {
+                                InsuranceClaimRequest req = (InsuranceClaimRequest) wr;
 
-                            totalClaims++;
+                                totalClaims++;
 
-                            String decision = req.getClaimDecision(); // Approved / Rejected
-                            String statusWr = req.getStatus();        // Pending 等
+                                String decision = req.getClaimDecision(); // Approved / Rejected
+                                String statusWr = req.getStatus();        // Pending
 
-                            if ("Approved".equalsIgnoreCase(decision)) {
-                                approvedClaims++;
-                            } else if ("Rejected".equalsIgnoreCase(decision)) {
-                                rejectedClaims++;
-                            } else if ("Pending".equalsIgnoreCase(statusWr)) {
-                                pendingClaims++;
-                            }
+                                if ("Approved".equalsIgnoreCase(decision)) {
+                                    approvedClaims++;
+                                } else if ("Rejected".equalsIgnoreCase(decision)) {
+                                    rejectedClaims++;
+                                } else if ("Pending".equalsIgnoreCase(statusWr)) {
+                                    pendingClaims++;
+                                }
 
-                            totalClaimAmount += req.getClaimAmount();
+                                totalClaimAmount += req.getClaimAmount();
                         }
                     }
                 }
@@ -149,7 +150,6 @@ public class AgentDashboardJPanel extends javax.swing.JPanel {
         }
     }
 }
-
 
         double approvalRate = (totalClaims == 0)
                 ? 0.0
@@ -446,8 +446,7 @@ public class AgentDashboardJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtExpiredPolicyActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-    if (userProcessContainer == null) return;
-
+        if (userProcessContainer == null) return;
         userProcessContainer.remove(this);
         java.awt.CardLayout layout = (java.awt.CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);

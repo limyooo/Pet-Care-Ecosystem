@@ -7,29 +7,25 @@ import Business.Pet.InsurancePolicyDirectory;
 import java.util.ArrayList;
 
 /**
- * InsurancePolicyOrganization:
- * 用于管理保单（Policy）的创建、保存、查询。
+ * Organization responsible for managing insurance policies.
  */
-public class InsurancePolicyOrganization extends Organization {
 
-    // ★★★★★ 关键：每个组织必须有自己的保单目录 ★★★★★
+public class InsurancePolicyOrganization extends Organization {
+    // Each organization maintains its own policy directory
     private InsurancePolicyDirectory policyDirectory;
 
+    
     public InsurancePolicyOrganization() {
         super("Insurance Policy Organization");
-        this.policyDirectory = new InsurancePolicyDirectory(); // 初始化保单目录
+        this.policyDirectory = new InsurancePolicyDirectory(); // Initialize policy directory to avoid null-pointer issues
     }
 
-    /**
-     * 返回该组织的保单目录
-     */
+    // Returns this organization's policy directory.
     public InsurancePolicyDirectory getPolicyDirectory() {
         return policyDirectory;
     }
 
-    /**
-     * 该组织只支持 InsuranceAgentRole
-     */
+    // Defines which roles this organization supports.
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList<>();

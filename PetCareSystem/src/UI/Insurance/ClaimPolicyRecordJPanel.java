@@ -16,10 +16,9 @@ import javax.swing.JPanel;
  */
 public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
-    private Organization claimOrg;  // InsuranceClaim Organization
-    /**
-     * Creates new form PolicyRecordJPanel
-     */
+    private Organization claimOrg; // Organization that owns the claim work queue (InsuranceClaimOrganization)
+    
+    // Receives the container and the claim organization.
     public ClaimPolicyRecordJPanel(JPanel userProcessContainer, Organization claimOrg) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
@@ -27,11 +26,10 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
     }
 
      private void populateFromClaim(InsuranceClaimRequest claim) {
-        // 上面的搜索区
+        // Search area
         txtPolicyId.setText(claim.getPolicyId());
-        // txtPolicyHolderName 目前没有字段来源，先留空或以后扩展
 
-        // 左边 Policy Basic Information
+        // Policy Basic Information
         txtCompany.setText(claim.getInsuranceCompany());
         txtPolicyHolderName.setText(claim.getHolderName()); 
         txtPetName.setText(claim.getPetName());
@@ -39,17 +37,17 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
         txtExpiration.setText(claim.getExpirationDate());
         txtStatus.setText(claim.getStatus());   // WorkRequest.status
 
-         // 右边 Policy Claim History
+         // Policy Claim History
         if (claim.getRequestDate() != null) {
             txtDate.setText(String.valueOf(claim.getRequestDate()));
         } else {
             txtDate.setText("");
         }
 
-        // ✅ 用真正的 ClaimId
+        // Use real claim id
         txtClaimID.setText(String.valueOf(claim.getClaimId()));
 
-        // 赔付金额（Approve 时算好的）
+        // Approved claim amount (calculated when the claim is processed)
         txtAmount.setText(String.valueOf(claim.getClaimAmount()));
 
         String decision = claim.getClaimDecision();
@@ -59,15 +57,16 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
         txtResult.setText(decision);
     }
      
+     // Clear all detail fields when no record is found.
      private void clearFields() {
-        // 左侧
+        
         txtCompany.setText("");
         txtPetName.setText("");
         txtCoverage.setText("");
         txtExpiration.setText("");
         txtStatus.setText("");
 
-        // 右侧
+        
         txtDate.setText("");
         txtClaimID.setText("");
         txtAmount.setText("");
@@ -310,6 +309,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // Read policy id from search box
         String policyId = txtPolicyId.getText().trim();
 
         if (policyId.isEmpty()) {
@@ -319,7 +319,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
 
         InsuranceClaimRequest match = null;
 
-        // 在 claimOrg 的 workQueue 中用 policyId 查找对应的 InsuranceClaimRequest
+        // Look up the matching claim in the organization work queue by Policy ID
         for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
             if (req instanceof InsuranceClaimRequest) {
                 InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
@@ -330,6 +330,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
             }
         }
 
+        // No record found → clear details and show message
         if (match == null) {
             JOptionPane.showMessageDialog(this,
                     "No record found for Policy ID: " + policyId);
@@ -337,7 +338,7 @@ public class ClaimPolicyRecordJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // 找到了，填充下面的字段
+        // Found matching claim → display its details
         populateFromClaim(match);
     }//GEN-LAST:event_btnSearchActionPerformed
 

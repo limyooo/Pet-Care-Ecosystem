@@ -5,6 +5,7 @@
 package UI.petClinic;
 
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetInsuranceEnterprise;
 import Business.PetClinicOrganization.FrontDeskOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
@@ -27,17 +28,19 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
     private FrontDeskOrganization frontDeskOrg;
     private Enterprise enterprise;
     private MainJFrame mainJFrame;
+    private PetInsuranceEnterprise insuranceEnterprise;
     
     /**
      * Creates new form FrontDeskManagementJPanel
      */
-    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, FrontDeskOrganization frontDeskOrg, Enterprise enterprise) {
+    public FrontDeskManagementJPanel(JPanel userProcessContainer, UserAccount account, FrontDeskOrganization frontDeskOrg, Enterprise enterprise,PetInsuranceEnterprise insuranceEnterprise) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
         this.account = account;
         this.frontDeskOrg = frontDeskOrg;
         this.enterprise = enterprise;
+        this.insuranceEnterprise = insuranceEnterprise;
         
 
         populateTable();
@@ -208,7 +211,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
 
         HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
 
-        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request, account, enterprise);
+        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request, account, enterprise,insuranceEnterprise);
 
         userProcessContainer.add("ViewMedicalStatusJPanel", panel);
 

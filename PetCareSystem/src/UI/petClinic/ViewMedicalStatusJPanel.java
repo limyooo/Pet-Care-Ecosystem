@@ -5,6 +5,7 @@
 package UI.petClinic;
 
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetInsuranceEnterprise;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
 import java.awt.CardLayout;
@@ -20,17 +21,19 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
     private HealthCareCheckRequest request;
     private UserAccount account;
     private Enterprise enterprise;
+    private PetInsuranceEnterprise insuranceEnterprise;
     /**
      * Creates new form ViewMedicalStatusJPanel
      */
     public ViewMedicalStatusJPanel(JPanel userProcessContainer, HealthCareCheckRequest request,UserAccount account,
-        Enterprise enterprise) {
+        Enterprise enterprise,PetInsuranceEnterprise insuranceEnterprise) {
         
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.request = request;
         this.account = account;
         this.enterprise = enterprise;
+        this.insuranceEnterprise = insuranceEnterprise;
         
         populateData();
     }
@@ -201,7 +204,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
 
     private void btnCreateInsuranceClaimRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateInsuranceClaimRequestActionPerformed
         // TODO add your handling code here:
-        SubmitInsuranceClaimRequestJPanel panel = new SubmitInsuranceClaimRequestJPanel(userProcessContainer, request,account,enterprise);
+        SubmitInsuranceClaimRequestJPanel panel = new SubmitInsuranceClaimRequestJPanel(userProcessContainer, request,account,insuranceEnterprise);
 
         userProcessContainer.add("SubmitInsuranceClaimRequestJPanel", panel);
 

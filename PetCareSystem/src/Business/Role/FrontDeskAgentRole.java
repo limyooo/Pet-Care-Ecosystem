@@ -2,6 +2,8 @@ package Business.Role;
 
 import Business.Petsystem;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetInsuranceEnterprise;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import static Business.Organization.Organization.Type.CustomerService;
 import Business.PetClinicOrganization.FrontDeskOrganization;
@@ -19,22 +21,44 @@ import UI.Boarding.CustomerServiceJPanel;
 public class FrontDeskAgentRole extends Role {
     
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account,
-                                 Organization organization, Enterprise enterprise, Petsystem system) {
-        
-        // ⭐ 关键：先判断组织类型，再进行强制转换
+public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account,
+                             Organization organization, Enterprise enterprise, Petsystem system) {
+
+        //1.找保险 enterprise
+        PetInsuranceEnterprise insuranceEnterprise = null;
+
+        for (Network net : system.getNetworkList()) {
+            for (Enterprise ent : net.getEnterpriseDirectory().getEnterpriseList()) {
+                if (ent instanceof PetInsuranceEnterprise) {
+                    insuranceEnterprise = (PetInsuranceEnterprise) ent;
+                    break;
+                }
+            }
+        }
+
+        if (insuranceEnterprise == null) {
+            System.out.println("⚠ Warning: No PetInsuranceEnterprise found in system!");
+        }
+
+        //2. 根据组织类型返回对应 panel
         if (organization instanceof CustomerService) {
-            // Pet Boarding 的客服
-            return new CustomerServiceJPanel(userProcessContainer, account,
-                    (CustomerService) organization, enterprise, system);
+
+            return new CustomerServiceJPanel(
+                    userProcessContainer,
+                    account,
+                    (CustomerService) organization,
+                    enterprise,
+                    system
+            );
+
         } else if (organization instanceof FrontDeskOrganization) {
-            // Pet Clinic 的前台
-            return new FrontDeskManagementJPanel(userProcessContainer, account,
-                    (FrontDeskOrganization) organization, enterprise);
+
+            return new FrontDeskManagementJPanel(userProcessContainer,account,
+                    (FrontDeskOrganization) organization,enterprise,
+                    insuranceEnterprise   );
+
         } else {
-            // 默认情况（不应该发生）
-            System.out.println("Warning: Unknown organization type for FrontDeskAgentRole: " 
-                    + organization.getClass().getName());
+            System.out.println("Warning: Unknown organization type: " + organization.getClass().getName());
             return null;
         }
     }

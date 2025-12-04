@@ -15,12 +15,12 @@ import java.awt.Component;
 import UI.Insurance.AgentWorkAreaJPanel;
 
     public class AgentManagePolicyJPanel extends javax.swing.JPanel {
-    private JPanel userProcessContainer; //Parent container used for CardLayout navigation.
-    private UserAccount account; //Logged-in agent account
-    private InsurancePolicyOrganization organization; //Organization managing insurance policies.
-    private PetInsuranceEnterprise enterprise; //Insurance enterprise this agent belongs to.
-    private Petsystem system; 
-    private InsurancePolicy policy; //The currently selected insurance policy to view / edit.
+        private JPanel userProcessContainer; //Parent container used for CardLayout navigation.
+        private UserAccount account; //Logged-in agent account
+        private InsurancePolicyOrganization organization; //Organization managing insurance policies.
+        private PetInsuranceEnterprise enterprise; //Insurance enterprise this agent belongs to.
+        private Petsystem system; 
+        private InsurancePolicy policy; //The currently selected insurance policy to view / edit.
 
     
     public AgentManagePolicyJPanel() {

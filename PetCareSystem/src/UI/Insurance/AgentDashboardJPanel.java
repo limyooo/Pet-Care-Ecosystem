@@ -21,11 +21,11 @@ import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
  * @author Eve Dou
  */
         public class AgentDashboardJPanel extends javax.swing.JPanel {
-        private JPanel userProcessContainer; // Parent container used for CardLayout navigation.
-        private UserAccount account; // Logged-in user account (agent).
-        private InsurancePolicyOrganization organization; // Policy organization for this agent
-        private PetInsuranceEnterprise enterprise; // Insurance enterprise this agent belongs to.
-        private Petsystem system;
+            private JPanel userProcessContainer; // Parent container used for CardLayout navigation.
+            private UserAccount account; // Logged-in user account (agent).
+            private InsurancePolicyOrganization organization; // Policy organization for this agent
+            private PetInsuranceEnterprise enterprise; // Insurance enterprise this agent belongs to.
+            private Petsystem system;
     
         public AgentDashboardJPanel() {
             initComponents();

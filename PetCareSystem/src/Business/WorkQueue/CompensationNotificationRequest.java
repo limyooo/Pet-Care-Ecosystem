@@ -10,6 +10,7 @@ public class CompensationNotificationRequest extends WorkRequest {
 
     private double compensationAmount;   // Final approved compensation
     private String note;                 // Additional remarks
+    private String boardingRecordId;
 
     
     public double getCompensationAmount() {
@@ -27,4 +28,14 @@ public class CompensationNotificationRequest extends WorkRequest {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public String getBoardingRecordId() {
+        return boardingRecordId;
+    }
+
+    public void setBoardingRecordId(String boardingRecordId) {
+        this.boardingRecordId = boardingRecordId;
+    }
+    
+    
 }

@@ -248,20 +248,41 @@ public class ManagerJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "请选择一条记录以发送给客服。", "警告", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a record to send to the customer service.", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         // 1. 获取选中的 Record ID
         String recordId = (String) jTable1.getValueAt(selectedRow, 0);
+            PetBoardingRecord selectedRecord = findRecordById(recordId);
+        Pet pet = (selectedRecord != null) ? selectedRecord.getPet() : null;
+
+        if (pet == null) {
+            JOptionPane.showMessageDialog(this, "Error: Unable to find the relevant pet information based on the record ID.", "Warning", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         // 2. 查找目标 Customer Service Organization (FrontDeskOrganization)
         Organization targetOrg = findCustomerServiceOrganization();
 
         if (targetOrg == null) {
-             JOptionPane.showMessageDialog(this, "未找到 Customer Service 组织，无法发送请求。", "错误", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(this, "The \"Customer Service\" organization was not found, so the request could not be sent.", "warning", JOptionPane.ERROR_MESSAGE);
              return;
         }
+        // ⭐⭐ 步骤 2：查找与该记录相关的 HealthCareCheckRequest，以获取 Symptom
+    HealthCareCheckRequest sourceRequest = null;
+    if (organization.getWorkQueue() != null) {
+        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof HealthCareCheckRequest) {
+                HealthCareCheckRequest hcr = (HealthCareCheckRequest) wr;
+                // 使用我们之前修复的 BoardingRecordId 精确匹配
+                if (recordId.equals(hcr.getBoardingRecordId())) { 
+                    sourceRequest = hcr;
+                    break;
+                }
+            }
+        }
+    }
 
         // 3. 创建一个新的 Work Request (使用 HealthCareCheckRequest 作为通用请求类型)
         // 实际业务中，可能需要创建一个专门的 CustomerServiceRequest 类
@@ -271,16 +292,28 @@ public class ManagerJPanel extends javax.swing.JPanel {
         csRequest.setReceiver(null); // 发送到队列
         csRequest.setStatus("Manager Escalate - Pending CS Review");
         csRequest.setBoardingRecordId(recordId); // 关联记录 ID
-
+        csRequest.setPet(pet);
+        // ⭐⭐⭐ 核心修复：设置 Symptom 字段
+    if (sourceRequest != null) {
+        // 从原始请求中继承症状
+        csRequest.setSymptom(sourceRequest.getSymptom());
+    } else {
+        // 如果找不到原始请求，可以提示 Manager 输入
+        String newSymptom = JOptionPane.showInputDialog(this, "Please enter the symptoms that you would like to report to the customer service:", "Manager update request", JOptionPane.QUESTION_MESSAGE);
+        if (newSymptom == null || newSymptom.trim().isEmpty()) {
+             newSymptom = "Manager Escalation - No specific symptom recorded.";
+        }
+        csRequest.setSymptom(newSymptom);
+    }
         // 4. 将请求添加到目标组织的 Work Queue
         targetOrg.getWorkQueue().getWorkRequestList().add(csRequest);
 
         JOptionPane.showMessageDialog(this, 
-            "记录 [" + recordId + "] 已发送给 Customer Service。", 
-            "发送成功", JOptionPane.INFORMATION_MESSAGE);
+            "record [" + recordId + "] send to Customer Service。", 
+            "Success", JOptionPane.INFORMATION_MESSAGE);
 
         // 5. 刷新表格（可选）
-        // populateTable();
+         populateTable();
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -288,7 +321,7 @@ public class ManagerJPanel extends javax.swing.JPanel {
         // 1. 检查是否选中了表格中的一行
     int selectedRow = jTable1.getSelectedRow();
     if (selectedRow < 0) {
-        JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please choice one record", "warning", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
@@ -299,7 +332,7 @@ public class ManagerJPanel extends javax.swing.JPanel {
     PetBoardingRecord selectedRecord = findRecordById(recordId);
 
     if (selectedRecord == null) {
-        JOptionPane.showMessageDialog(this, "未找到对应的记录。", "错误", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "No corresponding record was found.", "warning", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -420,19 +453,20 @@ private PetBoardingRecord findRecordById(String recordId) {
                     String notes = record.getNotes();
                     
                     // 1. 查找相关的 HealthCareCheckRequest（如果有的话）
-                    HealthCareCheckRequest activeRequest = null;
-                    if (organization.getWorkQueue() != null) {
-                        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
-                            if (wr instanceof HealthCareCheckRequest) {
-                                HealthCareCheckRequest hcr = (HealthCareCheckRequest) wr;
-                                // 假设 Record ID 和 Message 中包含了宠物的身份信息
-                                if (hcr.getMessage().contains(pet.getPetName())) {
-                                    activeRequest = hcr;
-                                    break;
-                                }
+                HealthCareCheckRequest activeRequest = null;
+                if (organization.getWorkQueue() != null) {
+                    for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+                        if (wr instanceof HealthCareCheckRequest) {
+                            HealthCareCheckRequest hcr = (HealthCareCheckRequest) wr;
+                            
+                            // 🌟 修复后的核心逻辑：使用 BoardingRecordId 精确匹配
+                            if (record.getRecordId().equals(hcr.getBoardingRecordId())) {
+                                activeRequest = hcr;
+                                break;
                             }
                         }
                     }
+                }
 
                     Object[] row = new Object[9];
                     

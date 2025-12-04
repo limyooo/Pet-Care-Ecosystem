@@ -30,6 +30,7 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String treatmentNeeded;
     private double treatmentCost;
     private LabTestRequest labTestRequest;
+
     
     
     //Constructor：create new patientId

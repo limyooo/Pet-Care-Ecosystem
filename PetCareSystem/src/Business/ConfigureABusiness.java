@@ -79,15 +79,15 @@ public class ConfigureABusiness {
                                 "Happy Paws Insurance",
                                 Enterprise.EnterpriseType.PetInsurance);
         
-         // 3.x 为每个 Enterprise 创建一个 Enterprise Admin 账号（固定用户名和密码，方便登录演示）
+         // 3.为每个 Enterprise 创建一个 Enterprise Admin 账号（固定用户名和密码，方便登录演示）
         // Boarding Enterprise Admin
         Employee boardingAdminEmp = boardingEnt.getEmployeeDirectory()
                 .createEmployee("Boarding Enterprise Admin");
         boardingEnt.getUserAccountDirectory().createUserAccount(
                 "boardingadmin",          // 用户名
-                "boardingadmin",           // 密码（你可以自己改强一点）
+                "boardingadmin",           // 密码
                 boardingAdminEmp,
-                new EnterpriseAdminRole() // 如果没有这个类，先用你的 AdminRole
+                new EnterpriseAdminRole() 
         );
 
         // Clinic Enterprise Admin

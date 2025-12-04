@@ -418,7 +418,7 @@ public class ViewJPanel extends javax.swing.JPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         if (selectedRecord == null) {
-            JOptionPane.showMessageDialog(this, "没有选中的记录进行保存。", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No selected records were saved.", "Warning", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -429,7 +429,7 @@ public class ViewJPanel extends javax.swing.JPanel {
         String roomNumber = fieldRoom.getText();
         
         if (ownerName.isEmpty() || petName.isEmpty() || species.isEmpty() || roomNumber.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "宠物主人姓名、宠物名称、种类和房间号不能为空。", "输入错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "The names of the pet owner, the pet's name, the type of pet and the room number cannot be left blank.", "Warning", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -468,12 +468,12 @@ public class ViewJPanel extends javax.swing.JPanel {
             btnModifty.setEnabled(true);
             btnSave.setEnabled(false);
 
-            JOptionPane.showMessageDialog(this, "记录更新成功！", "成功", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Record update successful！", "success", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "年龄和体重必须是有效的数字。", "输入错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Age and weight must be valid numbers.", "input error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "保存过程中发生错误: " + e.getMessage(), "系统错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "An error occurred during the saving process: " + e.getMessage(), "system error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
         

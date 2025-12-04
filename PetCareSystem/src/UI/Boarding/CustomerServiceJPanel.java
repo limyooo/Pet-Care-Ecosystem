@@ -159,7 +159,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
          int selectedRow = jTable1.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a record first.", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -184,7 +184,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a record first.", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -192,15 +192,15 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
         String ownerName = (String) jTable1.getValueAt(selectedRow, 1);
         
         JOptionPane.showMessageDialog(this, 
-                "正在拨打电话给: " + ownerName + "\n电话号码: " + ownerPhone, 
-                "拨打电话", JOptionPane.INFORMATION_MESSAGE);
+                "Making a phone call to: " + ownerName + "\nphone number: " + ownerPhone, 
+                "making a call", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnCallActionPerformed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         // TODO add your handling code here:
        int selectedRow = jTable1.getSelectedRow();
     if (selectedRow < 0) {
-        JOptionPane.showMessageDialog(this, "请先选择一条记录。", "警告", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please select a record first.", "Warning", JOptionPane.WARNING_MESSAGE);
         return;
     }
     
@@ -233,7 +233,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
         }
 
         if (comp instanceof UI.admin.MainJFrame) {
-            // ⭐ 关键修正：调用新的公共代理方法
+            // 关键修正：调用新的公共代理方法
             ((UI.admin.MainJFrame) comp).triggerLogout();
         } else {
             // 找不到 MainJFrame，执行后备方案
@@ -285,7 +285,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
             }
         }
     }
-    // ⭐ 刷新表格
+    // 刷新表格
     public void refreshTable() {
         populateTable();
     }

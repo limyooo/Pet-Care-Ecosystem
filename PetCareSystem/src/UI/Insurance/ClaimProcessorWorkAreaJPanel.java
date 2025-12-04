@@ -122,7 +122,10 @@ import javax.swing.table.DefaultTableModel;
             // Create a new compensation notification request
             CompensationNotificationRequest compReq = new CompensationNotificationRequest();
             compReq.setSender(account);   // 当前 Claim Processor
-            compReq.setMessage("Compensation for claim " + claim.getClaimId());
+            compReq.setMessage(
+            "Compensation result for claim " + claim.getClaimId() +
+            " (" + claim.getClaimDecision() + ")"
+    );
             compReq.setCompensationAmount(claim.getClaimAmount());
             compReq.setNote("Decision: " + claim.getCoverageDecision());
 
@@ -564,18 +567,7 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 3. Only approved claims can trigger compensation notification
-        if (!"Approved".equalsIgnoreCase(targetClaim.getStatus())) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please approve the claim before sending compensation notification.",
-                    "Info",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-            return;
-        }
-
-        // 4. Send the compensation notification to the Pet Boarding enterprise
+        // 3. Send the compensation notification to the Pet Boarding enterprise
         sendCompensationNotification(targetClaim);
 
         JOptionPane.showMessageDialog(

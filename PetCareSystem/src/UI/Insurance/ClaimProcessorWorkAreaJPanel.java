@@ -79,6 +79,10 @@ import javax.swing.table.DefaultTableModel;
     }
 
 }
+    public void refreshTable() {
+    populateTable();
+}
+    
         private void autoDecideCoverage(InsuranceClaimRequest claim) {
             // Coverage level, Full Coverage / Partial Coverage 
             String level = claim.getCoverageLevel();
@@ -348,7 +352,7 @@ import javax.swing.table.DefaultTableModel;
         }
 
         // Open the detail panel for the selected claim
-        ClaimDetailJPanel detailPanel = new ClaimDetailJPanel(userProcessContainer, targetClaim);
+        ClaimDetailJPanel detailPanel = new ClaimDetailJPanel(userProcessContainer, targetClaim, this);
         userProcessContainer.add("ClaimDetailJPanel", detailPanel);
         
         // Switch card layout to the detail panel

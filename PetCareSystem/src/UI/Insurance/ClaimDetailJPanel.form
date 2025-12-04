@@ -92,14 +92,11 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="txtCost" min="-2" pref="157" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="btnModify" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-                                  </Group>
                               </Group>
                           </Group>
+                          <Component id="btnModify" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="44" max="32767" attributes="0"/>
+                      <EmptySpace pref="42" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -124,10 +121,7 @@
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="btnSave" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txtEmergency" min="-2" pref="107" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="txtEmergency" min="-2" pref="107" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -150,24 +144,29 @@
                               </Group>
                               <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblStatus" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblRequestDate" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblSender" alignment="1" min="-2" pref="81" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                                      <Component id="txtSender" min="-2" pref="106" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="lblStatus" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="lblRequestDate" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="lblSender" alignment="1" min="-2" pref="81" max="-2" attributes="0"/>
+                                      </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtStatus" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
-                                          <Component id="txtRequestDate" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                                              <Component id="txtSender" min="-2" pref="106" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="txtStatus" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                                                  <Component id="txtRequestDate" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
                                   </Group>
+                                  <Component id="btnSave" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -369,9 +368,15 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPatientID">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblClaimReason">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Claim Reason: "/>
       </Properties>
     </Component>
@@ -379,6 +384,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblClaimAmount">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Claim Amount:"/>
       </Properties>
     </Component>
@@ -400,10 +408,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtRequestDate">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtStatus">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSender">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPet">
       <Properties>
@@ -419,6 +436,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPetName">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblSpecies">
       <Properties>
@@ -436,16 +456,25 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSpecies">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSpeciesActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtAge">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAgeActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtAllergy">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblMedicalInfo">
       <Properties>
@@ -471,10 +500,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDoctor">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtLabResult">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDiagnosis">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDiagnosisActionPerformed"/>
       </Events>
@@ -493,6 +531,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtClaimID">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblAllergy">
       <Properties>
@@ -500,6 +541,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtWeight">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEmail">
       <Properties>
@@ -527,14 +571,29 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtOwnerName">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPhone">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEmail">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtAddress">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEmergency">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCost">
       <Properties>
@@ -542,6 +601,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCost">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblInsuranceInfo">
       <Properties>
@@ -561,6 +623,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblCompany">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Insurance Company:"/>
       </Properties>
     </Component>
@@ -571,17 +636,26 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblCoverageLevel">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Coverage Level:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblExpirationDate">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft YaHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Expiration Date:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtInsuranceCompany">
     </Component>
     <Component class="javax.swing.JTextField" name="txtPolicyID">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCoverageLevel">
     </Component>
@@ -605,6 +679,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

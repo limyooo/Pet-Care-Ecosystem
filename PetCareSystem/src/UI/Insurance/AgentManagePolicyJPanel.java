@@ -14,22 +14,20 @@ import javax.swing.JOptionPane;
 import java.awt.Component;
 import UI.Insurance.AgentWorkAreaJPanel;
 
-public class AgentManagePolicyJPanel extends javax.swing.JPanel {
+    public class AgentManagePolicyJPanel extends javax.swing.JPanel {
+    private JPanel userProcessContainer; //Parent container used for CardLayout navigation.
+    private UserAccount account; //Logged-in agent account
+    private InsurancePolicyOrganization organization; //Organization managing insurance policies.
+    private PetInsuranceEnterprise enterprise; //Insurance enterprise this agent belongs to.
+    private Petsystem system; 
+    private InsurancePolicy policy; //The currently selected insurance policy to view / edit.
 
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private InsurancePolicyOrganization organization;
-    private PetInsuranceEnterprise enterprise;
-    private Petsystem system;
-
-    private InsurancePolicy policy;   // 当前选中的那条保单
-
-        // 设计器用
+    
     public AgentManagePolicyJPanel() {
         initComponents();
     }
 
-    // 运行时用：从 AgentWorkAreaJPanel 跳转过来会调用这个
+    
     public AgentManagePolicyJPanel(JPanel userProcessContainer,
                                    UserAccount account,
                                    InsurancePolicyOrganization organization,
@@ -44,14 +42,12 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
         this.system = system;
         this.policy = policy;
 
-        // 初始化下拉框选项
+        // Initialize combo box options and populate fields from the policy.
         initComboBoxes();
-        
-        // 用这条 policy 把界面上的字段填上
         populateForm();
     }
-        // 给 Coverage / Status 设置一个固定的选项
-    // 给 Coverage / Status 设置一个固定的选项
+    
+        // Initialize fixed options for coverage type and status.
         private void initComboBoxes() {
             cbxCoverageType.removeAllItems();
             cbxCoverageType.addItem("Full Coverage");
@@ -64,31 +60,30 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
         }
 
 
-    // 用 policy -> pet -> owner 的信息填充 UI
-    private void populateForm() {
-        if (policy == null) {
-            return;
+        // Fill the UI fields with information from the selected policy
+        private void populateForm() {
+            if (policy == null) {
+                return; 
         }
 
-        // Policy 基本信息
+        // Policy basic information
         txtPolicyID.setText(policy.getPolicyId());
         txtStart.setText(policy.getStartDate());
         txtExpiration.setText(policy.getEndDate());
 
-        // coverageType
+        // Coverage type
         String coverageType = policy.getCoverageType();
         if (coverageType != null) {
             cbxCoverageType.setSelectedItem(coverageType);
         }
 
-        // Status：从 policy 里取，如果为 null 就用 Active
+        // Status (default to Active if empty)
         String status = policy.getStatus();
         if (status != null && !status.isEmpty()) {
             cbxStatus.setSelectedItem(status);
         } else {
             cbxStatus.setSelectedItem("Active");
         }
-
 
         // Pet & Owner
         Pet pet = policy.getPet();
@@ -108,28 +103,27 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
             }
         }
 
-        // 默认一开始是“查看模式”，不能改
         setEditMode(false);
     }
 
-    // 控制哪些字段是可编辑（只允许改保单相关）
-    private void setEditMode(boolean editable) {
-        cbxCoverageType.setEnabled(editable);
-        txtStart.setEditable(editable);
-        txtExpiration.setEditable(editable);
-        cbxStatus.setEnabled(editable);
+        // Only policy-related fields can be edited
+        private void setEditMode(boolean editable) {
+            cbxCoverageType.setEnabled(editable);
+            txtStart.setEditable(editable);
+            txtExpiration.setEditable(editable);
+            cbxStatus.setEnabled(editable);
 
-        // 宠物 & owner 信息只读
-        txtPetName.setEditable(false);
-        txtSpecies.setEditable(false);
-        txtAge.setEditable(false);
-        txtWeight.setEditable(false);
-        txtOwnerName.setEditable(false);
-        txtPhone.setEditable(false);
-        txtEmail.setEditable(false);
-        txtAddress.setEditable(false);
-        txtEmergency.setEditable(false);
-    }
+            // Pet and Owner info are read-only
+            txtPetName.setEditable(false);
+            txtSpecies.setEditable(false);
+            txtAge.setEditable(false);
+            txtWeight.setEditable(false);
+            txtOwnerName.setEditable(false);
+            txtPhone.setEditable(false);
+            txtEmail.setEditable(false);
+            txtAddress.setEditable(false);
+            txtEmergency.setEditable(false);
+        }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -250,6 +244,7 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
         lblCoverageType.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         lblCoverageType.setText("CoverageType:");
 
+        lblStartDate.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         lblStartDate.setText("StartDate:");
 
         lblStatus.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
@@ -455,65 +450,65 @@ public class AgentManagePolicyJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtStartActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-    if (userProcessContainer == null) {
-        return;
-    }
+        if (userProcessContainer == null) {
+            return;
+        }
 
-    // 先移除当前面板
-    userProcessContainer.remove(this);
+        // Remove current panel
+        userProcessContainer.remove(this);
 
-    // 拿到容器里剩下的组件，最后一个就是我们要回去的 WorkArea
-    Component[] comps = userProcessContainer.getComponents();
-    Component c = comps[comps.length - 1];
+        // Get the previous component in the stack
+        Component[] comps = userProcessContainer.getComponents();
+        Component c = comps[comps.length - 1];
 
-    if (c instanceof AgentWorkAreaJPanel) {
-        AgentWorkAreaJPanel panel = (AgentWorkAreaJPanel) c;
-        panel.populatePolicyTable();   // ⭐ 刷新表格
-    }
+        if (c instanceof AgentWorkAreaJPanel) {
+            AgentWorkAreaJPanel panel = (AgentWorkAreaJPanel) c;
+            panel.populatePolicyTable(); // Refresh policy list
+        }
 
-    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-    layout.previous(userProcessContainer);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
-    // 允许编辑 coverage / start / expiration / status
         setEditMode(true);
     }//GEN-LAST:event_btnModifyActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-             if (policy == null) return;
+            if (policy == null) return;
 
-    String coverage = (String) cbxCoverageType.getSelectedItem();
-    String start = txtStart.getText().trim();
-    String end = txtExpiration.getText().trim();
-    String status = (String) cbxStatus.getSelectedItem();   // ⭐ 新增
+            String coverage = (String) cbxCoverageType.getSelectedItem();
+            String start = txtStart.getText().trim();
+            String end = txtExpiration.getText().trim();
+            String status = (String) cbxStatus.getSelectedItem();
 
-    if (coverage == null || start.isEmpty() || end.isEmpty()) {
-        JOptionPane.showMessageDialog(this,
-                "Coverage, StartDate, ExpirationDate cannot be empty.",
-                "Warning",
-                JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+            if (coverage == null || start.isEmpty() || end.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Coverage, StartDate, ExpirationDate cannot be empty.",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Update policy object
+            policy.setCoverageType(coverage);
+            policy.setStartDate(start);
+            policy.setEndDate(end);
+            policy.setStatus(status);
 
-    policy.setCoverageType(coverage);
-    policy.setStartDate(start);
-    policy.setEndDate(end);
-    policy.setStatus(status);   // ⭐ 一定要有这行！
+            JOptionPane.showMessageDialog(this,
+                    "Policy updated successfully.",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE);
 
-    JOptionPane.showMessageDialog(this,
-            "Policy updated successfully.",
-            "Info",
-            JOptionPane.INFORMATION_MESSAGE);
+            setEditMode(false);
 
-    setEditMode(false);
-
-            // 5️⃣ 刷新前一个列表面板
+            // Refresh policy list in any AgentWorkAreaJPanel in the container
             if (userProcessContainer != null) {
                 for (Component comp : userProcessContainer.getComponents()) {
                     if (comp instanceof AgentWorkAreaJPanel) {
                         AgentWorkAreaJPanel panel = (AgentWorkAreaJPanel) comp;
-                        panel.populatePolicyTable();   // 重新加载表格
+                        panel.populatePolicyTable();
                     }
                 }
             }

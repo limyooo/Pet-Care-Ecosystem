@@ -9,8 +9,14 @@ import Business.UserAccount.UserAccount;
 import UI.Insurance.ClaimProcessorWorkAreaJPanel;
 import javax.swing.JPanel;
 
+/**
+ * ClaimProcessorRole:
+ * Defines the role of a claim processor who reviews and processes insurance claim requests.
+ */
+
 public class ClaimProcessorRole extends Role {
 
+    //  Creates the main work area UI for the claim processor.
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer,
                                  UserAccount account,
@@ -18,6 +24,7 @@ public class ClaimProcessorRole extends Role {
                                  Enterprise enterprise,
                                  Petsystem system) {
 
+        // Return the UI for claim handling
         return new ClaimProcessorWorkAreaJPanel(
                 userProcessContainer,
                 account,
@@ -27,6 +34,7 @@ public class ClaimProcessorRole extends Role {
         );
     }
 
+    // Role name shown in UI tables or dropdowns.
     @Override
     public String toString() {
         return "Claim Processor";

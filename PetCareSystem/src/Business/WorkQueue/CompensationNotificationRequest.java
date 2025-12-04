@@ -1,14 +1,17 @@
 package Business.WorkQueue;
 
 /**
- * Request to notify another organization about compensation.
- * For example: Insurance Claim -> Pet Boarding for payment info.
+ * CompensationNotificationRequest:
+ * A work request used to notify another organization about
+ * the result of a compensation calculation.
  */
+
 public class CompensationNotificationRequest extends WorkRequest {
 
-    private double compensationAmount;   // final compensation amount
-    private String note;                 // extra message (optional)
+    private double compensationAmount;   // Final approved compensation
+    private String note;                 // Additional remarks
 
+    
     public double getCompensationAmount() {
         return compensationAmount;
     }

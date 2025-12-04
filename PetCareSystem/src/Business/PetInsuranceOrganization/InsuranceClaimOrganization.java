@@ -6,15 +6,15 @@ import Business.Role.Role;
 import java.util.ArrayList;
 
 /**
- * InsuranceClaimOrganization:
- * Processes claim requests submitted by pet owners or agents.
+ * Organization responsible for handling insurance claim requests.
  */
 public class InsuranceClaimOrganization extends Organization {
 
     public InsuranceClaimOrganization() {
-        super("Insurance Claim Organization");
+        super("Insurance Claim Organization"); // Set organization name
     }
 
+    // Returns the list of roles(Claim Processor) supported by this organization.
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList<>();

@@ -2,26 +2,22 @@ package Business.Pet;
 
 import java.util.ArrayList;
 
-/**
- * InsurancePolicyDirectory:
- * 管理所有宠物保险保单（InsurancePolicy）。
- */
-public class InsurancePolicyDirectory {
 
+public class InsurancePolicyDirectory {
+    // List of all policies
     private ArrayList<InsurancePolicy> policyList = new ArrayList<>();
 
-    // Constructor
+    
     public InsurancePolicyDirectory() {
     }
 
-    // 获取所有保单
+    // Get the full policy list.
     public ArrayList<InsurancePolicy> getPolicyList() {
         return policyList;
     }
 
-    // ============================
-    // 创建新保单（完整版本）
-    // ============================
+    
+    // Create and add a new policy
                 public InsurancePolicy addPolicy(
                 String policyId,
                 String provider,
@@ -52,17 +48,17 @@ public class InsurancePolicyDirectory {
 
 
 
-    // 添加已有保单对象
+    // Add an existing policy object.
     public void addPolicy(InsurancePolicy policy) {
         policyList.add(policy);
     }
 
-    // 删除保单
+    // Remove a policy.
     public void removePolicy(InsurancePolicy policy) {
         policyList.remove(policy);
     }
 
-    // 根据保单号查找
+    // Search policy by ID.
     public InsurancePolicy findPolicyById(String policyId) {
         for (InsurancePolicy policy : policyList) {
             if (policy.getPolicyId().equals(policyId)) {

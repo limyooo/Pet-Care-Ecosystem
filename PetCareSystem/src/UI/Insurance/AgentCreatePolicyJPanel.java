@@ -1,5 +1,4 @@
 package UI.Insurance;
-
 import Business.Enterprise.PetInsuranceEnterprise;
 import Business.Pet.InsurancePolicy;
 import Business.Pet.InsurancePolicyDirectory;
@@ -16,20 +15,20 @@ import javax.swing.JPanel;
 import java.awt.Component;
 import UI.Insurance.AgentWorkAreaJPanel;
 
-public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
 
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private InsurancePolicyOrganization organization;
-    private PetInsuranceEnterprise enterprise;
+public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
+    private JPanel userProcessContainer; //Parent container for CardLayout navigation.
+    private UserAccount account; //Logged-in user (Insurance Agent).
+    private InsurancePolicyOrganization organization; //Organization responsible for insurance policy management.
+    private PetInsuranceEnterprise enterprise; //Insurance enterprise this agent belongs to.
     private Petsystem system;
 
-    // 设计器用的无参构造（NetBeans 可视化编辑会用到）
+    
     public AgentCreatePolicyJPanel() {
         initComponents();
     }
 
-    // 运行时真正用的构造
+    
     public AgentCreatePolicyJPanel(JPanel userProcessContainer,
                                    UserAccount account,
                                    InsurancePolicyOrganization organization,
@@ -327,29 +326,27 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtStartActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-     if (userProcessContainer != null) {
+        if (userProcessContainer != null) {
+        userProcessContainer.remove(this); // Remove this panel from the container
 
-        // 先把当前创建页面移除
-        userProcessContainer.remove(this);
-
-        // 拿到容器里剩下的组件（栈顶就是我们要回去的那个）
+        // Get the previous component from the container
         Component[] comps = userProcessContainer.getComponents();
         Component c = comps[comps.length - 1];
 
-        // 如果上一页是 AgentWorkAreaJPanel，就刷新它的表格
+        // Refresh the policy table in the work area if we are returning there
         if (c instanceof AgentWorkAreaJPanel) {
             AgentWorkAreaJPanel panel = (AgentWorkAreaJPanel) c;
-            panel.populatePolicyTable();   // ⭐ 关键：刷新列表
+            panel.populatePolicyTable(); 
         }
 
-        // 再真正执行卡片返回
+        // Navigate back using CardLayout
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-            // ========== 1. 读取界面上的输入 ==========
+           // 1. Read input from UI fields
 
            // Pet
            String petName   = txtPetName.getText().trim();
@@ -366,12 +363,13 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
 
            // Policy
            String policyId       = txtPolicyID.getText().trim();
-           String coverageType   = txtCoverageType.getText().trim();  // basic / premium...
+           String coverageType   = txtCoverageType.getText().trim(); 
            String startDate      = txtStart.getText().trim();
            String expirationDate = txtExpiration.getText().trim();
            String status         = txtStatus.getText().trim();
 
-           // ========== 2. 必填项简单校验（提示用英文） ==========
+           
+           // 2. Basic validation for required fields
            if (petName.isEmpty() || species.isEmpty() || ownerName.isEmpty()
                    || policyId.isEmpty() || coverageType.isEmpty()
                    || startDate.isEmpty() || expirationDate.isEmpty()) {
@@ -385,7 +383,8 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                return;
            }
 
-           // ========== 3. 年龄、体重转成数字 ==========
+           
+           // 3. Convert age and weight to numeric values
            int age;
            double weight;
            try {
@@ -401,7 +400,8 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                return;
            }
 
-           // ========== 4. 从 system / enterprise 里拿目录对象 ==========
+           
+           // 4. Retrieve directories from system
            if (system == null) {
                JOptionPane.showMessageDialog(
                        this,
@@ -435,11 +435,9 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
             }
 
 
-           // ========== 5. 创建 PetOwner ==========
-           // 这里没有单独的 ownerId 文本框，就自动生成一个
+           // 5. Create a PetOwner record
            String ownerId = "PO" + System.currentTimeMillis();
 
-           // 保险公司先用 enterprise 的名字；coverageType 就是 txtCoverageLevel
            String insuranceCompany = enterprise.getName();
 
            PetOwner owner = ownerDir.addOwner(
@@ -455,7 +453,8 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                    expirationDate
            );
 
-           // ========== 6. 在该 owner 下面创建 Pet ==========
+           
+           // 6. Create a Pet under this owner
            PetDirectory petDir = owner.getPetDirectory();
            if (petDir == null) {
                JOptionPane.showMessageDialog(
@@ -467,7 +466,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                return;
            }
 
-           // petId 自动生成；后面几个字段（食物、过敏、备注）用 "N/A" 占位
+           
            String petId = "P" + System.currentTimeMillis();
 
            Pet pet = petDir.addPet(
@@ -482,26 +481,26 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                    owner
            );
 
-                    // ========== 7. 创建 InsurancePolicy 并存到 system 的目录 ==========
-                    double premium = 0.0;  // 目前界面没有 premium，就先用 0 占位
+           
+           // 7. Create an InsurancePolicy and store it in the system directory
+              double premium = 0.0;
 
-                    // 这里直接用上面第 4 步拿到的 policyDir
-                    InsurancePolicy policy = policyDir.addPolicy(
-                            policyId,
-                            insuranceCompany,
-                            coverageType,
-                            startDate,
-                            expirationDate,
-                            premium,
-                            status,
-                            pet,
-                            owner
+              InsurancePolicy policy = policyDir.addPolicy(
+                                                    policyId,
+                                                    insuranceCompany,
+                                                    coverageType,
+                                                    startDate,
+                                                    expirationDate,
+                                                    premium,
+                                                    status,
+                                                    pet,
+                                                    owner
          );
 
 
 
 
-           // ========== 8. 提示成功 + 清空输入 ==========
+           // 8. Show success message and clear fields
            JOptionPane.showMessageDialog(
                    this,
                    "Policy created successfully.",
@@ -509,7 +508,7 @@ public class AgentCreatePolicyJPanel extends javax.swing.JPanel {
                    JOptionPane.INFORMATION_MESSAGE
            );
 
-           // 清空界面方便继续录入下一条
+        
            txtPetName.setText("");
            txtSpecies.setText("");
            txtAge.setText("");

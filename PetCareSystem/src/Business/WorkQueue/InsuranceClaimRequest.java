@@ -1,54 +1,57 @@
 package Business.WorkQueue;
+
 import Business.Pet.Pet;
 import Business.Pet.PetOwner;
 
 /**
- * Work request for an insurance claim.
- * Created by customer / front desk / clinic and
- * handled by Insurance Claim Organization.
+ * InsuranceClaimRequest:
+ * Represents one insurance claim submitted for review.
  */
+
 public class InsuranceClaimRequest extends WorkRequest {
 
-    private static int claimCounter = 2000;  // 自增的理赔单号
+    private static int claimCounter = 2000;  // Auto-increment ID
 
-    // ===== 基本理赔信息 =====
-    private int claimId;              // 理赔编号（唯一）
-    private double claimAmount;       // 理赔金额
-    private String claimDecision;     // 审批结果：Approved / Rejected / Pending
-    private HealthCareCheckRequest healthRequest; // 关联的健康检查请求（如果有）
+    // Basic Claim Info
+    private int claimId;              // Unique claim ID
+    private double claimAmount;       // Final approved amount
+    private String claimDecision;     // Approved / Rejected / Pending
+    private HealthCareCheckRequest healthRequest; // Linked medical checkup (if any)
 
-    // ===== 展示在 Claim 列表 / 明细里的字段 =====
-    private String holderName;        // 宠物主人名字（你新加的）
-    private String patientId;         // 患者/病历 ID
-    private String policyId;          // 保单号
-    private String petName;           // 宠物名
-    private String symptom;           // 症状
-    private String labResult;         // 检验结果
-    private double treatmentCost;     // 治疗费用
+    // Display Fields (shown in tables/UI)
+    private String holderName;  
+    private String patientId;       
+    private String policyId;      
+    private String petName;         
+    private String symptom;          
+    private String labResult;        
+    private double treatmentCost;   
 
-    // ===== 保险相关信息 =====
-    private String insuranceCompany;  // 保险公司
-    private String coverageLevel;     // 保障等级：Basic / Standard / Premium
-    private String expirationDate;    // 保单到期日（String 存就够）
+    // Insurance-related info
+    private String insuranceCompany;  
+    private String coverageLevel;     
+    private String expirationDate;  
 
-    // ===== 你新加的“全保/半保” 决策 =====
-    private String coverageDecision;  // 全保 / 半保 / Pending 等
+    // Coverage Decision (Full / Partial)
+    private String coverageDecision;  // Full Coverage / Partial Coverage / No Coverage
     private Pet pet;
     private PetOwner owner;
     
+    // Medical Detail
     private String doctorName;        // Doctor Assigned
-    private String treatmentNeeded;   // Treatment Needed / Diagnosis
+    private String treatmentNeeded;   
 
+    
     public InsuranceClaimRequest() {
-        this.claimId = ++claimCounter;
+        this.claimId = ++claimCounter; // auto-generate claim id
     }
 
-    // ---------- claimId ----------
+    
     public int getClaimId() {
         return claimId;
     }
 
-    // ---------- claimAmount ----------
+    
     public double getClaimAmount() {
         return claimAmount;
     }
@@ -57,7 +60,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.claimAmount = claimAmount;
     }
 
-    // ---------- claimDecision ----------
+    
     public String getClaimDecision() {
         return claimDecision;
     }
@@ -66,7 +69,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.claimDecision = claimDecision;
     }
 
-    // ---------- healthRequest ----------
+    
     public HealthCareCheckRequest getHealthRequest() {
         return healthRequest;
     }
@@ -75,7 +78,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.healthRequest = healthRequest;
     }
 
-    // ---------- holderName ----------
+    
     public String getHolderName() {
         return holderName;
     }
@@ -84,7 +87,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.holderName = holderName;
     }
 
-    // ---------- patientId ----------
+    
     public String getPatientId() {
         return patientId;
     }
@@ -93,7 +96,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.patientId = patientId;
     }
 
-    // ---------- policyId ----------
+    
     public String getPolicyId() {
         return policyId;
     }
@@ -102,7 +105,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.policyId = policyId;
     }
 
-    // ---------- petName ----------
+    
     public String getPetName() {
         return petName;
     }
@@ -111,7 +114,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.petName = petName;
     }
 
-    // ---------- symptom ----------
+    
     public String getSymptom() {
         return symptom;
     }
@@ -120,7 +123,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.symptom = symptom;
     }
 
-    // ---------- labResult ----------
+    
     public String getLabResult() {
         return labResult;
     }
@@ -129,7 +132,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.labResult = labResult;
     }
 
-    // ---------- treatmentCost ----------
+    
     public double getTreatmentCost() {
         return treatmentCost;
     }
@@ -138,7 +141,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.treatmentCost = treatmentCost;
     }
 
-    // ---------- insuranceCompany ----------
+    
     public String getInsuranceCompany() {
         return insuranceCompany;
     }
@@ -147,7 +150,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.insuranceCompany = insuranceCompany;
     }
 
-    // ---------- coverageLevel ----------
+    
     public String getCoverageLevel() {
         return coverageLevel;
     }
@@ -156,7 +159,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.coverageLevel = coverageLevel;
     }
 
-    // ---------- expirationDate ----------
+    
     public String getExpirationDate() {
         return expirationDate;
     }
@@ -165,7 +168,7 @@ public class InsuranceClaimRequest extends WorkRequest {
         this.expirationDate = expirationDate;
     }
 
-    // ---------- coverageDecision（全保 / 半保） ----------
+    
     public String getCoverageDecision() {
         return coverageDecision;
     }
@@ -173,8 +176,6 @@ public class InsuranceClaimRequest extends WorkRequest {
     public void setCoverageDecision(String coverageDecision) {
         this.coverageDecision = coverageDecision;
     }
-
-        // ===== 关联对象：直接挂 Pet / PetOwner =====
    
 
     public Pet getPet() {

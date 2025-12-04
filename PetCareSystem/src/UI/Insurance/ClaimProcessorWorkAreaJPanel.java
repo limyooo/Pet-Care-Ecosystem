@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package UI.Insurance;
+
 import Business.UserAccount.UserAccount;
 import Business.Petsystem;
 import Business.Enterprise.PetInsuranceEnterprise;
@@ -20,17 +17,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Eve Dou
  */
-public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private InsuranceClaimOrganization organization;
-    private PetInsuranceEnterprise enterprise;
-    private Petsystem system;
-    private InsuranceClaimOrganization claimOrg; 
+    public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
+        private JPanel userProcessContainer; // Parent container used for CardLayout navigation
+        private UserAccount account; // Logged-in claim processor account
+        private InsuranceClaimOrganization organization; //  Claim organization this processor belongs to
+        private PetInsuranceEnterprise enterprise;
+        private Petsystem system;
+        private InsuranceClaimOrganization claimOrg; 
 
-    /**
-     * Creates new form ClaimProcessorWorkAreaJPanel
-     */
+    
     public ClaimProcessorWorkAreaJPanel(JPanel userProcessContainer,
                                         UserAccount account,
                                         InsuranceClaimOrganization organization,
@@ -46,52 +41,49 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
         populateTable();
     }
     
-     private void populateTable() {
-    DefaultTableModel model = (DefaultTableModel) tblInsuranceClaim.getModel();
-    model.setRowCount(0);
+    
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblInsuranceClaim.getModel();
+        model.setRowCount(0);
 
-    for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
-        if (req instanceof InsuranceClaimRequest) {
-            InsuranceClaimRequest claim = (InsuranceClaimRequest) req;
+        for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
+            if (req instanceof InsuranceClaimRequest) {
+                InsuranceClaimRequest claim = (InsuranceClaimRequest) req;
 
-            // ⭐ 一共 12 列，对应表头：
-            // Patient ID, Policy ID, Holder Name, Pet Name, Symptom,
-            // Lab Result, Treatment Cost, Coverage Type,
-            // Claim Amount, Sender, Status, Decision
-            Object[] row = new Object[12];
 
-            row[0]  = claim.getPatientId();          // Patient ID
-            row[1]  = claim.getPolicyId();           // Policy ID
-            row[2]  = claim.getHolderName();         // Holder Name
-            row[3]  = claim.getPetName();            // Pet Name
-            row[4]  = claim.getSymptom();            // Symptom
-            row[5]  = claim.getLabResult();          // Lab Result
-            row[6]  = claim.getTreatmentCost();      // Treatment Cost
-            row[7]  = claim.getCoverageLevel();      // ⭐ Coverage Type (Basic/Standard/Premium)
-            row[8]  = claim.getClaimAmount();        // Claim Amount
-            row[9]  = claim.getSender();             // Sender
-            row[10] = claim.getStatus();             // Status
-            row[11] = claim.getCoverageDecision();   // Decision (Full/Partial/No Coverage)
+                Object[] row = new Object[12];
 
-            model.addRow(row);
+                row[0]  = claim.getPatientId(); 
+                row[1]  = claim.getPolicyId();           
+                row[2]  = claim.getHolderName();         
+                row[3]  = claim.getPetName();           
+                row[4]  = claim.getSymptom();            
+                row[5]  = claim.getLabResult();          
+                row[6]  = claim.getTreatmentCost();      
+                row[7]  = claim.getCoverageLevel();      
+                row[8]  = claim.getClaimAmount();      
+                row[9]  = claim.getSender();             
+                row[10] = claim.getStatus();            
+                row[11] = claim.getCoverageDecision();   
+
+                model.addRow(row);
         }
     }
 
-    
-
 }
         private void autoDecideCoverage(InsuranceClaimRequest claim) {
-
+            // Coverage level, Full Coverage / Partial Coverage 
             String level = claim.getCoverageLevel();
             double ratio;
 
-            // 只要是 Full Coverage 就 100%，其他一律 50%
+            // Full coverage → 100%, otherwise → 50%
             if (level != null && level.toLowerCase().contains("full")) {
-                ratio = 1.0;   // 全保
+                ratio = 1.0;   // full coverage
             } else {
-                ratio = 0.5;   // 半保
+                ratio = 0.5;   // partial coverage
             }
-
+            
+            // Approved amount = treatment cost * ratio
             double approvedAmount = claim.getTreatmentCost() * ratio;
             claim.setClaimAmount(approvedAmount);
 
@@ -104,11 +96,7 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 claim.setCoverageDecision("Partial Coverage");
                 claim.setClaimDecision("Approved");
             }
-
-
 }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -242,23 +230,20 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-   // 找到这个 panel 所在的顶层窗口（JFrame）
-    java.awt.Window window = SwingUtilities.getWindowAncestor(this);
-
-    if (window instanceof MainJFrame) {
-        MainJFrame mainFrame = (MainJFrame) window;
-        // 复用 MainJFrame 里已经写好的登出逻辑
-        mainFrame.triggerLogout();
-    } else {
-        // 兜底：如果拿不到 MainJFrame，就仅仅从 CardLayout 返回上一页
-        userProcessContainer.remove(this);
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.previous(userProcessContainer);
+        java.awt.Window window = SwingUtilities.getWindowAncestor(this);
+        
+        if (window instanceof MainJFrame) {
+            MainJFrame mainFrame = (MainJFrame) window; 
+            mainFrame.triggerLogout();
+        } else {
+            userProcessContainer.remove(this);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            layout.previous(userProcessContainer);
     }
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void btnViewDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailActionPerformed
-        // 1. 检查有没有选中表格行
+        // Get selected row; if none selected, warn user
         int selectedRow = tblInsuranceClaim.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(
@@ -270,9 +255,10 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // 2. 通过 Policy ID 在 workQueue 里找到对应的 InsuranceClaimRequest
+        // Extract policy ID from table (column index 1)
         String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
-
+        
+        // Search the work queue for the matching InsuranceClaimRequest
         InsuranceClaimRequest targetClaim = null;
         for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
             if (req instanceof InsuranceClaimRequest) {
@@ -284,6 +270,7 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
             }
         }
 
+        // If not found, show error
         if (targetClaim == null) {
             JOptionPane.showMessageDialog(
                     this,
@@ -294,16 +281,18 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // 3. 跳转到 ClaimDetailJPanel，并把这条 claim 传过去
+        // Open the detail panel for the selected claim
         ClaimDetailJPanel detailPanel = new ClaimDetailJPanel(userProcessContainer, targetClaim);
         userProcessContainer.add("ClaimDetailJPanel", detailPanel);
+        
+        // Switch card layout to the detail panel
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
     }//GEN-LAST:event_btnViewDetailActionPerformed
 
     private void btnApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveActionPerformed
-            // 1. 看看有没有选中行
-            int selectedRow = tblInsuranceClaim.getSelectedRow();
+        // Get selected row; if none selected, stop    
+        int selectedRow = tblInsuranceClaim.getSelectedRow();
             if (selectedRow < 0) {
                 JOptionPane.showMessageDialog(
                         this,
@@ -314,10 +303,10 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 return;
             }
 
-            // 2. 从表格里拿到 policyId（第二列，索引 1）
+            // Retrieve policy ID from the selected table row
             String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
 
-            // 3. 在 claimOrg 的 workQueue 里找到这一条 InsuranceClaimRequest
+            // Locate the corresponding InsuranceClaimRequest in the work queue
             InsuranceClaimRequest targetClaim = null;
             for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
                 if (req instanceof InsuranceClaimRequest) {
@@ -328,7 +317,8 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                     }
                 }
             }
-
+            
+            // If no matching claim is found
             if (targetClaim == null) {
                 JOptionPane.showMessageDialog(
                         this,
@@ -339,7 +329,7 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 return;
             }
 
-            // 4. 如果已经处理过，就不重复处理
+            // Prevent double processing (approved / rejected already)
             if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
                 JOptionPane.showMessageDialog(
                         this,
@@ -358,9 +348,11 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                 );
                 return;
             }
-
+            
+               // Automatically calculate approval amount and update claim status
                autoDecideCoverage(targetClaim);
-
+               
+               // Show result summary to user
                 JOptionPane.showMessageDialog(
                         this,
                         "Claim processed.\n"
@@ -370,100 +362,102 @@ public class ClaimProcessorWorkAreaJPanel extends javax.swing.JPanel {
                         "Success",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-
+                
+                // Refresh table to reflect updates
                 populateTable();
 
     }//GEN-LAST:event_btnApproveActionPerformed
 
     private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
-    // 1. 看看有没有选中行
-    int selectedRow = tblInsuranceClaim.getSelectedRow();
-    if (selectedRow < 0) {
-        JOptionPane.showMessageDialog(
-                this,
-                "Please select a claim first.",
-                "Warning",
-                JOptionPane.WARNING_MESSAGE
-        );
-        return;
-    }
+         // Ensure a row is selected in the table
+        int selectedRow = tblInsuranceClaim.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please select a claim first.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
-    // 2. 从表格里拿到 policyId（第二列，索引 1）
-    String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
-
-    // 3. 在 claimOrg 的 workQueue 里找到这一条 InsuranceClaimRequest
-    InsuranceClaimRequest targetClaim = null;
-    for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
-        if (req instanceof InsuranceClaimRequest) {
-            InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
-            if (policyId.equals(ic.getPolicyId())) {
-                targetClaim = ic;
-                break;
+          // Retrieve policy ID from the selected row
+        String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
+       
+        // Find the matching InsuranceClaimRequest in the work queue
+        InsuranceClaimRequest targetClaim = null;
+        for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
+            if (req instanceof InsuranceClaimRequest) {
+                InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
+                if (policyId.equals(ic.getPolicyId())) {
+                    targetClaim = ic;
+                    break;
+                }
             }
         }
-    }
 
-    if (targetClaim == null) {
-        JOptionPane.showMessageDialog(
+        // Stop if claim cannot be found
+        if (targetClaim == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Cannot find this claim in work queue.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // Prevent re-processing previously handled claims
+        if ("Rejected".equalsIgnoreCase(targetClaim.getStatus())) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "This claim is already rejected.",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+        if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "This claim has been approved and cannot be rejected.",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+    
+        // Ask for confirmation before rejecting the claim
+        int result = JOptionPane.showConfirmDialog(
                 this,
-                "Cannot find this claim in work queue.",
-                "Error",
-                JOptionPane.ERROR_MESSAGE
+                "Are you sure to reject this claim?",
+                "Confirm",
+                JOptionPane.YES_NO_OPTION
         );
-        return;
-    }
+        
+        if (result != JOptionPane.YES_OPTION) {
+            return;
+        }
 
-    // 4. 如果已经处理过，就不重复处理
-    if ("Rejected".equalsIgnoreCase(targetClaim.getStatus())) {
+             // Update claim’s final status and coverage decision
+            targetClaim.setStatus("Rejected");
+            targetClaim.setClaimDecision("Rejected");
+            targetClaim.setCoverageDecision("No Coverage"); 
+
+
         JOptionPane.showMessageDialog(
                 this,
-                "This claim is already rejected.",
-                "Info",
+                "Claim rejected.",
+                "Success",
                 JOptionPane.INFORMATION_MESSAGE
         );
-        return;
-    }
-    if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
-        JOptionPane.showMessageDialog(
-                this,
-                "This claim has been approved and cannot be rejected.",
-                "Info",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-        return;
-    }
 
-    // 5. 二次确认（可选）
-    int result = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure to reject this claim?",
-            "Confirm",
-            JOptionPane.YES_NO_OPTION
-    );
-    if (result != JOptionPane.YES_OPTION) {
-        return;
-    }
-
-        // 6. 修改状态 + 决策
-        targetClaim.setStatus("Rejected");
-        targetClaim.setClaimDecision("Rejected");
-        targetClaim.setCoverageDecision("No Coverage");   // 明确：不赔
-
-
-    JOptionPane.showMessageDialog(
-            this,
-            "Claim rejected.",
-            "Success",
-            JOptionPane.INFORMATION_MESSAGE
-    );
-
-    // 7. 刷新表格
-    populateTable();
+        // Refresh the table to show updates
+        populateTable();
     }//GEN-LAST:event_btnRejectActionPerformed
 
     private void btnPolicyRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolicyRecordActionPerformed
-            ClaimPolicyRecordJPanel panel =
-            new ClaimPolicyRecordJPanel(userProcessContainer, claimOrg);
+    ClaimPolicyRecordJPanel panel = new ClaimPolicyRecordJPanel(userProcessContainer, claimOrg);
     userProcessContainer.add("ClaimPolicyRecordJPanel", panel);
     CardLayout layout = (CardLayout) userProcessContainer.getLayout();
     layout.next(userProcessContainer);

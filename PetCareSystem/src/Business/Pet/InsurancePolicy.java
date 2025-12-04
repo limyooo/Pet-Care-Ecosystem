@@ -2,38 +2,24 @@ package Business.Pet;
 
 import Business.Pet.PetOwner;
 
-/**
- * InsurancePolicy:
- * 代表一份宠物保险保单。
- */
+
 public class InsurancePolicy {
 
-    // ====== 保单基础信息 ======
-    private String policyId;       // 保单号，例如 PL1234
-    private String provider;       // 保险公司/机构名称，例如 "Happy Paws Insurance"
-
-    // 保障类型（这里统一用 CoverageType 存 Full Coverage / Partial Coverage）
-    private String coverageType;   // "Full Coverage" / "Partial Coverage"
-
-    // 生效日期 & 终止日期（可以先用 String 存，后面有时间再改成 Date）
+    private String policyId;   
+    private String provider;    
+    private String coverageType; // Full Coverage / Partial Coverage
     private String startDate;
     private String endDate;
-
-    // 保费（如果暂时不用，也可以先保留着）
     private double premium;
+    private String status; // Active / Expired / Cancelled
+    private Pet pet;          
+    private PetOwner owner; // Policy holder   
 
-    // 当前保单状态：Active / Expired / Cancelled / Pending 等
-    private String status;
-
-    // ====== 关联对象 ======
-    private Pet pet;           // 被保宠物
-    private PetOwner owner;    // 投保人（宠物主人）
-
-    // ====== 构造方法 ======
+    
     public InsurancePolicy(
         String policyId,
         String provider,
-        String coverageType,  // 这里直接传 Full Coverage / Partial Coverage
+        String coverageType,  
         String startDate,
         String endDate,
         double premium,
@@ -52,7 +38,7 @@ public class InsurancePolicy {
         this.owner = owner;
     }
 
-    // ====== Getter / Setter ======
+    
     public String getPolicyId() {
         return policyId;
     }
@@ -125,7 +111,7 @@ public class InsurancePolicy {
         this.owner = owner;
     }
 
-    // UI 里下拉框/表格默认展示保单号
+    // Default display in UI components like combo boxes or tables.
     @Override
     public String toString() {
         return policyId;

@@ -16,124 +16,127 @@ import java.awt.Dimension;
  */
 public class ClaimDetailJPanel extends javax.swing.JPanel {
 
-    private JPanel userProcessContainer;
-    private InsuranceClaimRequest claim;
+    private JPanel userProcessContainer; // Parent container using CardLayout
+    private InsuranceClaimRequest claim; // The claim being viewed in this detail panel
 
 
-    /**
-     * Creates new form ViewDetailsJPanel
-     */
     public ClaimDetailJPanel() {
-        initComponents();
-        
+        initComponents();     
     }
 
+    
+    // Receives parent container and the selected InsuranceClaimRequest
     public ClaimDetailJPanel(JPanel userProcessContainer,
                          InsuranceClaimRequest claim) {
-    this();                         // 先调用无参构造，完成 initComponents()
-    this.userProcessContainer = userProcessContainer;
-    this.claim = claim;
+                            this();          
+                            this.userProcessContainer = userProcessContainer;
+                            this.claim = claim;
 
-    populateFields();               // 把 claim 的数据填到文本框
+                            populateFields();             
 }
+    
+    
+    /*  Populate all sections (Claim / Pet / Owner / Medical / Insurance)
+        from the InsuranceClaimRequest object. */
     private void populateFields() {
-    if (claim == null) {
-        return;
-    }
+            if (claim == null) {
+                return;
+            }
 
-    // -------- Claim Info --------
-    txtPatientID.setText(claim.getPatientId());
-    txtClaimID.setText("CLM-" + claim.getPolicyId());
-    txtClaimReason.setText(claim.getMessage());
-    txtClaimAmount.setText(String.valueOf(claim.getClaimAmount()));
+            // Claim Info
+            txtPatientID.setText(claim.getPatientId());
+            txtClaimID.setText("CLM-" + claim.getPolicyId());
+            txtClaimReason.setText(claim.getMessage());
+            txtClaimAmount.setText(String.valueOf(claim.getClaimAmount()));
 
-    if (claim.getRequestDate() != null) {
-        txtRequestDate.setText(claim.getRequestDate().toString());
-    } else {
-        txtRequestDate.setText("");
-    }
-    txtStatus.setText(claim.getStatus() == null ? "" : claim.getStatus());
+            if (claim.getRequestDate() != null) {
+                txtRequestDate.setText(claim.getRequestDate().toString());
+            } else {
+                txtRequestDate.setText("");
+            }
+            txtStatus.setText(claim.getStatus() == null ? "" : claim.getStatus());
 
-    if (claim.getSender() != null) {
-        txtSender.setText(claim.getSender().getUsername());
-    } else {
-        txtSender.setText("");
-    }
+            if (claim.getSender() != null) {
+                txtSender.setText(claim.getSender().getUsername());
+            } else {
+                txtSender.setText("");
+            }
 
-    // -------- Pet Info --------
-    Pet pet = claim.getPet();
-    if (pet != null) {
-        txtPetName.setText(pet.getPetName() == null ? "" : pet.getPetName());
-        txtSpecies.setText(pet.getSpecies() == null ? "" : pet.getSpecies());
-        txtAge.setText(String.valueOf(pet.getAge()));
-        txtWeight.setText(String.valueOf(pet.getWeight()));
-        txtAllergy.setText(pet.getFoodAllergy() == null ? "" : pet.getFoodAllergy());
-    } else {
-        // 如果 request 里没挂 Pet，就退回到以前的逻辑，只用 petName 字符串
-        txtPetName.setText(claim.getPetName() == null ? "" : claim.getPetName());
-        txtSpecies.setText("");
-        txtAge.setText("");
-        txtWeight.setText("");
-        txtAllergy.setText("");
-    }
+            // Pet Info 
+            Pet pet = claim.getPet();
+            if (pet != null) {
+                // Pet attached on the claim
+                txtPetName.setText(pet.getPetName() == null ? "" : pet.getPetName());
+                txtSpecies.setText(pet.getSpecies() == null ? "" : pet.getSpecies());
+                txtAge.setText(String.valueOf(pet.getAge()));
+                txtWeight.setText(String.valueOf(pet.getWeight()));
+                txtAllergy.setText(pet.getFoodAllergy() == null ? "" : pet.getFoodAllergy());
+            } else {
+                // Fallback: only basic pet name stored on the claim
+                txtPetName.setText(claim.getPetName() == null ? "" : claim.getPetName());
+                txtSpecies.setText("");
+                txtAge.setText("");
+                txtWeight.setText("");
+                txtAllergy.setText("");
+            }
 
-    // -------- Owner Info --------
-    PetOwner owner = claim.getOwner();
-    if (owner == null && pet != null) {
-        // 有些时候你可能只给 Pet 里挂了 owner，这里兜底一下
-        owner = pet.getPetOwner();
-    }
+            // Owner Info
+            PetOwner owner = claim.getOwner();
+            if (owner == null && pet != null) {
+                // Fallback: sometimes owner is only linked through Pet
+                owner = pet.getPetOwner();
+            }
 
-    if (owner != null) {
-        txtOwnerName.setText(owner.getOwnerName() == null ? "" : owner.getOwnerName());
-        txtPhone.setText(owner.getPhone() == null ? "" : owner.getPhone());
-        txtEmail.setText(owner.getEmail() == null ? "" : owner.getEmail());
-        txtAddress.setText(owner.getAddress() == null ? "" : owner.getAddress());
-        txtEmergency.setText(owner.getEmergencyContact() == null ? "" : owner.getEmergencyContact());
-    } else {
-        // 退回之前只用 holderName 的方式
-        txtOwnerName.setText(claim.getHolderName() == null ? "" : claim.getHolderName());
-        txtPhone.setText("");
-        txtEmail.setText("");
-        txtAddress.setText("");
-        txtEmergency.setText("");
-    }
+            if (owner != null) {
+                txtOwnerName.setText(owner.getOwnerName() == null ? "" : owner.getOwnerName());
+                txtPhone.setText(owner.getPhone() == null ? "" : owner.getPhone());
+                txtEmail.setText(owner.getEmail() == null ? "" : owner.getEmail());
+                txtAddress.setText(owner.getAddress() == null ? "" : owner.getAddress());
+                txtEmergency.setText(owner.getEmergencyContact() == null ? "" : owner.getEmergencyContact());
+            } else {
+                // Fallback: only holderName is stored in the claim
+                txtOwnerName.setText(claim.getHolderName() == null ? "" : claim.getHolderName());
+                txtPhone.setText("");
+                txtEmail.setText("");
+                txtAddress.setText("");
+                txtEmergency.setText("");
+            }
 
 
-        // -------- Medical Info --------
+                // Medical Info
 
-        // 第 1 行：Doctor Assigned 对应 txtDiagnosis
-        txtDiagnosis.setText(
-                claim.getDoctorName() == null ? "" : claim.getDoctorName()
-        );
+                // Doctor Assigned
+                txtDiagnosis.setText(
+                        claim.getDoctorName() == null ? "" : claim.getDoctorName()
+                );
 
-        // 第 2 行：Lab Test Result 对应 txtLabResult
-        txtLabResult.setText(
-                claim.getLabResult() == null ? "" : claim.getLabResult()
-        );
+                // Lab Test Result
+                txtLabResult.setText(
+                        claim.getLabResult() == null ? "" : claim.getLabResult()
+                );
 
-        // 第 3 行：Treatment Needed 对应 txtDoctor
-        txtDoctor.setText(
-                claim.getTreatmentNeeded() == null ? "" : claim.getTreatmentNeeded()
-        );
+                // Treatment Needed
+                txtDoctor.setText(
+                        claim.getTreatmentNeeded() == null ? "" : claim.getTreatmentNeeded()
+                );
 
-        // 费用
-        txtCost.setText(String.valueOf(claim.getTreatmentCost()));
+                // Total treatment cost
+                txtCost.setText(String.valueOf(claim.getTreatmentCost()));
 
-        
-        // -------- Insurance Info --------
-        txtInsuranceCompany.setText(
-                claim.getInsuranceCompany() == null ? "" : claim.getInsuranceCompany()
-        );
-        txtPolicyID.setText(
-                claim.getPolicyId() == null ? "" : claim.getPolicyId()
-        );
-        txtCoverageLevel.setText(
-                claim.getCoverageLevel() == null ? "" : claim.getCoverageLevel()
-        );
-        txtExpirationDate.setText(
-                claim.getExpirationDate() == null ? "" : claim.getExpirationDate()
-        );
+
+                // Insurance Info
+                txtInsuranceCompany.setText(
+                        claim.getInsuranceCompany() == null ? "" : claim.getInsuranceCompany()
+                );
+                txtPolicyID.setText(
+                        claim.getPolicyId() == null ? "" : claim.getPolicyId()
+                );
+                txtCoverageLevel.setText(
+                        claim.getCoverageLevel() == null ? "" : claim.getCoverageLevel()
+                );
+                txtExpirationDate.setText(
+                        claim.getExpirationDate() == null ? "" : claim.getExpirationDate()
+                );
     }
 
 

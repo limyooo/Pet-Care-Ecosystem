@@ -1,5 +1,4 @@
 package UI.Insurance;
-
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.PetInsuranceEnterprise;
 import Business.Organization.Organization;
@@ -18,61 +17,51 @@ import javax.swing.SwingUtilities;
 import UI.admin.MainJFrame;
 
 
-
-public class AgentWorkAreaJPanel extends javax.swing.JPanel {
-
-    // ===== 我们自己加的字段 =====
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private InsurancePolicyOrganization organization;
-    private PetInsuranceEnterprise insuranceEnterprise;
-    private Petsystem system;
-    private InsurancePolicyDirectory policyDirectory;
-
-    /**
-     * 设计器用的无参构造（保持不动）
-     */
+    public class AgentWorkAreaJPanel extends javax.swing.JPanel {
+        private JPanel userProcessContainer; //Parent container used for switching between panels.
+        private UserAccount account; //Logged-in agent account.
+        private InsurancePolicyOrganization organization; //Organization that manages insurance policies.
+        private PetInsuranceEnterprise insuranceEnterprise; //Insurance enterprise containing this organization.
+        private Petsystem system; //Global system instance.
+        private InsurancePolicyDirectory policyDirectory; //Directory containing all insurance policies.
+   
+    
     public AgentWorkAreaJPanel() {
         initComponents();
     }
 
-    /**
-     * 真正运行时用的构造函数（Role 里会调用这个）
-     */
+    
     public AgentWorkAreaJPanel(JPanel userProcessContainer,
                                UserAccount account,
                                Organization organization,
                                Enterprise enterprise,
                                Petsystem system) {
 
-        initComponents();   // 先把 UI 画出来
+        initComponents();
 
         this.userProcessContainer = userProcessContainer;
         this.account = account;
         this.organization = (InsurancePolicyOrganization) organization;
         this.insuranceEnterprise = (PetInsuranceEnterprise) enterprise;
         this.system = system;
-
-        // ⭐ 假设 Petsystem 里有一个 InsurancePolicyDirectory
-        // 如果你实际是别的名字，就改成你真实的 getter
         this.policyDirectory = system.getInsurancePolicyDirectory();
 
         populatePolicyTable();
     }
     
-    /** 把 policyDirectory 里的数据塞到表格里 */
+    
     public void populatePolicyTable() {
         DefaultTableModel model = (DefaultTableModel) tblPolicyList.getModel();
         model.setRowCount(0);
 
         if (policyDirectory == null) {
-            return;  // 还没挂目录就先不显示
+            return;
         }
 
         for (InsurancePolicy policy : policyDirectory.getPolicyList()) {
             Object[] row = new Object[7];
 
-            row[0] = policy;                  // toString() -> policyId
+            row[0] = policy;
 
             Pet pet = policy.getPet();
             String petName = "";
@@ -91,11 +80,9 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
             row[3] = policy.getCoverageType();
             row[4] = policy.getStartDate();
             row[5] = policy.getEndDate();
-
             row[6] = (policy.getStatus() == null || policy.getStatus().isEmpty())
             ? "Active"
             : policy.getStatus();
-
 
             model.addRow(row);
         }
@@ -216,23 +203,20 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewActionPerformed
-    // 打开创建保单页面
-       AgentCreatePolicyJPanel createPanel = new AgentCreatePolicyJPanel(
-               userProcessContainer,
-               account,
-               organization,
-               insuranceEnterprise,   // 也可以写成 (Enterprise) insuranceEnterprise
-               system
-       );
-
+    AgentCreatePolicyJPanel createPanel = new AgentCreatePolicyJPanel(
+                                            userProcessContainer,
+                                            account,
+                                            organization,
+                                            insuranceEnterprise,
+                                            system);
        userProcessContainer.add("AgentCreatePolicyJPanel", createPanel);
        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
        layout.show(userProcessContainer, "AgentCreatePolicyJPanel");
     }//GEN-LAST:event_btnCreateNewActionPerformed
 
     private void btnViewPolicyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPolicyActionPerformed
-     int selectedRow = tblPolicyList.getSelectedRow();
-    if (selectedRow < 0) {
+    int selectedRow = tblPolicyList.getSelectedRow();
+        if (selectedRow < 0) {
         JOptionPane.showMessageDialog(this,
                 "Please select a policy from the table first.",
                 "Warning",
@@ -240,41 +224,36 @@ public class AgentWorkAreaJPanel extends javax.swing.JPanel {
         return;
     }
 
-    // 第一列我们放的是 InsurancePolicy 对象本身
-    InsurancePolicy selectedPolicy =
-            (InsurancePolicy) tblPolicyList.getValueAt(selectedRow, 0);
+    InsurancePolicy selectedPolicy = (InsurancePolicy) tblPolicyList.getValueAt(selectedRow, 0);
 
     AgentManagePolicyJPanel managePanel = new AgentManagePolicyJPanel(
-            userProcessContainer,
-            account,
-            organization,
-            insuranceEnterprise,
-            system,
-            selectedPolicy
+                                                userProcessContainer,
+                                                account,
+                                                organization,
+                                                insuranceEnterprise,
+                                                system,
+                                                selectedPolicy
     );
-
     userProcessContainer.add("AgentManagePolicyJPanel", managePanel);
     CardLayout layout = (CardLayout) userProcessContainer.getLayout();
     layout.show(userProcessContainer, "AgentManagePolicyJPanel");
     }//GEN-LAST:event_btnViewPolicyActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-    // 找到这个 panel 所在的顶层窗口（就是 MainJFrame）
     java.awt.Window window = SwingUtilities.getWindowAncestor(this);
     if (window instanceof MainJFrame) {
         MainJFrame frame = (MainJFrame) window;
-        // 调用你在 MainJFrame 里写好的登出逻辑
         frame.triggerLogout();
     }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-                AgentDashboardJPanel panel = new AgentDashboardJPanel(
-                userProcessContainer,
-                account,
-                organization,
-                insuranceEnterprise,
-                system
+        AgentDashboardJPanel panel = new AgentDashboardJPanel(
+                                                    userProcessContainer,
+                                                    account,
+                                                    organization,
+                                                    insuranceEnterprise,
+                                                    system
         );
         userProcessContainer.add("AgentDashboardJPanel", panel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();

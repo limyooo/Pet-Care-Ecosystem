@@ -6,6 +6,7 @@ package UI.petClinic;
 
 
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.PetInsuranceEnterprise;
 import Business.Organization.Organization;
 import Business.Pet.Pet;
 import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
@@ -25,20 +26,20 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
     private HealthCareCheckRequest Request;
     private UserAccount account;
-    private Enterprise enterprise;
+    private PetInsuranceEnterprise insuranceEnterprise;
     private final java.util.Map<String, Double> treatmentPriceMap = new java.util.HashMap<>();
     
     /**
      * Creates new form SubmitInsuranceClaimRequestJPanel
      */
     public SubmitInsuranceClaimRequestJPanel(JPanel userProcessContainer, HealthCareCheckRequest Request,UserAccount account,
-        Enterprise enterprise) {
+        PetInsuranceEnterprise insuranceEnterprise) {
         
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.Request = Request;
         this.account = account;
-        this.enterprise = enterprise;
+        this.insuranceEnterprise = insuranceEnterprise;
         
         initTreatmentPrice();
         populateData();
@@ -341,44 +342,65 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     private void btnSubmitInsuranceClaimRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitInsuranceClaimRequestActionPerformed
         // TODO add your handling code here:
         try {
-        //Create a new InsuranceClaimRequest
         InsuranceClaimRequest claimRequest = new InsuranceClaimRequest();
-        claimRequest.setClaimAmount(Double.parseDouble(fieldTreatmentCost.getText()));
+
+        //Basic Info 
+        Pet p = Request.getPet();
+
+        claimRequest.setPatientId(p.getPetId());
+        claimRequest.setPolicyId(p.getPetOwner().getPolicyId());
+        claimRequest.setHolderName(p.getPetOwner().getOwnerName());
+        claimRequest.setPetName(p.getPetName());
+
+        //Medical Info
+        claimRequest.setSymptom(Request.getSymptom());
+        claimRequest.setLabResult(Request.getLabResult());
+        claimRequest.setTreatmentCost(Double.parseDouble(fieldTreatmentCost.getText()));
+
+        //Insurance Info
+        claimRequest.setCoverageLevel(p.getPetOwner().getCoverageLevel());
+        claimRequest.setClaimAmount(0.0);  // initial
         claimRequest.setClaimDecision("Pending");
-        
-        //set Message
-        claimRequest.setMessage("Insurance claim for patient: " + Request.getPatientId());
-        
-        //set Sender
+        claimRequest.setStatus("Pending");
+
+        //Relationship to Clinic Request
+        claimRequest.setHealthRequest(Request);
+
+        //Sender
         claimRequest.setSender(account);
+        claimRequest.setMessage("Insurance claim for patient: " + p.getPetId());
 
-        //fint the Insurance Claim Organization
+        //Find the org
         Organization claimOrg = null;
-
-        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+        for (Organization org : insuranceEnterprise.getOrganizationDirectory().getOrganizationList()) {
             if (org instanceof InsuranceClaimOrganization) {
                 claimOrg = org;
                 break;
             }
         }
-        //if it is found 
-        if (claimOrg != null) {
-            //put the request into the cliam org
-            claimOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
 
-            // 当前用户的 workQueue 也要存一份
+        if (claimOrg != null) {
+            claimOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
             account.getWorkQueue().getWorkRequestList().add(claimRequest);
 
-            JOptionPane.showMessageDialog(this,"Insurance Claim Request submitted successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
-            } else {
-            JOptionPane.showMessageDialog(this,"Insurance Claim Organization not found!","Error",JOptionPane.ERROR_MESSAGE);
-            }
-    
-        } catch (Exception e) {
-            
-            JOptionPane.showMessageDialog(this,"Please check the treatment cost input.","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                "Insurance Claim Request submitted successfully!",
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "Insurance Claim Organization not found!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
-        
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Please check the treatment cost input.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+
         
     }//GEN-LAST:event_btnSubmitInsuranceClaimRequestActionPerformed
 

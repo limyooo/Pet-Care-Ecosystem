@@ -211,7 +211,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
 
         HealthCareCheckRequest request = (HealthCareCheckRequest) tblFrontDesk.getValueAt(selectedRow, 0);
 
-        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request, account, enterprise,insuranceEnterprise);
+        ViewMedicalStatusJPanel panel = new ViewMedicalStatusJPanel(userProcessContainer, request, account, enterprise,insuranceEnterprise,frontDeskOrg);
 
         userProcessContainer.add("ViewMedicalStatusJPanel", panel);
 
@@ -229,7 +229,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         }
 
         if (comp instanceof UI.admin.MainJFrame) {
-            // ⭐ 关键修正：调用新的公共代理方法
+            //关键修正：调用新的公共代理方法
             ((UI.admin.MainJFrame) comp).triggerLogout(); 
         } else {
             // 找不到 MainJFrame，执行后备方案

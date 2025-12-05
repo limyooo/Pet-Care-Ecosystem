@@ -9,6 +9,7 @@ import Business.Enterprise.Enterprise;
 import Business.Enterprise.PetInsuranceEnterprise;
 import Business.Organization.Organization;
 import Business.Pet.Pet;
+import Business.PetClinicOrganization.FrontDeskOrganization;
 import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
@@ -32,19 +33,21 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     private HealthCareCheckRequest Request;
     private UserAccount account;
     private PetInsuranceEnterprise insuranceEnterprise;
+    private FrontDeskOrganization frontDeskOrg;
     private final java.util.Map<String, Double> treatmentPriceMap = new java.util.HashMap<>();
     
     /**
      * Creates new form SubmitInsuranceClaimRequestJPanel
      */
     public SubmitInsuranceClaimRequestJPanel(JPanel userProcessContainer, HealthCareCheckRequest Request,UserAccount account,
-        PetInsuranceEnterprise insuranceEnterprise) {
+        PetInsuranceEnterprise insuranceEnterprise,FrontDeskOrganization frontDeskOrg) {
         
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.Request = Request;
         this.account = account;
         this.insuranceEnterprise = insuranceEnterprise;
+        this.frontDeskOrg = frontDeskOrg;
         
         initTreatmentPrice();
         populateData();
@@ -347,6 +350,11 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
     private void btnSubmitInsuranceClaimRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitInsuranceClaimRequestActionPerformed
         // TODO add your handling code here:
         try {
+            
+        //把治疗数据写回 HealthCareCheckRequest
+        Request.setTreatmentNeeded((String) comboTreatmentNeeded.getSelectedItem());
+        Request.setTreatmentCost(Double.parseDouble(fieldTreatmentCost.getText()));
+        
         InsuranceClaimRequest claimRequest = new InsuranceClaimRequest();
         
         // Basic Info 
@@ -412,7 +420,9 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
             claimOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
             account.getWorkQueue().getWorkRequestList().add(claimRequest);
             
-            // ⭐⭐⭐ 新增：发送到 Pet Boarding Customer Service ⭐⭐⭐
+            frontDeskOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
+
+            //新增：发送到 Pet Boarding Customer Service 
             sendToCustomerService(Request);
             
             JOptionPane.showMessageDialog(this,
@@ -436,6 +446,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
             JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
+       
 }
 
 

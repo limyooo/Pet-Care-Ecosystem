@@ -19,31 +19,47 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="296" max="-2" attributes="0"/>
               <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="307" max="32767" attributes="0"/>
+              <EmptySpace pref="644" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblSymptom" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblHealthCheckStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTreatmentNeeded" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTreatmentCost" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblInsuranceStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblInsuranceCost" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="fieldSymptom" pref="118" max="32767" attributes="0"/>
+                  <Component id="fieldHealthStatus" alignment="0" max="32767" attributes="0"/>
+                  <Component id="fieldTreatmentNeeded" alignment="0" max="32767" attributes="0"/>
+                  <Component id="fieldTreatmentCost" alignment="0" max="32767" attributes="0"/>
+                  <Component id="fieldInsuranceStatus" alignment="0" max="32767" attributes="0"/>
+                  <Component id="fieldInsuranceCost" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblPetName" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lblPetName" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="fieldSpecies" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
-                                      <Component id="fieldPetName" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
-                                      <Component id="fieldWeight" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
-                                      <Component id="fieldAge" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lblFood" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                                  <Component id="fieldFood" min="-2" pref="113" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="fieldSpecies" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
+                              <Component id="fieldPetName" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
+                              <Component id="fieldWeight" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
+                              <Component id="fieldAge" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblFood" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <Component id="fieldFood" min="-2" pref="113" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -133,9 +149,9 @@
                                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="14" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="351" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -144,7 +160,37 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="526" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblSymptom" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldSymptom" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblHealthCheckStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldHealthStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTreatmentNeeded" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldTreatmentNeeded" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTreatmentCost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldTreatmentCost" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblInsuranceStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldInsuranceStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblInsuranceCost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldInsuranceCost" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="257" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -243,7 +289,7 @@
                       <Component id="lblEp" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="fieldEp" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -437,6 +483,51 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Food Allergy"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblSymptom">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Symptom"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldSymptom">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblHealthCheckStatus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Health Check Status"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTreatmentNeeded">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Treatment Needed"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTreatmentCost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Treatment Cost"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblInsuranceStatus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Insurance Status"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblInsuranceCost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Insurance Cost"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldHealthStatus">
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldTreatmentNeeded">
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldTreatmentCost">
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldInsuranceStatus">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldInsuranceStatusActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldInsuranceCost">
     </Component>
   </SubComponents>
 </Form>

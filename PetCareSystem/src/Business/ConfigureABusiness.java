@@ -374,11 +374,42 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
     csRequest.setStatus("Pending CS Review");
     csRequest.setPet(pet);
     csRequest.setSymptom(faker.medical().symptoms());
+    
     csRequest.setBoardingRecordId("BR" + faker.number().digits(4));
     csRequest.setCheckResult("Health check completed");
     
-    boardingCustomerServiceOrg.getWorkQueue().getWorkRequestList().add(csRequest);
-}
+     // 设置治疗相关字段
+    csRequest.setTreatmentNeeded(faker.options().option(
+        "Medication Only", 
+        "IV Fluids & Supportive Care ", 
+        "Diagnostic Imaging (X-ray / Ultrasound) ", 
+        "Hospitalization",
+        "Surgery"
+    
+    ));
+    csRequest.setTreatmentCost(faker.number().randomDouble(2, 100, 1000));
+    // 可选：关联一个 Claim Request（模拟已提交保险）
+        if (i == 0) {
+            InsuranceClaimRequest claim = new InsuranceClaimRequest();
+            claim.setClaimDecision("Pending Payment"); // 模拟已批准理赔
+            claim.setClaimAmount(csRequest.getTreatmentCost() * 0.8); // 80% 赔付
+            csRequest.setInsuranceClaimRequest(claim);
+        } else if (i == 1) {
+            InsuranceClaimRequest claim = new InsuranceClaimRequest();
+            claim.setClaimDecision("Approved"); 
+            claim.setClaimAmount(csRequest.getTreatmentCost() * 0.5); // 50% 赔付
+            csRequest.setInsuranceClaimRequest(claim);
+        }else{
+            InsuranceClaimRequest claim = new InsuranceClaimRequest();
+            claim.setClaimDecision("Approved"); 
+            claim.setClaimAmount(csRequest.getTreatmentCost() * 1); // 100% 赔付
+            csRequest.setInsuranceClaimRequest(claim);
+        }
+        
+        boardingCustomerServiceOrg.getWorkQueue().getWorkRequestList().add(csRequest);
+    }
+    
+  
 
         // 7.1 Boarding -> Clinic：健康检查
         for (int i = 0; i < createdPets.size(); i++) {
@@ -394,6 +425,7 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
 
         //设定症状
         req.setSymptom(faker.medical().symptoms());
+        
 
         //将这个request放到clinic front desk的队列里
         frontDeskOrg.getWorkQueue().getWorkRequestList().add(req);

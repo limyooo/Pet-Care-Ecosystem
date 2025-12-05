@@ -33,14 +33,12 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
      */
     public OperationIndicatorsReportJPanel(JPanel userProcessContainer, Organization organization, Enterprise enterprise1, Petsystem system) {
         initComponents();
-        this.userProcessContainer = userProcessContainer;
-        this.account = account;       // 正确初始化
+      this.userProcessContainer = userProcessContainer;
         this.organization = organization;
-        this.enterprise = enterprise; // ✅ 现在 enterprise 被正确赋值了！
+        this.enterprise = enterprise1; // 修正：将参数 enterprise1 赋值给 this.enterprise
         this.system = system;
 
-        //现实运营数据
-        calculateOperationIndicators();
+    calculateOperationIndicators();
     }
 
     /**

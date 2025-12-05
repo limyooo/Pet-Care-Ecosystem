@@ -156,9 +156,16 @@ public class ConfigureABusiness {
         }
         //pet boarding 客服账号
         // 固定 Front Desk 测试账号
-        Employee frontDeskTest = frontDeskOrg.getEmployeeDirectory().createEmployee("Test Front Desk");
-        frontDeskOrg.getUserAccountDirectory().createUserAccount(
-                "fd1", "1111", frontDeskTest, new FrontDeskAgentRole());
+        Employee frontDeskTest = frontDeskOrg.getEmployeeDirectory()
+                .createEmployee("Test Front Desk");
+        UserAccount frontDeskTestAccount = frontDeskOrg.getUserAccountDirectory()
+                .createUserAccount(
+                        "fd1",       
+                        "1111",  
+                        frontDeskTest,
+                        new FrontDeskAgentRole()
+        );
+
         
 // ⭐ 新增：固定 Customer Service 测试账号 (cs1)
         
@@ -484,7 +491,7 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
             req.setCoverageDecision(null);
             req.setClaimDecision(null);
 
-            req.setSender(insuranceAdminAccount);
+            req.setSender(frontDeskTestAccount);
             claimOrg.getWorkQueue().getWorkRequestList().add(req);
         }
 

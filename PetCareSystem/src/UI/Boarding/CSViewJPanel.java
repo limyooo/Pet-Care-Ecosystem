@@ -13,7 +13,10 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
-
+import Business.WorkQueue.InsuranceClaimRequest;
+import Business.Pet.PetBoardingRecord;
+import Business.Enterprise.PetBoardingEnterprise;
+import Business.Network.Network;
 /**
  *
  * @author hanlinyao
@@ -93,6 +96,18 @@ public class CSViewJPanel extends javax.swing.JPanel {
         lblPolicy = new javax.swing.JLabel();
         fieldAddress = new javax.swing.JTextField();
         lblFood = new javax.swing.JLabel();
+        lblSymptom = new javax.swing.JLabel();
+        fieldSymptom = new javax.swing.JTextField();
+        lblHealthCheckStatus = new javax.swing.JLabel();
+        lblTreatmentNeeded = new javax.swing.JLabel();
+        lblTreatmentCost = new javax.swing.JLabel();
+        lblInsuranceStatus = new javax.swing.JLabel();
+        lblInsuranceCost = new javax.swing.JLabel();
+        fieldHealthStatus = new javax.swing.JTextField();
+        fieldTreatmentNeeded = new javax.swing.JTextField();
+        fieldTreatmentCost = new javax.swing.JTextField();
+        fieldInsuranceStatus = new javax.swing.JTextField();
+        fieldInsuranceCost = new javax.swing.JTextField();
 
         lblBoarding.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         lblBoarding.setForeground(new java.awt.Color(0, 51, 255));
@@ -172,6 +187,24 @@ public class CSViewJPanel extends javax.swing.JPanel {
 
         lblFood.setText("Food Allergy");
 
+        lblSymptom.setText("Symptom");
+
+        lblHealthCheckStatus.setText("Health Check Status");
+
+        lblTreatmentNeeded.setText("Treatment Needed");
+
+        lblTreatmentCost.setText("Treatment Cost");
+
+        lblInsuranceStatus.setText("Insurance Status");
+
+        lblInsuranceCost.setText("Insurance Cost");
+
+        fieldInsuranceStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldInsuranceStatusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,26 +212,41 @@ public class CSViewJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(296, 296, 296)
                 .addComponent(lblTitle)
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addContainerGap(644, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSymptom)
+                    .addComponent(lblHealthCheckStatus)
+                    .addComponent(lblTreatmentNeeded)
+                    .addComponent(lblTreatmentCost)
+                    .addComponent(lblInsuranceStatus)
+                    .addComponent(lblInsuranceCost))
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(fieldSymptom, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                    .addComponent(fieldHealthStatus)
+                    .addComponent(fieldTreatmentNeeded)
+                    .addComponent(fieldTreatmentCost)
+                    .addComponent(fieldInsuranceStatus)
+                    .addComponent(fieldInsuranceCost))
+                .addGap(58, 58, 58))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(13, 13, 13)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblPetName)
+                            .addGap(64, 64, 64)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblPetName)
-                                    .addGap(64, 64, 64)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(fieldSpecies, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(fieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(fieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(fieldAge, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblFood)
-                                    .addGap(49, 49, 49)
-                                    .addComponent(fieldFood, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(fieldSpecies, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fieldAge, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblFood)
+                            .addGap(49, 49, 49)
+                            .addComponent(fieldFood, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblSpecies)
@@ -264,14 +312,38 @@ public class CSViewJPanel extends javax.swing.JPanel {
                                     .addComponent(lblContact)
                                     .addGap(49, 49, 49)
                                     .addComponent(fieldContact, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(32, 32, 32)))
-                            .addContainerGap(14, Short.MAX_VALUE)))))
+                                    .addGap(32, 32, 32)))))
+                    .addContainerGap(351, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblTitle)
-                .addGap(0, 526, Short.MAX_VALUE))
+                .addGap(71, 71, 71)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSymptom)
+                    .addComponent(fieldSymptom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHealthCheckStatus)
+                    .addComponent(fieldHealthStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTreatmentNeeded)
+                    .addComponent(fieldTreatmentNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTreatmentCost)
+                    .addComponent(fieldTreatmentCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblInsuranceStatus)
+                    .addComponent(fieldInsuranceStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblInsuranceCost)
+                    .addComponent(fieldInsuranceCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 257, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -349,7 +421,7 @@ public class CSViewJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblEp)
                         .addComponent(fieldEp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(32, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -372,6 +444,10 @@ public class CSViewJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldAddressActionPerformed
 
+    private void fieldInsuranceStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldInsuranceStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldInsuranceStatusActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -384,6 +460,9 @@ public class CSViewJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldEp;
     private javax.swing.JTextField fieldFood;
+    private javax.swing.JTextField fieldHealthStatus;
+    private javax.swing.JTextField fieldInsuranceCost;
+    private javax.swing.JTextField fieldInsuranceStatus;
     private javax.swing.JTextField fieldOwnerName;
     private javax.swing.JTextField fieldPetName;
     private javax.swing.JTextField fieldPhone;
@@ -391,6 +470,9 @@ public class CSViewJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField fieldRoom;
     private javax.swing.JTextField fieldSD;
     private javax.swing.JTextField fieldSpecies;
+    private javax.swing.JTextField fieldSymptom;
+    private javax.swing.JTextField fieldTreatmentCost;
+    private javax.swing.JTextField fieldTreatmentNeeded;
     private javax.swing.JTextField fieldWeight;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblAge;
@@ -402,7 +484,10 @@ public class CSViewJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEp;
     private javax.swing.JLabel lblFood;
+    private javax.swing.JLabel lblHealthCheckStatus;
     private javax.swing.JLabel lblInsurance;
+    private javax.swing.JLabel lblInsuranceCost;
+    private javax.swing.JLabel lblInsuranceStatus;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPet;
     private javax.swing.JLabel lblPetName;
@@ -412,63 +497,186 @@ public class CSViewJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblRoom;
     private javax.swing.JLabel lblSD;
     private javax.swing.JLabel lblSpecies;
+    private javax.swing.JLabel lblSymptom;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblTreatmentCost;
+    private javax.swing.JLabel lblTreatmentNeeded;
     private javax.swing.JLabel lblWeight;
     // End of variables declaration//GEN-END:variables
     public void loadRequestDetails(HealthCareCheckRequest request) {
-        this.selectedRequest = request;
-        if (request == null) return;
+        // ⭐ 添加调试输出
+    System.out.println("=== DEBUG CSViewJPanel ===");
+    System.out.println("Boarding Record ID: " + request.getBoardingRecordId());
+    System.out.println("System: " + system);
+       
+    this.selectedRequest = request;
+    if (request == null) return;
 
-        Pet pet = request.getPet();
-        PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+    Pet pet = request.getPet();
+    PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+    
+    // 获取关联的 InsuranceClaimRequest（如果有）
+    InsuranceClaimRequest claimRequest = request.getInsuranceClaimRequest();
 
-        // 宠物信息 (Pet)
-        fieldPetName.setText((pet != null) ? pet.getPetName() : "N/A");
-        fieldSpecies.setText((pet != null) ? pet.getSpecies() : "N/A");
-        fieldAge.setText((pet != null) ? String.valueOf(pet.getAge()) : "N/A");
-        fieldWeight.setText((pet != null) ? String.valueOf(pet.getWeight()) : "N/A");
-        fieldFood.setText((pet != null && pet.getFoodAllergy() != null) ? pet.getFoodAllergy() : "N/A");
+    // ========== 宠物信息 (Pet) ==========
+    fieldPetName.setText((pet != null) ? pet.getPetName() : "N/A");
+    fieldSpecies.setText((pet != null) ? pet.getSpecies() : "N/A");
+    fieldAge.setText((pet != null) ? String.valueOf(pet.getAge()) : "N/A");
+    fieldWeight.setText((pet != null) ? String.valueOf(pet.getWeight()) : "N/A");
+    fieldFood.setText((pet != null && pet.getFoodAllergy() != null) ? pet.getFoodAllergy() : "N/A");
 
-        // 宠物主人信息 (Pet Owner)
-        fieldOwnerName.setText((owner != null) ? owner.getOwnerName() : "N/A");
-        fieldPhone.setText((owner != null) ? owner.getPhone() : "N/A");
-        fieldEmail.setText((owner != null) ? owner.getEmail() : "N/A");
-        fieldAddress.setText((owner != null) ? owner.getAddress() : "N/A");
-        fieldContact.setText((owner != null) ? owner.getEmergencyContact() : "N/A");
+    // ========== 宠物主人信息 (Pet Owner) ==========
+    fieldOwnerName.setText((owner != null) ? owner.getOwnerName() : "N/A");
+    fieldPhone.setText((owner != null) ? owner.getPhone() : "N/A");
+    fieldEmail.setText((owner != null) ? owner.getEmail() : "N/A");
+    fieldAddress.setText((owner != null) ? owner.getAddress() : "N/A");
+    fieldContact.setText((owner != null) ? owner.getEmergencyContact() : "N/A");
 
-        // 保险信息 (Insurance) - 从 PetOwner 获取
-        fieldCompany.setText((owner != null && owner.getInsuranceCompany() != null) ? owner.getInsuranceCompany() : "N/A");
-        fieldPolicy.setText((owner != null && owner.getPolicyId() != null) ? owner.getPolicyId() : "N/A");
-        fieldCL.setText((owner != null && owner.getCoverageLevel() != null) ? owner.getCoverageLevel() : "N/A");
-        fieldEp.setText((owner != null && owner.getExpirationDate() != null) ? owner.getExpirationDate() : "N/A");
-
-        // 寄养信息 (Boarding) - 如果有关联的 BoardingRecord
-        // 注意：HealthCareCheckRequest 可能没有直接关联 BoardingRecord，这里简化处理
-        fieldRoom.setText(request.getBoardingRecordId() != null ? request.getBoardingRecordId() : "N/A");
-        fieldSD.setText("N/A");  // 如果需要显示，需要从 BoardingRecord 获取
-        fieldED.setText("N/A");  // 如果需要显示，需要从 BoardingRecord 获取
+    // ========== 保险信息 (Insurance) ==========
+    fieldCompany.setText((owner != null && owner.getInsuranceCompany() != null) ? owner.getInsuranceCompany() : "N/A");
+    fieldPolicy.setText((owner != null && owner.getPolicyId() != null) ? owner.getPolicyId() : "N/A");
+    
+    // Coverage Level - 优先从 claimRequest 获取
+    if (claimRequest != null && claimRequest.getCoverageLevel() != null) {
+        fieldCL.setText(claimRequest.getCoverageLevel());
+    } else if (owner != null && owner.getCoverageLevel() != null) {
+        fieldCL.setText(owner.getCoverageLevel());
+    } else {
+        fieldCL.setText("N/A");
     }
     
-    private void setFieldsEditable(boolean editable) {
-        fieldPetName.setEditable(editable);
-        fieldSpecies.setEditable(editable);
-        fieldAge.setEditable(editable);
-        fieldWeight.setEditable(editable);
-        fieldFood.setEditable(editable);
+    fieldEp.setText((owner != null && owner.getExpirationDate() != null) ? owner.getExpirationDate() : "N/A");
+
+    String roomNumber = "N/A";
+String startDate = "N/A";
+String endDate = "N/A";
+
+System.out.println("Looking for BoardingRecord with ID: " + request.getBoardingRecordId());
+
+if (request.getBoardingRecordId() != null && system != null) {
+    System.out.println("Network count: " + system.getNetworkList().size());
+    
+    for (Business.Network.Network network : system.getNetworkList()) {
+        System.out.println("  Network: " + network.getName());
         
-        fieldOwnerName.setEditable(editable);
-        fieldPhone.setEditable(editable);
-        fieldEmail.setEditable(editable);
-        fieldAddress.setEditable(editable);
-        fieldContact.setEditable(editable);
-        
-        fieldCompany.setEditable(editable);
-        fieldPolicy.setEditable(editable);
-        fieldCL.setEditable(editable);
-        fieldEp.setEditable(editable);
-        
-        fieldRoom.setEditable(editable);
-        fieldSD.setEditable(editable);
-        fieldED.setEditable(editable);
+        for (Business.Enterprise.Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()) {
+            System.out.println("    Enterprise: " + ent.getName() + " [" + ent.getClass().getSimpleName() + "]");
+            
+            if (ent instanceof Business.Enterprise.PetBoardingEnterprise) {
+                Business.Enterprise.PetBoardingEnterprise boardingEnt = (Business.Enterprise.PetBoardingEnterprise) ent;
+                
+                // 打印所有记录
+                System.out.println("    Total records: " + boardingEnt.getBoardingRecordDirectory().getRecordList().size());
+                for (Business.Pet.PetBoardingRecord rec : boardingEnt.getBoardingRecordDirectory().getRecordList()) {
+                    System.out.println("      - Record ID: " + rec.getRecordId());
+                }
+                
+                Business.Pet.PetBoardingRecord record = boardingEnt.getBoardingRecordDirectory().findRecordById(request.getBoardingRecordId());
+                System.out.println("    Found record: " + record);
+                
+                if (record != null) {
+                    roomNumber = record.getRoomNumber() != null ? record.getRoomNumber() : "N/A";
+                    startDate = record.getStartDate() != null ? record.getStartDate() : "N/A";
+                    endDate = record.getEndDate() != null ? record.getEndDate() : "N/A";
+                    System.out.println("    ✅ Room: " + roomNumber + ", Start: " + startDate + ", End: " + endDate);
+                    break;
+                }
+            }
+        }
     }
+} else {
+    System.out.println("⚠️ BoardingRecordId is null or system is null!");
+}
+
+fieldRoom.setText(roomNumber);
+fieldSD.setText(startDate);
+fieldED.setText(endDate);
+
+    // ========== ⭐ 医疗信息 (Medical Info) - 新增 ⭐ ==========
+    // 注意：需要先在 GUI 设计器中添加这些字段
+    
+    // Symptom
+    if (fieldSymptom != null) {
+        fieldSymptom.setText(request.getSymptom() != null ? request.getSymptom() : "N/A");
+    }
+    
+    // Health Check Status
+    if (fieldHealthStatus != null) {
+        fieldHealthStatus.setText(request.getStatus() != null ? request.getStatus() : "N/A");
+    }
+    
+    // Treatment Needed - 优先从 claimRequest 获取
+    if (fieldTreatmentNeeded != null) {
+        String treatmentNeeded = "N/A";
+        if (claimRequest != null && claimRequest.getTreatmentNeeded() != null) {
+            treatmentNeeded = claimRequest.getTreatmentNeeded();
+        } else if (request.getTreatmentNeeded() != null) {
+            treatmentNeeded = request.getTreatmentNeeded();
+        }
+        fieldTreatmentNeeded.setText(treatmentNeeded);
+    }
+    
+    // Treatment Cost - 优先从 claimRequest 获取
+    if (fieldTreatmentCost != null) {
+        double cost = 0;
+        if (claimRequest != null && claimRequest.getTreatmentCost() > 0) {
+            cost = claimRequest.getTreatmentCost();
+        } else if (request.getTreatmentCost() > 0) {
+            cost = request.getTreatmentCost();
+        }
+        fieldTreatmentCost.setText(cost > 0 ? String.format("$%.2f", cost) : "N/A");
+    }
+    
+    // Insurance Status (Claim Decision)
+    if (fieldInsuranceStatus != null) {
+        String status = "No Claim";
+        if (claimRequest != null && claimRequest.getClaimDecision() != null) {
+            status = claimRequest.getClaimDecision();
+        }
+        fieldInsuranceStatus.setText(status);
+    }
+    
+    // Insurance Cost (Claim Amount)
+    if (fieldInsuranceCost != null) {
+        String costStr = "N/A";
+        if (claimRequest != null && claimRequest.getClaimAmount() > 0) {
+            costStr = String.format("$%.2f", claimRequest.getClaimAmount());
+        }
+        fieldInsuranceCost.setText(costStr);
+    }
+}
+
+// ⭐ 更新 setFieldsEditable 方法 - 添加新字段
+private void setFieldsEditable(boolean editable) {
+    // 原有字段
+    fieldPetName.setEditable(editable);
+    fieldSpecies.setEditable(editable);
+    fieldAge.setEditable(editable);
+    fieldWeight.setEditable(editable);
+    fieldFood.setEditable(editable);
+    
+    fieldOwnerName.setEditable(editable);
+    fieldPhone.setEditable(editable);
+    fieldEmail.setEditable(editable);
+    fieldAddress.setEditable(editable);
+    fieldContact.setEditable(editable);
+    
+    fieldCompany.setEditable(editable);
+    fieldPolicy.setEditable(editable);
+    fieldCL.setEditable(editable);
+    fieldEp.setEditable(editable);
+    
+    fieldRoom.setEditable(editable);
+    fieldSD.setEditable(editable);
+    fieldED.setEditable(editable);
+    
+   
+     fieldSymptom.setEditable(editable);
+     fieldHealthStatus.setEditable(editable);
+     fieldTreatmentNeeded.setEditable(editable);
+    fieldTreatmentCost.setEditable(editable);
+    fieldInsuranceStatus.setEditable(editable);
+     fieldInsuranceCost.setEditable(editable);
+     
+}
 }

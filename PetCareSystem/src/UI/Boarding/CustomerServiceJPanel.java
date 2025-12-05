@@ -44,6 +44,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
         
         // 初始化表格
         populateTable();
+        
     }
 
     /**
@@ -264,6 +265,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
     if (organization == null || organization.getWorkQueue() == null) {
         return;
     }
+    
     
     // 遍历 Customer Service 组织的 Work Queue
     for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {

@@ -356,21 +356,53 @@ public class ManagerJPanel extends javax.swing.JPanel {
 
 // ⭐ 辅助方法：根据 Record ID 查找 PetBoardingRecord
 private PetBoardingRecord findRecordById(String recordId) {
-    if (!(enterprise instanceof PetBoardingEnterprise)) {
+    System.out.println("=== DEBUG findRecordById ===");
+    System.out.println("Looking for BoardingRecord with ID: " + recordId);
+    System.out.println("System: " + system);
+    
+    if (system == null) {
+        System.out.println("❌ System is NULL!");
         return null;
     }
     
-    PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) enterprise;
-    BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
-    
-    if (recordDirectory != null && recordDirectory.getRecordList() != null) {
-        for (PetBoardingRecord record : recordDirectory.getRecordList()) {
-            if (record.getRecordId().equals(recordId)) {
-                return record;
+    // 遍历所有 Network
+    if (system.getNetworkList() != null) {
+        System.out.println("Network count: " + system.getNetworkList().size());
+        
+        for (Business.Network.Network network : system.getNetworkList()) {
+            System.out.println("  Network: " + network.getName());
+            
+            // 遍历该 Network 中的所有 Enterprise
+            if (network.getEnterpriseDirectory() != null) {
+                for (Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()) {
+                    System.out.println("    Enterprise: " + ent.getName() + " [" + ent.getClass().getSimpleName() + "]");
+                    
+                    // 只处理 PetBoardingEnterprise
+                    if (ent instanceof PetBoardingEnterprise) {
+                        PetBoardingEnterprise boardingEnt = (PetBoardingEnterprise) ent;
+                        BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
+                        
+                        if (recordDirectory != null && recordDirectory.getRecordList() != null) {
+                            System.out.println("    Total records: " + recordDirectory.getRecordList().size());
+                            
+                            for (PetBoardingRecord record : recordDirectory.getRecordList()) {
+                                System.out.println("      - Record ID: " + record.getRecordId());
+                                
+                                if (record.getRecordId().equals(recordId)) {
+                                    System.out.println("    ✅ Found record: " + recordId);
+                                    return record;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+    
+    System.out.println("❌ Record not found: " + recordId);
     return null;
+
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

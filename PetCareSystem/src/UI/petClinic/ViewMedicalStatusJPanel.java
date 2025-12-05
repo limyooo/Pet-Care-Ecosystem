@@ -6,6 +6,7 @@ package UI.petClinic;
 
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.PetInsuranceEnterprise;
+import Business.PetClinicOrganization.FrontDeskOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
 import java.awt.CardLayout;
@@ -22,11 +23,12 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
     private UserAccount account;
     private Enterprise enterprise;
     private PetInsuranceEnterprise insuranceEnterprise;
+    private FrontDeskOrganization frontDeskOrg;
     /**
      * Creates new form ViewMedicalStatusJPanel
      */
     public ViewMedicalStatusJPanel(JPanel userProcessContainer, HealthCareCheckRequest request,UserAccount account,
-        Enterprise enterprise,PetInsuranceEnterprise insuranceEnterprise) {
+        Enterprise enterprise,PetInsuranceEnterprise insuranceEnterprise,FrontDeskOrganization frontDeskOrg) {
         
         initComponents();
         this.userProcessContainer = userProcessContainer;
@@ -34,6 +36,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
         this.account = account;
         this.enterprise = enterprise;
         this.insuranceEnterprise = insuranceEnterprise;
+        this.frontDeskOrg = frontDeskOrg;
         
         populateData();
     }
@@ -204,7 +207,7 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
 
     private void btnCreateInsuranceClaimRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateInsuranceClaimRequestActionPerformed
         // TODO add your handling code here:
-        SubmitInsuranceClaimRequestJPanel panel = new SubmitInsuranceClaimRequestJPanel(userProcessContainer, request,account,insuranceEnterprise);
+        SubmitInsuranceClaimRequestJPanel panel = new SubmitInsuranceClaimRequestJPanel(userProcessContainer, request,account,insuranceEnterprise,frontDeskOrg);
 
         userProcessContainer.add("SubmitInsuranceClaimRequestJPanel", panel);
 

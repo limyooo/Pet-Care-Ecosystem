@@ -213,6 +213,7 @@ public class InsuranceClaimRequest extends WorkRequest {
     
     @Override
     public String toString() {
-        return String.valueOf(this.claimId);
-    }
+    return patientId != null ? patientId : String.valueOf(claimId);
+}
+
 }

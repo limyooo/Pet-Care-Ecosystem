@@ -61,7 +61,7 @@ import javax.swing.table.DefaultTableModel;
 
                 Object[] row = new Object[12];
 
-                row[0]  = claim.getPatientId(); 
+                row[0]  = claim;   
                 row[1]  = claim.getPolicyId();           
                 row[2]  = claim.getHolderName();         
                 row[3]  = claim.getPetName();           
@@ -313,7 +313,6 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void btnViewDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailActionPerformed
-        // Get selected row; if none selected, warn user
         int selectedRow = tblInsuranceClaim.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(
@@ -325,44 +324,97 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // Extract policy ID from table (column index 1)
-        String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
-        
-        // Search the work queue for the matching InsuranceClaimRequest
-        InsuranceClaimRequest targetClaim = null;
-        for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
-            if (req instanceof InsuranceClaimRequest) {
-                InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
-                if (policyId.equals(ic.getPolicyId())) {
-                    targetClaim = ic;
-                    break;
-                }
-            }
-        }
+        // 🔥 column 0 直接存的就是 InsuranceClaimRequest 对象
+        InsuranceClaimRequest targetClaim =
+                (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
 
-        // If not found, show error
         if (targetClaim == null) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Cannot find this claim in work queue.",
+                    "Error loading claim details!",
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
         }
 
-        // Open the detail panel for the selected claim
-        ClaimDetailJPanel detailPanel = new ClaimDetailJPanel(userProcessContainer, targetClaim, this);
+        // 🔥 跳转详情页面
+        ClaimDetailJPanel detailPanel = 
+                new ClaimDetailJPanel(userProcessContainer, targetClaim, this);
+
         userProcessContainer.add("ClaimDetailJPanel", detailPanel);
-        
-        // Switch card layout to the detail panel
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
     }//GEN-LAST:event_btnViewDetailActionPerformed
 
     private void btnApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveActionPerformed
-        // Get selected row; if none selected, stop    
+         // 1. 先检查有没有选中行
         int selectedRow = tblInsuranceClaim.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please select a claim first.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        // 2. 直接从表格第 0 列拿出这一行对应的 InsuranceClaimRequest 对象
+        InsuranceClaimRequest targetClaim =
+                (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
+
+        if (targetClaim == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Cannot find this claim.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // 3. 防止重复审批
+        if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "This claim is already approved.",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+        if ("Rejected".equalsIgnoreCase(targetClaim.getStatus())) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "This claim has been rejected.",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        // 4. 自动计算赔付 & 更新状态
+        autoDecideCoverage(targetClaim);
+
+        // 5. 给处理结果的弹窗
+        JOptionPane.showMessageDialog(
+                this,
+                "Claim processed.\n"
+                + "Status: " + targetClaim.getStatus() + "\n"
+                + "Decision: " + targetClaim.getCoverageDecision() + "\n"
+                + "Amount: " + targetClaim.getClaimAmount(),
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        // 6. 刷新表格，让修改显示出来
+        populateTable();
+    }//GEN-LAST:event_btnApproveActionPerformed
+
+    private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
+        // 1) Ensure user selects a row
+            int selectedRow = tblInsuranceClaim.getSelectedRow();
             if (selectedRow < 0) {
                 JOptionPane.showMessageDialog(
                         this,
@@ -373,157 +425,66 @@ import javax.swing.table.DefaultTableModel;
                 return;
             }
 
-            // Retrieve policy ID from the selected table row
-            String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
+            // 2) Directly retrieve the InsuranceClaimRequest object from column 0
+            InsuranceClaimRequest targetClaim =
+                    (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
 
-            // Locate the corresponding InsuranceClaimRequest in the work queue
-            InsuranceClaimRequest targetClaim = null;
-            for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
-                if (req instanceof InsuranceClaimRequest) {
-                    InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
-                    if (policyId.equals(ic.getPolicyId())) {
-                        targetClaim = ic;
-                        break;
-                    }
-                }
-            }
-            
-            // If no matching claim is found
             if (targetClaim == null) {
                 JOptionPane.showMessageDialog(
                         this,
-                        "Cannot find this claim in work queue.",
+                        "Cannot find this claim.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
 
-            // Prevent double processing (approved / rejected already)
-            if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "This claim is already approved.",
-                        "Info",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-                return;
-            }
+            // 3) Block double handling
             if ("Rejected".equalsIgnoreCase(targetClaim.getStatus())) {
                 JOptionPane.showMessageDialog(
                         this,
-                        "This claim has been rejected.",
+                        "This claim is already rejected.",
                         "Info",
                         JOptionPane.INFORMATION_MESSAGE
                 );
                 return;
             }
-            
-               // Automatically calculate approval amount and update claim status
-               autoDecideCoverage(targetClaim);
-               
-               // Show result summary to user
+            if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
                 JOptionPane.showMessageDialog(
                         this,
-                        "Claim processed.\n"
-                        + "Status: " + targetClaim.getStatus() + "\n"
-                        + "Decision: " + targetClaim.getCoverageDecision() + "\n"
-                        + "Amount: " + targetClaim.getClaimAmount(),
-                        "Success",
+                        "This claim has been approved and cannot be rejected.",
+                        "Info",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-                
-                // Refresh table to reflect updates
-                populateTable();
-
-    }//GEN-LAST:event_btnApproveActionPerformed
-
-    private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
-         // Ensure a row is selected in the table
-        int selectedRow = tblInsuranceClaim.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please select a claim first.",
-                    "Warning",
-                    JOptionPane.WARNING_MESSAGE
-            );
-            return;
-        }
-
-          // Retrieve policy ID from the selected row
-        String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
-       
-        // Find the matching InsuranceClaimRequest in the work queue
-        InsuranceClaimRequest targetClaim = null;
-        for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
-            if (req instanceof InsuranceClaimRequest) {
-                InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
-                if (policyId.equals(ic.getPolicyId())) {
-                    targetClaim = ic;
-                    break;
-                }
+                return;
             }
-        }
 
-        // Stop if claim cannot be found
-        if (targetClaim == null) {
-            JOptionPane.showMessageDialog(
+            // 4) Confirm rejection
+            int result = JOptionPane.showConfirmDialog(
                     this,
-                    "Cannot find this claim in work queue.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
+                    "Are you sure to reject this claim?",
+                    "Confirm",
+                    JOptionPane.YES_NO_OPTION
             );
-            return;
-        }
 
-        // Prevent re-processing previously handled claims
-        if ("Rejected".equalsIgnoreCase(targetClaim.getStatus())) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "This claim is already rejected.",
-                    "Info",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-            return;
-        }
-        if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "This claim has been approved and cannot be rejected.",
-                    "Info",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-            return;
-        }
-    
-        // Ask for confirmation before rejecting the claim
-        int result = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure to reject this claim?",
-                "Confirm",
-                JOptionPane.YES_NO_OPTION
-        );
-        
-        if (result != JOptionPane.YES_OPTION) {
-            return;
-        }
+            if (result != JOptionPane.YES_OPTION) {
+                return;
+            }
 
-             // Update claim’s final status and coverage decision
+            // 5) Update final decisions
             targetClaim.setStatus("Rejected");
             targetClaim.setClaimDecision("Rejected");
-            targetClaim.setCoverageDecision("No Coverage"); 
+            targetClaim.setCoverageDecision("No Coverage");
 
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Claim rejected.",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
 
-        JOptionPane.showMessageDialog(
-                this,
-                "Claim rejected.",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-
-        // Refresh the table to show updates
-        populateTable();
+            // 6) Refresh table UI
+            populateTable();
     }//GEN-LAST:event_btnRejectActionPerformed
 
     private void btnPolicyRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolicyRecordActionPerformed
@@ -534,7 +495,7 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_btnPolicyRecordActionPerformed
 
     private void btnSendCompensationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendCompensationActionPerformed
-        // 1. Retrieve the selected claim from the table
+        // 1. 先确认用户有选中一行
         int selectedRow = tblInsuranceClaim.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(
@@ -546,32 +507,33 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // Extract the policy ID from column index 1
-        String policyId = (String) tblInsuranceClaim.getValueAt(selectedRow, 1);
-
-        // 2. Locate the corresponding InsuranceClaimRequest in the work queue
-        InsuranceClaimRequest targetClaim = null;
-        for (WorkRequest req : claimOrg.getWorkQueue().getWorkRequestList()) {
-            if (req instanceof InsuranceClaimRequest) {
-                InsuranceClaimRequest ic = (InsuranceClaimRequest) req;
-                if (policyId.equals(ic.getPolicyId())) {
-                    targetClaim = ic;
-                    break;
-                }
-            }
-        }
+        // 2. 直接从表格中取出这一行对应的 InsuranceClaimRequest 对象（第 0 列）
+        InsuranceClaimRequest targetClaim =
+                (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
 
         if (targetClaim == null) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Cannot find this claim in work queue.",
+                    "Cannot find this claim.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
         }
 
-        // 3. Send the compensation notification to the Pet Boarding enterprise
+        // 👉 如果你希望“必须先审批（Approved / Rejected）才能发送”，保留下面这段
+        //    （不想限制的话，可以把这一段删掉）
+        if ("Pending".equalsIgnoreCase(targetClaim.getStatus())) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please approve or reject the claim before sending compensation notification.",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        // 3. 不管 Approved / Rejected，都发送通知给 Pet Boarding 的 CustomerService
         sendCompensationNotification(targetClaim);
 
         JOptionPane.showMessageDialog(

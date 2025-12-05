@@ -11,6 +11,7 @@ import Business.Pet.PetOwner;
 import Business.Petsystem;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HealthCareCheckRequest;
+import Business.WorkQueue.InsuranceClaimRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -67,17 +68,17 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Record ID", "Pet Owner", "Pet Owner Phone", "Pet Owner Email", "Symptom", "Insurance claim result", "Health check result"
+                "Record ID", "Pet Owner", "Pet Owner Phone", "Pet Owner Email", "Symptom", "Health check status", "Insurance Status", "tm need", "tm costs", "Insurane Costs"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, true, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,15 +127,15 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
                         .addGap(200, 200, 200)
                         .addComponent(btnLogout))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1087, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(161, 161, 161)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnCall, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnView)
-                            .addComponent(btnSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(100, Short.MAX_VALUE))
+                            .addComponent(btnSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1003, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(567, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,32 +259,74 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
 
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        
-        if (organization == null || organization.getWorkQueue() == null) {
-            return;
-        }
-        
-        // 遍历 Customer Service 组织的 Work Queue
-        for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
-            if (request instanceof HealthCareCheckRequest) {
-                HealthCareCheckRequest healthRequest = (HealthCareCheckRequest) request;
-                
-                Pet pet = healthRequest.getPet();
-                PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
-                
-                Object[] row = new Object[7];
-                row[0] = healthRequest.getBoardingRecordId() != null ? healthRequest.getBoardingRecordId() : "N/A";
-                row[1] = (owner != null) ? owner.getOwnerName() : "N/A";
-                row[2] = (owner != null) ? owner.getPhone() : "N/A";
-                row[3] = (owner != null) ? owner.getEmail() : "N/A";
-                row[4] = healthRequest.getSymptom() != null ? healthRequest.getSymptom() : "N/A";
-                row[5] = "Pending";  // Insurance claim result
-                row[6] = healthRequest.getCheckResult() != null ? healthRequest.getCheckResult() : "Pending";
-                
-                model.addRow(row);
+    model.setRowCount(0);
+    
+    if (organization == null || organization.getWorkQueue() == null) {
+        return;
+    }
+    
+    // 遍历 Customer Service 组织的 Work Queue
+    for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
+        if (request instanceof HealthCareCheckRequest) {
+            HealthCareCheckRequest healthRequest = (HealthCareCheckRequest) request;
+            
+            Pet pet = healthRequest.getPet();
+            PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+            
+            // 获取关联的 InsuranceClaimRequest（如果有）
+            InsuranceClaimRequest claimRequest = healthRequest.getInsuranceClaimRequest();
+            
+            // ⭐ 填充完整的 10 列数据
+            Object[] row = new Object[10];
+            
+            // 1. Record ID
+            row[0] = healthRequest.getBoardingRecordId() != null ? 
+                     healthRequest.getBoardingRecordId() : "N/A";
+            
+            // 2. Pet Owner
+            row[1] = (owner != null) ? owner.getOwnerName() : "N/A";
+            
+            // 3. Pet Owner Phone
+            row[2] = (owner != null) ? owner.getPhone() : "N/A";
+            
+            // 4. Pet Owner Email
+            row[3] = (owner != null) ? owner.getEmail() : "N/A";
+            
+            // 5. Symptom
+            row[4] = healthRequest.getSymptom() != null ? 
+                     healthRequest.getSymptom() : "N/A";
+            
+            // 6. Health Check Status → healthRequest.getStatus()
+            row[5] = healthRequest.getStatus() != null ? 
+                     healthRequest.getStatus() : "Pending";
+            
+            // 7. Insurance Status → claimRequest.getClaimDecision() 或 getCoverageDecision()
+            if (claimRequest != null && claimRequest.getClaimDecision() != null) {
+                row[6] = claimRequest.getClaimDecision();
+            } else if (claimRequest != null && claimRequest.getCoverageDecision() != null) {
+                row[6] = claimRequest.getCoverageDecision();
+            } else {
+                row[6] = "No Claim";
             }
+            
+            // 8. Treatment Needed → healthRequest.getTreatmentNeeded()
+            row[7] = healthRequest.getTreatmentNeeded() != null ? 
+                     healthRequest.getTreatmentNeeded() : "Pending";
+            
+            // 9. Treatment Cost → healthRequest.getTreatmentCost()
+            row[8] = healthRequest.getTreatmentCost() > 0 ? 
+                     String.format("$%.2f", healthRequest.getTreatmentCost()) : "N/A";
+            
+            // 10. Insurance Cost (赔付金额) → claimRequest.getClaimAmount()
+            if (claimRequest != null && claimRequest.getClaimAmount() > 0) {
+                row[9] = String.format("$%.2f", claimRequest.getClaimAmount());
+            } else {
+                row[9] = "N/A";
+            }
+            
+            model.addRow(row);
         }
+    }
     }
     // 刷新表格
     public void refreshTable() {

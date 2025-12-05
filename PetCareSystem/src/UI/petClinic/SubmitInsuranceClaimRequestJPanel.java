@@ -18,6 +18,11 @@ import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Business.Network.Network;
+import Business.Enterprise.PetBoardingEnterprise;
+import Business.PetBoardingOrganization.CustomerService;
+import Business.Petsystem;
+
 /**
  *
  * @author jingyangwang
@@ -351,34 +356,58 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         Request.setTreatmentCost(Double.parseDouble(fieldTreatmentCost.getText()));
         
         InsuranceClaimRequest claimRequest = new InsuranceClaimRequest();
-
-        //Basic Info 
+        
+        // Basic Info 
         Pet p = Request.getPet();
-
         claimRequest.setPatientId(p.getPetId());
         claimRequest.setPolicyId(p.getPetOwner().getPolicyId());
         claimRequest.setHolderName(p.getPetOwner().getOwnerName());
         claimRequest.setPetName(p.getPetName());
-
-        //Medical Info
+        
+        // 设置 Pet 和 Owner 对象
+        claimRequest.setPet(p);
+        claimRequest.setOwner(p.getPetOwner());
+        
+        // 设置 Treatment Needed（从下拉框获取）
+        String treatmentNeeded = (String) comboTreatmentNeeded.getSelectedItem();
+        claimRequest.setTreatmentNeeded(treatmentNeeded);
+        
+        // 设置 Doctor Name（如果有的话）
+        if (Request.getAssignedDoctor() != null) {
+            claimRequest.setDoctorName(Request.getAssignedDoctor());
+        }
+        
+        // Treatment Cost
+        double treatmentCost = Double.parseDouble(fieldTreatmentCost.getText());
+        
+        // Medical Info
         claimRequest.setSymptom(Request.getSymptom());
         claimRequest.setLabResult(Request.getLabResult());
-        claimRequest.setTreatmentCost(Double.parseDouble(fieldTreatmentCost.getText()));
-
-        //Insurance Info
-        claimRequest.setCoverageLevel(p.getPetOwner().getCoverageLevel());
+        claimRequest.setTreatmentCost(treatmentCost);
+        
+        // Insurance Info
+        claimRequest.setInsuranceCompany(p.getPetOwner().getInsuranceCompany());
+        claimRequest.setCoverageLevel((String) comboCoverageLevel.getSelectedItem());
+        claimRequest.setExpirationDate(p.getPetOwner().getExpirationDate());
         claimRequest.setClaimAmount(0.0);  // initial
         claimRequest.setClaimDecision("Pending");
         claimRequest.setStatus("Pending");
-
-        //Relationship to Clinic Request
+        
+        // Relationship to Clinic Request
         claimRequest.setHealthRequest(Request);
-
-        //Sender
+        
+        // ⭐ 关键：建立双向关联
+        Request.setInsuranceClaimRequest(claimRequest);
+        
+        // ⭐ 同时更新 HealthCareCheckRequest 的 Treatment 信息
+        Request.setTreatmentNeeded(treatmentNeeded);
+        Request.setTreatmentCost(treatmentCost);
+        
+        // Sender
         claimRequest.setSender(account);
         claimRequest.setMessage("Insurance claim for patient: " + p.getPetId());
-
-        //Find the org
+        
+        // Find the Insurance Claim Org
         Organization claimOrg = null;
         for (Organization org : insuranceEnterprise.getOrganizationDirectory().getOrganizationList()) {
             if (org instanceof InsuranceClaimOrganization) {
@@ -386,15 +415,21 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                 break;
             }
         }
-
+        
         if (claimOrg != null) {
             claimOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
             account.getWorkQueue().getWorkRequestList().add(claimRequest);
             
             frontDeskOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
 
+            //新增：发送到 Pet Boarding Customer Service 
+            sendToCustomerService(Request);
+            
             JOptionPane.showMessageDialog(this,
-                "Insurance Claim Request submitted successfully!",
+                "Insurance Claim Request submitted successfully!\n" +
+                "Treatment: " + treatmentNeeded + "\n" +
+                "Cost: $" + String.format("%.2f", treatmentCost) + "\n" +
+                "Notification sent to Customer Service.",
                 "Success",
                 JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -403,14 +438,43 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
-
+        
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this,
-            "Please check the treatment cost input.",
+            "Please check the treatment cost input.\nError: " + e.getMessage(),
             "Error",
             JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
        
+}
+
+
+
+// ⭐⭐⭐ 新增辅助方法：发送到 Customer Service ⭐⭐⭐
+private void sendToCustomerService(HealthCareCheckRequest healthRequest) {
+    // 获取系统实例
+    Business.Petsystem system = Business.Petsystem.getInstance();
+    
+    // 遍历所有网络，查找 Pet Boarding Enterprise 的 Customer Service Organization
+    for (Business.Network.Network network : system.getNetworkList()) {
+        for (Business.Enterprise.Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+            // 找到 Pet Boarding Enterprise
+            if (enterprise instanceof Business.Enterprise.PetBoardingEnterprise) {
+                for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+                    // 找到 Customer Service Organization
+                    if (org instanceof Business.PetBoardingOrganization.CustomerService) {
+                        // 把 HealthCareCheckRequest 添加到 Customer Service 的队列
+                        org.getWorkQueue().getWorkRequestList().add(healthRequest);
+                        System.out.println("✅ Request sent to Customer Service: " + healthRequest.getPatientId());
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    System.out.println("⚠️ Customer Service Organization not found!");
+        
     }//GEN-LAST:event_btnSubmitInsuranceClaimRequestActionPerformed
 
     private void comboTreatmentNeededActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTreatmentNeededActionPerformed

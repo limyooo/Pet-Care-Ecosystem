@@ -25,10 +25,6 @@
                       <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="1087" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnCall" max="32767" attributes="0"/>
@@ -36,8 +32,12 @@
                           <Component id="btnSend" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="1003" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="100" max="32767" attributes="0"/>
+              <EmptySpace pref="567" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,18 +81,36 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="4">
+              <Table columnCount="10" rowCount="4">
                 <Column editable="false" title="Record ID" type="java.lang.Object"/>
                 <Column editable="false" title="Pet Owner" type="java.lang.Object"/>
-                <Column editable="true" title="Pet Owner Phone" type="java.lang.Object"/>
+                <Column editable="false" title="Pet Owner Phone" type="java.lang.Object"/>
                 <Column editable="false" title="Pet Owner Email" type="java.lang.Object"/>
-                <Column editable="true" title="Symptom" type="java.lang.Object"/>
-                <Column editable="false" title="Insurance claim result" type="java.lang.Object"/>
-                <Column editable="false" title="Health check result" type="java.lang.Object"/>
+                <Column editable="false" title="Symptom" type="java.lang.Object"/>
+                <Column editable="false" title="Health check status" type="java.lang.Object"/>
+                <Column editable="false" title="Insurance Status" type="java.lang.Object"/>
+                <Column editable="false" title="tm need" type="java.lang.Object"/>
+                <Column editable="false" title="tm costs" type="java.lang.Object"/>
+                <Column editable="false" title="Insurane Costs" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

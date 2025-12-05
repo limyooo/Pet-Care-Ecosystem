@@ -315,18 +315,12 @@ import javax.swing.table.DefaultTableModel;
     private void btnViewDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailActionPerformed
         int selectedRow = tblInsuranceClaim.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please select a claim first.",
-                    "Warning",
-                    JOptionPane.WARNING_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this,"Please select a claim first.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         // 🔥 column 0 直接存的就是 InsuranceClaimRequest 对象
-        InsuranceClaimRequest targetClaim =
-                (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
+        InsuranceClaimRequest targetClaim = (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
 
         if (targetClaim == null) {
             JOptionPane.showMessageDialog(
@@ -339,8 +333,7 @@ import javax.swing.table.DefaultTableModel;
         }
 
         // 🔥 跳转详情页面
-        ClaimDetailJPanel detailPanel = 
-                new ClaimDetailJPanel(userProcessContainer, targetClaim, this);
+        ClaimDetailJPanel detailPanel = new ClaimDetailJPanel(userProcessContainer, targetClaim, this);
 
         userProcessContainer.add("ClaimDetailJPanel", detailPanel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();

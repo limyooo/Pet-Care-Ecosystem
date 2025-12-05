@@ -125,7 +125,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Claim ID", "Patient ID", "Claim Amount", "Decision", "Claim Status"
+                "Claim ID", "Patient ID", "Claim Amount", "Coverage Decision", "Claim Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -290,7 +290,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
                 row[0] = claim.getClaimId();       
                 row[1] = claim.getHealthRequest() == null ? "Unknown" : claim.getHealthRequest().getPatientId();  
                 row[2] = claim.getClaimAmount();   
-                row[3] = claim.getClaimDecision(); 
+                row[3] = claim.getCoverageDecision();
                 row[4] = claim.getStatus();        
 
                 model.addRow(row);

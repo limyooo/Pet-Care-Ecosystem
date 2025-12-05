@@ -30,12 +30,21 @@ public class HealthCareCheckRequest extends WorkRequest {
     private String treatmentNeeded;
     private double treatmentCost;
     private LabTestRequest labTestRequest;
-
+    
+    private InsuranceClaimRequest insuranceClaimRequest;
     
     
     //Constructor：create new patientId
     
     //getter 和 setter
+    // 2. 添加 getter 和 setter 方法：
+public InsuranceClaimRequest getInsuranceClaimRequest() {
+    return insuranceClaimRequest;
+}
+
+public void setInsuranceClaimRequest(InsuranceClaimRequest insuranceClaimRequest) {
+    this.insuranceClaimRequest = insuranceClaimRequest;
+}
     public String getBoardingRecordId() {
         return boardingRecordId;
     }

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package UI.enterpriseAdmin;
 
 import Business.Enterprise.Enterprise;
@@ -28,14 +25,11 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
     private PetBoardingRecord selectedRecord;
 
 
-    /**
-     * Creates new form OperationIndicatorsReportJPanel
-     */
     public OperationIndicatorsReportJPanel(JPanel userProcessContainer, Organization organization, Enterprise enterprise1, Petsystem system) {
         initComponents();
-      this.userProcessContainer = userProcessContainer;
+        this.userProcessContainer = userProcessContainer;
         this.organization = organization;
-        this.enterprise = enterprise1; // 修正：将参数 enterprise1 赋值给 this.enterprise
+        this.enterprise = enterprise1; 
         this.system = system;
 
     calculateOperationIndicators();
@@ -183,16 +177,16 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void calculateOperationIndicators() {
-        // 添加调试信息
+        
         System.out.println("=== Debug: calculateOperationIndicators ===");
         System.out.println("Enterprise: " + enterprise);
         System.out.println("Organization: " + organization);
         
-        // 检查 enterprise 是否为 null
+        // Check if enterprise is null. If so, clear and set defaults 检查 enterprise 是否为 null
         if (enterprise == null) {
-            System.out.println("❌ Enterprise is NULL!");
+            System.out.println(" Enterprise is NULL!");
             clearOperationFields();
-            // 显示默认值以便调试
+            //  Set default debug values 显示默认值以便调试
             fieldor.setText("0.00%");
             fieldnc.setText("0");
             fielddd.setText("0");
@@ -203,7 +197,7 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
         }
         
         if (!(enterprise instanceof PetBoardingEnterprise)) {
-            System.out.println("❌ Enterprise is not PetBoardingEnterprise: " + enterprise.getClass().getName());
+            System.out.println(" Enterprise is not PetBoardingEnterprise: " + enterprise.getClass().getName());
             clearOperationFields();
             return;
         }
@@ -212,23 +206,23 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
         BoardingRecordDirectory recordDirectory = boardingEnt.getBoardingRecordDirectory();
         
         if (recordDirectory == null) {
-            System.out.println("❌ BoardingRecordDirectory is NULL!");
+            System.out.println(" BoardingRecordDirectory is NULL!");
             clearOperationFields();
             return;
         }
         
         if (recordDirectory.getRecordList() == null) {
-            System.out.println("❌ RecordList is NULL!");
+            System.out.println(" RecordList is NULL!");
             clearOperationFields();
             return;
         }
 
-        // 1. 获取所有记录
+        // 1. Get all boarding records 获取所有记录
         java.util.List<PetBoardingRecord> allRecords = recordDirectory.getRecordList();
-        System.out.println("✅ Total records: " + allRecords.size());
+        System.out.println(" Total records: " + allRecords.size());
         
-        // 2. 计算指标
-        // 统计活动宠物数量
+        // 2. Calculate indicators 计算指标
+        // Count records currently Active or Checked In 统计活动宠物数量
         long activelyBoardingCount = allRecords.stream()
             .filter(r -> "Active".equalsIgnoreCase(r.getStatus()) || 
                         "Checked In".equalsIgnoreCase(r.getStatus()))
@@ -237,7 +231,7 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
         System.out.println("Active boarding count: " + activelyBoardingCount);
         
         int totalRecords = allRecords.size();
-        int totalRooms = 20; // 假设总房位数
+        int totalRooms = 20; // Assumed total rooms 假设总房位数
         
         // --- Occupancy Rate ---
         double occupancyRateValue = (totalRooms > 0) ? (activelyBoardingCount * 100.0 / totalRooms) : 0.0;
@@ -266,7 +260,7 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
         // --- Staff-to-Dog Ratio ---
         String staffToDogRatio = "1:5";
         
-        // 3. 更新字段
+        // 3. Update UI fields
         fieldor.setText(occupancyRate);
         fieldnc.setText(newCheckins);
         fielddd.setText(dogCatDays);
@@ -274,12 +268,12 @@ public class OperationIndicatorsReportJPanel extends javax.swing.JPanel {
         fieldir.setText(incidentRate);
         fields.setText(staffToDogRatio);
         
-        System.out.println("✅ Fields updated successfully!");
+        System.out.println("Fields updated successfully!");
         System.out.println("Occupancy Rate: " + occupancyRate);
         System.out.println("New Check-ins: " + newCheckins);
     }
     
-    // ⭐ 新增：清除运营指标字段的方法
+    // Clear the operation indicator fields
     private void clearOperationFields() {
         fieldor.setText("");
         fieldnc.setText("");

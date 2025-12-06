@@ -20,37 +20,27 @@ import javax.swing.event.TreeSelectionEvent;
 import UI.admin.MainJFrame;
 
 
-/**
- *
- * @author hanlinyao
- */
+
 public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private Petsystem system;
     
     
 
-    /**
-     * Creates new form SystemAdminWorkAreaJPanel
-     */
     public SystemAdminWorkAreaJPanel(Petsystem system) {
       this.system = system;
     initComponents();
-    // ⭐ 添加 JTree 监听器
+    
     jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
         public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
             jTree1ValueChanged(evt);
-            jTree1.updateUI(); // ⭐ 关键：强制刷新 JTree 视图
+            jTree1.updateUI(); 
         }
 
           private void jTree1ValueChanged(TreeSelectionEvent evt) {
-              // 这个方法通常用来处理节点点击，但我们在这里主要利用它的触发机制。
-    // 如果您需要根据选中的节点显示信息，代码应该写在这里。
-    
-    // 假设您想在点击节点时显示节点的名称：
+              
     DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
     if (selectedNode != null && selectedNode.getUserObject() instanceof Network) {
         Network network = (Network) selectedNode.getUserObject();
-        // 可以在这里设置一个标签来显示选中的网络名称，以确认 JTree 正在工作
         // System.out.println("Selected Network: " + network.getName()); 
     }
           }
@@ -58,7 +48,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     });
     
     
-    // 初始化 JTree
     populateTree();
     }
 
@@ -164,7 +153,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnManageNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageNetworkActionPerformed
-        // TODO add your handling code here:
+
     ManageNetworkJPanel manageNetworkJPanel = new ManageNetworkJPanel(system, this);
         jSplitPane1.setRightComponent(manageNetworkJPanel);
         jSplitPane1.setDividerLocation(150);
@@ -172,7 +161,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnManageNetworkActionPerformed
 
     private void btnManageEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEnterpriseActionPerformed
-        // TODO add your handling code here:
+
         ManageEnterpriseJPanel manageEnterpriseJPanel = new ManageEnterpriseJPanel(system, this);
         jSplitPane1.setRightComponent(manageEnterpriseJPanel);
         jSplitPane1.setDividerLocation(150);
@@ -181,7 +170,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnManageEnterpriseActionPerformed
 
     private void btnMeaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeaActionPerformed
-        // TODO add your handling code here:
+
          ManageEnterpriseAdminJPanel manageEnterpriseAdminJPanel = new ManageEnterpriseAdminJPanel(system, this);
         jSplitPane1.setRightComponent(manageEnterpriseAdminJPanel);
         jSplitPane1.setDividerLocation(150);
@@ -189,8 +178,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMeaActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-       // 1. 确认是否要登出
+
     int choice = JOptionPane.showConfirmDialog(this, 
         "Are you sure you want to logout?", 
         "Confirm Logout", 
@@ -198,12 +186,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         JOptionPane.QUESTION_MESSAGE);
     
     if (choice == JOptionPane.YES_OPTION) {
-        // 2. 找到最顶层的 MainJFrame 并调用其 triggerLogout 方法
         java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
         
         if (window instanceof MainJFrame) {
             MainJFrame mainFrame = (MainJFrame) window;
-            mainFrame.triggerLogout(); // 调用 MainJFrame 中已有的登出方法
+            mainFrame.triggerLogout(); 
         }
     }
         
@@ -223,39 +210,30 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     void populateTree() {
-     // 1. 获取 JTree 的模型
+
     DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
 
-    // ⭐ 关键修正：总是创建一个全新的根节点 ("PetCareSystem")，
-    // 并使用 model.setRoot() 方法，强制模型从新根开始构建，彻底消除重复显示。
     DefaultMutableTreeNode root = new DefaultMutableTreeNode("PetCareSystem");
     model.setRoot(root); 
     
-    // 注意：不再需要 root.removeAllChildren()，因为 model.setRoot(root) 已经完成了重置。
-
-    // 2. 遍历所有 Network 
     if (system.getNetworkList() != null) {
         for (Network network : system.getNetworkList()) {
-            // 使用 Network 对象作为节点的用户对象 (JTree 会显示其 toString() 返回的文本，例如 "Portland")
+           
             DefaultMutableTreeNode networkNode = new DefaultMutableTreeNode(network);
             root.add(networkNode);
-
-            // 3. 遍历 Network 下的所有 Enterprise
+      
             if (network.getEnterpriseDirectory() != null) {
                 for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
                     DefaultMutableTreeNode enterpriseNode = new DefaultMutableTreeNode(enterprise);
                     networkNode.add(enterpriseNode);
-                    
-                    // 如果需要显示 Organization，可以在这里继续添加循环
                 }
             }
         }
     }
 
-    // 4. 刷新树视图
-    model.reload(root); // 重新加载模型，从新的根节点开始
+    model.reload(root); 
     
-    // 5. 展开所有节点，使结构可见
+  
     for (int i = 0; i < jTree1.getRowCount(); i++) {
         jTree1.expandRow(i);
     }
@@ -264,16 +242,13 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void loadManageAdminPanel() {
         try {
-        // 创建目标面板实例
+       
         ManageEnterpriseAdminJPanel manageEnterpriseAdminJPanel = new ManageEnterpriseAdminJPanel(system, this);
-        
-        // 关键：清除初始的按钮/布局，加载新面板
+    
         jPanel2.removeAll(); 
-        
-        // 将面板添加到容器 jPanel2 中
+
         jPanel2.add("manageEnterpriseAdminJPanel", manageEnterpriseAdminJPanel);
         
-        // 显示新添加的面板
         CardLayout layout = (CardLayout)jPanel2.getLayout();
         layout.show(jPanel2, "manageEnterpriseAdminJPanel");
         
@@ -281,24 +256,20 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jPanel2.repaint();
         
     } catch (Exception ex) {
-        // ⭐ 捕获异常，并显示错误信息。这有助于找到真正的失败原因。
-        JOptionPane.showMessageDialog(this, "加载管理面板失败: " + ex.getMessage(), "内部错误", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace(); // 将堆栈跟踪打印到控制台
+        JOptionPane.showMessageDialog(this, "Failed to load the management panel:" + ex.getMessage(), "Internal error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace(); 
     }
     }
 
     void restoreDefaultView() {
-        // 1. 恢复 jSplitPane1 的右侧组件为包含按钮的 jPanel2
+
     jSplitPane1.setRightComponent(jPanel2); 
-    
-    // 2. 可选：重设分割线位置，让 JTree 区域保持一致
+
     jSplitPane1.setDividerLocation(150); 
-    
-    // 3. 刷新容器以显示恢复后的视图
+
     jSplitPane1.revalidate();
     jSplitPane1.repaint(); 
     
-    // ⭐ 确保重新加载 JTree，以便在创建新企业后显示新节点
     populateTree();
     }
         

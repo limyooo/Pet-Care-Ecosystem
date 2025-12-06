@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package UI.admin;
 
 import Business.ConfigureABusiness;
 import Business.Petsystem;
 import Business.UserAccount.UserAccount;
-import Business.Role.SystemAdminRole; // 导入 SystemAdminRole 以便在登录后判断角色
+import Business.Role.SystemAdminRole; 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -18,33 +15,23 @@ import Business.Organization.Organization;
 import Business.Role.EnterpriseAdminRole;
 
 
-/**
- *
- * @author hanlinyao
- */
 public class MainJFrame extends javax.swing.JFrame {
     private Petsystem system;
-    private UserAccount userAccount; // 当前登录的用户
+    private UserAccount userAccount; // Currently logged in user
     private Enterprise inEnterprise;
     private Organization inOrganization;
 
 
-    /**
-     * Creates new form MainJFrame
-     */
     public MainJFrame() {
-        // 在 initComponents() 之前初始化系统实例
         ConfigureABusiness.configure();
         this.system = Petsystem.getInstance();
         initComponents();
         
-        // 初始状态设置
+        // Initial state setup
         jSplitPane1.setLeftComponent(jPanel1);
-        container.removeAll(); // 清空右侧工作区
-        btnLogout.setEnabled(false); // 初始状态禁用登出按钮
+        container.removeAll(); // Clear right workspace 
+        btnLogout.setEnabled(false); // Initially disable logout button
         
-        // 默认将窗口最大化或设置一个合理大小
-        //this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -134,29 +121,29 @@ public class MainJFrame extends javax.swing.JFrame {
     String userName = jTextField1.getText().trim();
     String password = jTextField2.getText().trim();
 
-    // 先清空之前的状态
+    // Clear previous state first
     userAccount = null;
     inEnterprise = null;
     inOrganization = null;
 
-    // 1️⃣ 先在 System 层找（System Admin）
+    // First search at System level (System Admin) / 先在 System 层找（System Admin）
     userAccount = system.getUserAccountDirectory()
                         .authenticateUser(userName, password);
 
-    // 2️⃣ 如果没找到，再在 Network -> Enterprise -> Organization 里找
+    // If not found, search in Network -> Enterprise -> Organization / 如果没找到，再在 Network -> Enterprise -> Organization 里找
     if (userAccount == null) {
         for (Network network : system.getNetworkList()) {
             for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
 
-                // 2.1 先在 Enterprise 自己的账号目录里找（Enterprise Admin）
+                // 2.1 First search in Enterprise's own account directory (Enterprise Admin) / 先在 Enterprise 自己的账号目录里找（Enterprise Admin）
                 userAccount = enterprise.getUserAccountDirectory()
                                         .authenticateUser(userName, password);
                 if (userAccount != null) {
                     inEnterprise = enterprise;
-                    break; // 找到了就不用再找 org 了
+                    break; // Found, no need to search orgs / 找到了就不用再找 org 了
                 }
 
-                // 2.2 再去下面的 Organization 里找（医生、前台等）
+                // 2.2 Search in Organizations below (doctors, front desk, etc.) / 再去下面的 Organization 里找（医生、前台等）
                 for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
                     userAccount = org.getUserAccountDirectory()
                                      .authenticateUser(userName, password);
@@ -177,48 +164,49 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
 
-    // 3️⃣ 如果所有地方都找不到，提示错误
+    // If not found anywhere, show error / 如果所有地方都找不到，提示错误
     if (userAccount == null) {
         JOptionPane.showMessageDialog(this,
-                "用户名或密码错误！",
-                "登录失败",
+                "Incorrect username or password!",
+                "Login Failed",
                 JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // 4️⃣ 找到了，记录当前用户，调整 UI
+    // Found, record current user, adjust UI / 找到了，记录当前用户，调整 UI
     this.userAccount = userAccount;
 
-    jPanel1.setVisible(false);   // 隐藏左侧登录面板
-    btnLogout.setEnabled(true);  // 启用登出按钮
+    jPanel1.setVisible(false);   // Hide left login panel / 隐藏左侧登录面板 
+    btnLogout.setEnabled(true);  // Enable logout button / 启用登出按钮
 
-    // 5️⃣ 加载对应角色的工作区
+
+    // Load corresponding role's work area / 加载对应角色的工作区
     loadWorkArea();
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-       // 1. 清除当前用户会话
+       // 1. Clear current user session / 清除当前用户会话
         this.userAccount = null;
     
-    // 2. 恢复登录界面
-    getContentPane().removeAll(); // 清空当前内容
-    getContentPane().setLayout(new java.awt.CardLayout()); // 重新设置布局
-    getContentPane().add(jSplitPane1, "card2"); // 添加回登录界面
+    // 2. Restore login interface / 恢复登录界面
+    getContentPane().removeAll(); // Clear current content / 清空当前内容
+    getContentPane().setLayout(new java.awt.CardLayout()); // Reset layout / 重新设置布局
+    getContentPane().add(jSplitPane1, "card2"); // Add back login interface / 添加回登录界面
     
-    // 3. 重置登录面板状态
-    jPanel1.setVisible(true); // 显示左侧登录面板
-    container.removeAll(); // 清除右侧工作区内容
+    // 3. Reset login panel state / 重置登录面板状态
+    jPanel1.setVisible(true); // Show left login panel / 显示左侧登录面板
+    container.removeAll(); // Clear right workspace content / 清除右侧工作区内容
     container.revalidate();
     container.repaint();
     
-    btnLogout.setEnabled(false); // 禁用登出按钮
+    btnLogout.setEnabled(false); // Disable logout button / 禁用登出按钮
     
-    // 4. 清空输入框
+    // 4. Clear input fields / 清空输入框
     jTextField1.setText("");
     jTextField2.setText("");
     
-    // 5. 刷新界面
+    // 5. Refresh interface / 刷新界面
     getContentPane().revalidate();
     getContentPane().repaint();
     }//GEN-LAST:event_btnLogoutActionPerformed
@@ -272,40 +260,38 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void loadWorkArea() {
     if (userAccount == null) {
-        // 如果没有用户账户，就退出
+         // If no user account, exit / 如果没有用户账户，就退出
         return;
     }
 
-    // 1. 统一调用当前登录用户的 Role 对象的 createWorkArea 方法。
-    //    无论用户是系统管理员、企业管理员还是组织（如 Boarding Manager），
-    //    都会调用其角色类中实现的 createWorkArea 方法来获取工作区面板。
+    // Uniformly call the current logged-in user's Role object's createWorkArea method.
     JPanel workAreaPanel = userAccount.getRole().createWorkArea(
-        container,         // userProcessContainer
-        userAccount,       // account
+        container,         
+        userAccount,      
         inOrganization,    // organization (对于组织角色，这是 BoardingServiceOrganization)
-        inEnterprise,      // enterprise
-        system             // system
+        inEnterprise,      
+        system            
     );
 
-    // 2. 检查是否成功创建了工作区面板
+    // 2. Check if work area panel was successfully created / 检查是否成功创建了工作区面板
     if (workAreaPanel == null) {
         JOptionPane.showMessageDialog(this,
             "The work area panel returned null. Please check your Role implementation for this user type.",
             "Error",
             JOptionPane.ERROR_MESSAGE);
         
-        // 如果工作区创建失败，恢复登录状态
+        // If work area creation failed, restore login state / 如果工作区创建失败，恢复登录状态
         btnLogoutActionPerformed(null); 
         return;
     }
 
-    // 3. 把工作区面板放到右侧 container（CardLayout）
+    // 3.  Put work area panel in right container (CardLayout) / 把工作区面板放到右侧 container（CardLayout）
     container.removeAll();
     container.add("workArea", workAreaPanel);
     CardLayout layout = (CardLayout) container.getLayout();
     layout.next(container);
     
-    // 刷新界面确保显示
+    // Refresh interface to ensure display / 刷新界面确保显示
     container.revalidate();
     container.repaint();
 }
@@ -313,15 +299,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
 
     private void setupActionListeners() {
-        // 绑定登录按钮事件
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        
-        // 绑定登出按钮事件
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
     }
     
     public void triggerLogout() {
-    // 传递 null Event 是可以的，因为 btnLogoutActionPerformed 的实现中没有使用 evt 参数。
     btnLogoutActionPerformed(null); 
 }
        

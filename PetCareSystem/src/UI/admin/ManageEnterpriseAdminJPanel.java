@@ -22,9 +22,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
     private Petsystem system;
     private SystemAdminWorkAreaJPanel parent;
 
-    /**
-     * Creates new form ManageEnterpriseAdminJPanel
-     */
+    
     public ManageEnterpriseAdminJPanel(Petsystem system, SystemAdminWorkAreaJPanel parent) {
         initComponents();
         this.system = system;
@@ -60,9 +58,9 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
             for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
                 for (UserAccount ua : enterprise.getUserAccountDirectory().getUserAccountList()) {
                     Object[] row = new Object[3];
-                    row[0] = enterprise;                // Enterprise Name（toString 返回 name）
-                    row[1] = network;                   // Network
-                    row[2] = ua.getUsername();          // Username
+                    row[0] = enterprise;                
+                    row[1] = network;                  
+                    row[2] = ua.getUsername();         
                     model.addRow(row);
                 }
             }
@@ -240,6 +238,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         String password = String.valueOf(passwordJPasswordField.getPassword());
         String name = nameJTextField.getText().trim();
 
+        // Input validation / 输入验证
         if (network == null || enterprise == null) {
             JOptionPane.showMessageDialog(this, "Please select a network and enterprise.");
             return;
@@ -249,9 +248,10 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
             return;
         }
         
-         // 1. 创建员工
+         // 1. Create employee
             Employee employee = enterprise.getEmployeeDirectory().createEmployee(name);
-         // 2. 创建账号（用 AdminRole / EnterpriseAdminRole）
+            
+         // 2. Create user account with EnterpriseAdminRole / 使用 EnterpriseAdminRole 创建账号
             enterprise.getUserAccountDirectory().createUserAccount(
             username,
             password,
@@ -260,30 +260,27 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         );
             JOptionPane.showMessageDialog(this, "Enterprise admin created successfully.");
 
-            // 3. 刷新表格
+            // 3. Refresh table / 刷新表格
             populateTable();
 
-            // 4. 清空输入框
+            // 4. Clear input fields / 清空输入框
             usernameJTextField.setText("");
             passwordJPasswordField.setText("");
             nameJTextField.setText("");
         
-    
-        
-        
-        
-
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-            if (parent != null) {
+        // Return to parent panel's default view / 返回父面板的默认视图
+        if (parent != null) {
         parent.restoreDefaultView();
     }
     }//GEN-LAST:event_backJButtonActionPerformed
 
     private void networkJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkJComboBoxActionPerformed
-         Network network = (Network) networkJComboBox.getSelectedItem();
-    if (network != null) {
+        // Update enterprise combo box when network selection changes / 当网络选择改变时更新企业下拉框
+        Network network = (Network) networkJComboBox.getSelectedItem();
+        if (network != null) {
         populateEnterpriseComboBox(network);
     }
     }//GEN-LAST:event_networkJComboBoxActionPerformed

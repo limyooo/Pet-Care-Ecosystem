@@ -49,6 +49,7 @@ public abstract class Enterprise extends Organization {
     }
 
     /**
+     * Subclasses must define: which Organization types this Enterprise supports.
      * 子类必须定义：该 Enterprise 支持哪些 Organization 类型
      */
     public abstract ArrayList<Organization.Type> getSupportedOrganizationTypes();
@@ -56,8 +57,7 @@ public abstract class Enterprise extends Organization {
 
     /**
      * Enterprise 本身通常不直接拥有 Role。
-     * 所有 Role 都是在 Organization 里面实现的。
-     * 所以这里返回空 list 即可，避免子类报错。
+     * All Roles are implemented within Organizations. 所有 Role 都是在 Organization 里面实现的。
      */
     @Override
     public ArrayList<Role> getSupportedRole() {

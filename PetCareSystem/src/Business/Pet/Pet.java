@@ -115,7 +115,7 @@ public class Pet {
     public void setPetOwner(PetOwner petOwner) {
         this.petOwner = petOwner;
     }
-    // ⭐ 新增 Getter 和 Setter
+    
     public InsurancePolicy getInsurancePolicy() {
         return insurancePolicy;
     }
@@ -124,13 +124,6 @@ public class Pet {
     public void setInsurancePolicy(InsurancePolicy insurancePolicy) {
         this.insurancePolicy = insurancePolicy;
     }
-    /*  暂时未知用来做什么
-    @Override
-    public String toString() {
-        return petName;   // UI table / dropdown 显示宠物名
-    }
-    */ 
-
 
 }
 

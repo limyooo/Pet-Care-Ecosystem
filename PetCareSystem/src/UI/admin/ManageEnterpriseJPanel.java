@@ -17,16 +17,14 @@ import javax.swing.table.DefaultTableModel;
  * @author hanlinyao
  */
 public class ManageEnterpriseJPanel extends javax.swing.JPanel {
-    //1.声明父面板实例变量
+    // 1. Declare parent panel instance variables
     private Petsystem system;
     private SystemAdminWorkAreaJPanel parent; 
 
-    /**
-     * Creates new form ManageEnterpriseJPanel
-     */
+   
     public ManageEnterpriseJPanel(Petsystem system, SystemAdminWorkAreaJPanel aThis) {
         initComponents();
-        //2.初始化父面板变量
+        // 2. Initialize parent panel variables
         this.system = system;
         this.parent = aThis; 
         
@@ -155,28 +153,25 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
-// 1. 获取选定的 Network 和 EnterpriseType
+        // 1. Get selected Network and EnterpriseType 获取选定的 Network 和 EnterpriseType
         Network network = (Network) networkJComboBox.getSelectedItem();
         Enterprise.EnterpriseType type = (Enterprise.EnterpriseType) enterpriseTypeJComboBox.getSelectedItem();
 
         String name = nameJTextField.getText().trim();
 
-        // 2. 验证输入
+        // 2. Validate input 验证输入
         if (network == null || type == null || name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Network/Enterprise Type/Name can not be empty！", "Input error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // 3. 创建 Enterprise
+        // 3. Create Enterprise 创建 Enterprise
         // 假设 EnterpriseDirectory 中有 createAndAddEnterprise(String name, Enterprise.EnterpriseType type) 方法
         EnterpriseDirectory directory = network.getEnterpriseDirectory();
         
-        // ⭐ 注意：由于您提供的 EnterpriseDirectory.java 仅包含 getter，我们假设 createAndAddEnterprise 存在于 Network/EnterpriseDirectory 中
-        // 为确保编译，这里需要一个实现来处理创建。
-        // 由于我们没有 EnterpriseDirectory.createAndAddEnterprise 的代码，这里只是调用一个假设的方法。
         Enterprise enterprise = directory.createAndAddEnterprise(name, type);
 
-        // 4. 刷新表格并清空输入
+        // 4. Refresh table and clear input 刷新表格并清空输入
         populateTable();
         nameJTextField.setText("");
         
@@ -186,7 +181,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-       //调用父面板的方法来恢复默认视图
+       // Call parent panel's method to restore default view 调用父面板的方法来恢复默认视图
         if (parent != null) {
             parent.restoreDefaultView();
         }

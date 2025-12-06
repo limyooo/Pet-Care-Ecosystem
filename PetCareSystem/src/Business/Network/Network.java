@@ -12,8 +12,8 @@ import Business.Enterprise.EnterpriseDirectory;
  */
 public class Network {
     
-    //我们模型是简化版本，就是一个ecosystem只有一个network 就是portland
-    //然后在portland只有一个宠物托管所/一个宠物医院和一个宠物保险公司
+    //The ecosystem has only one network - Portland
+    //one pet boarding facility / one pet clinic and one pet insurance company
     private String name;
     private EnterpriseDirectory enterpriseDirectory;
     
@@ -34,6 +34,7 @@ public class Network {
     public EnterpriseDirectory getEnterpriseDirectory() {
         return enterpriseDirectory;
     }
+    
     //display network “Portland”
     @Override
     public String toString() {

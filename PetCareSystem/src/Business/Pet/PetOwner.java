@@ -23,11 +23,11 @@ public class PetOwner {
     private String coverageLevel;
     private String expirationDate;
     
-    private PetDirectory petDirectory; // 新增成员变量
+    private PetDirectory petDirectory; 
     
-    //constructor
+    
     public PetOwner() {
-        petDirectory = new PetDirectory(); // 初始化
+        petDirectory = new PetDirectory(); 
     }
 
     public PetOwner(String ownerId, String ownerName, String phone,
@@ -49,8 +49,8 @@ public class PetOwner {
 
         this.petDirectory = new PetDirectory();
     }
-    //getter and setter method
-    // 新增 getPetDirectory 方法
+    
+    
     public PetDirectory getPetDirectory() {
         return petDirectory;
     }
@@ -134,10 +134,4 @@ public class PetOwner {
         this.expirationDate = expirationDate;
     }
        
-    /* 暂时不确定干啥的
-    @Override
-    public String toString() {
-        return name;  // 供 UI 表格 / 下拉框显示名字
-    }
-    */
 }

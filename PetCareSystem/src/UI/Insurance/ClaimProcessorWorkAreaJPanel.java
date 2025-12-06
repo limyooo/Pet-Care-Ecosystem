@@ -201,7 +201,7 @@ import javax.swing.table.DefaultTableModel;
         jScrollPane1.setViewportView(tblInsuranceClaim);
 
         btnPolicyRecord.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
-        btnPolicyRecord.setText("View Policy Record");
+        btnPolicyRecord.setText("Search Policy Record");
         btnPolicyRecord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPolicyRecordActionPerformed(evt);

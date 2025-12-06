@@ -9,7 +9,6 @@ import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Organization.Organization.Type;
 import Business.Role.SystemAdminRole;
-// 下面这些 Role 需要你在 Business.Role 包里自己建（如果暂时没有，可以先注释掉）
 import Business.Role.FrontDeskAgentRole;
 import Business.Role.PetCareTakerRole;
 import Business.Role.BoardingManagerRole;
@@ -31,7 +30,6 @@ import Business.WorkQueue.LabTestRequest;
 
 import com.github.javafaker.Faker;
 
-// 导入新增的 Pet 相关类
 import Business.Pet.Pet;
 import Business.Pet.PetOwner;
 import Business.Pet.PetDirectory;
@@ -44,23 +42,23 @@ public class ConfigureABusiness {
 
     public static Petsystem configure() {
 
-        // 1. 获取唯一系统实例
+        // 1. Get the singleton system instance (获取唯一系统实例)
         Petsystem system = Petsystem.getInstance();
         
         InsurancePolicyDirectory policyDir = system.getInsurancePolicyDirectory();
-        // ⭐ 关键修正：检查是否已经配置过数据。如果系统中的 Network 列表不为空，则直接返回。
+        // Check if data has already been configured. Return if Network list is not empty.
         if (!system.getNetworkList().isEmpty()) {
             return system; 
         }
 
-        // Java Faker：用于生成随机测试数据
+        // Java Faker: For generating random test data
         Faker faker = new Faker();
 
-        // 2. 创建一个 Network：Portland
+        // 2. Create a Network: Portland (创建一个Network)
         Network petNetwork = system.createAndAddNetwork("Portland");
         petNetwork.setName("Portland");
 
-        // 3. 在该 Network 中创建 3 个 Enterprise
+        // 3. Create 3 Enterprises in this Network (在该Network中创建3个Enterprise)
         PetBoardingEnterprise boardingEnt =
                 (PetBoardingEnterprise) petNetwork.getEnterpriseDirectory()
                         .createAndAddEnterprise(
@@ -79,8 +77,8 @@ public class ConfigureABusiness {
                                 "Happy Paws Insurance",
                                 Enterprise.EnterpriseType.PetInsurance);
         
-         // 3.为每个 Enterprise 创建一个 Enterprise Admin 账号（固定用户名和密码，方便登录演示）
-        // Boarding Enterprise Admin
+         // 3.Create an Enterprise Admin account for each Enterprise (fixed username/password for demo)
+        // Boarding Enterprise Admin （固定用户名和密码，方便登录演示）
         Employee boardingAdminEmp = boardingEnt.getEmployeeDirectory()
                 .createEmployee("Boarding Enterprise Admin");
         boardingEnt.getUserAccountDirectory().createUserAccount(
@@ -111,9 +109,8 @@ public class ConfigureABusiness {
         );
 
 
-        // 4. 给每个 Enterprise 创建 Organizations（要求你已经有 OrganizationDirectory.createOrganization(Type)）
-        // 4.1 Boarding enterprise
-        
+        // 4. Create Organizations for each Enterprise(给每个Enterprise创建Organizations)
+        // 4.1 Boarding enterprise 
         Organization petCareOrg = boardingEnt.getOrganizationDirectory()
                 .createOrganization(Type.PetCare);
         Organization boardingServiceOrg = boardingEnt.getOrganizationDirectory()
@@ -136,16 +133,16 @@ public class ConfigureABusiness {
         Organization claimOrg = insuranceEnt.getOrganizationDirectory()
                 .createOrganization(Type.InsuranceClaim);
 
-        // 5. System Admin 账号
+        // 5. System Admin
         Employee sysAdminEmp = system.getEmployeeDirectory()
                 .createEmployee("System Admin");
         system.getUserAccountDirectory().createUserAccount(
                 "sysadmin", "sysadmin", sysAdminEmp, new SystemAdminRole()
         );
 
-        // 6. 用 Faker 生成员工账号（演示数据）
+        // 6. Generate employee accounts using Faker (demo data) 用Faker生成员工账号（演示数据）
 
-        // 6.1 Front Desk 员工
+        // 6.1 Front Desk staff
         for (int i = 0; i < 3; i++) {
             String name = faker.name().fullName();
             Employee e = frontDeskOrg.getEmployeeDirectory().createEmployee(name);
@@ -154,8 +151,8 @@ public class ConfigureABusiness {
             frontDeskOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new FrontDeskAgentRole());
         }
-        //pet boarding 客服账号
-        // 固定 Front Desk 测试账号
+        // Pet boarding customer service account
+        // Fixed Front Desk test account(固定FrontDesk测试账号)
         Employee frontDeskTest = frontDeskOrg.getEmployeeDirectory()
                 .createEmployee("Test Front Desk");
         UserAccount frontDeskTestAccount = frontDeskOrg.getUserAccountDirectory()
@@ -167,9 +164,8 @@ public class ConfigureABusiness {
         );
 
         
-// ⭐ 新增：固定 Customer Service 测试账号 (cs1)
         
-        // 6.2 Pet Care 员工
+        // 6.2 Pet Care staff
         for (int i = 0; i < 3; i++) {
             String name = faker.name().fullName();
             Employee e = petCareOrg.getEmployeeDirectory().createEmployee(name);
@@ -182,7 +178,7 @@ public class ConfigureABusiness {
         boardingServiceOrg.getUserAccountDirectory().createUserAccount(
                 "pct1", "pct1", pct1, new PetCareTakerRole());
 
-        // 6.3 Boarding Service 员工
+        // 6.3 Boarding Service staff
         for (int i = 0; i < 2; i++) {
             String name = faker.name().fullName();
             Employee e = boardingServiceOrg.getEmployeeDirectory().createEmployee(name);
@@ -195,7 +191,7 @@ public class ConfigureABusiness {
         boardingServiceOrg.getUserAccountDirectory().createUserAccount(
                 "bm1", "bm1", bmTestEmp, new BoardingManagerRole());
         
-        // ⭐ Pet Boarding Customer Service 固定测试账号
+        // Pet Boarding Customer Service fixed test account(固定测试账号)
         Employee boardingCSTestEmp = boardingCustomerServiceOrg.getEmployeeDirectory()
         .createEmployee("Test Customer Service");
         boardingCustomerServiceOrg.getUserAccountDirectory().createUserAccount(
@@ -213,7 +209,7 @@ public class ConfigureABusiness {
             vetDoctorOrg.getUserAccountDirectory().createUserAccount(
                     username, password, e, new VetDoctorRole());
         }*/
-        // 6.4.1固定的Doctor账号
+        // 6.4.1 Fixed Doctor accounts (固定的Doctor账号)
         String[][] fixedDoctors = {
             {"Doctor William Hanks", "Surgery", "doc1", "doc1"},
             {"Doctor Hanna King", "Internal Medicine", "doc2", "doc2"},
@@ -229,10 +225,10 @@ public class ConfigureABusiness {
             String username = d[2];
             String password = d[3];
 
-            // 创建 Employee
+            // Create Employee
             Employee doctorEmp = vetDoctorOrg.getEmployeeDirectory().createEmployee(fullName + " - " + specialty);
 
-            // 创建账号
+            // Create account
             vetDoctorOrg.getUserAccountDirectory().createUserAccount(
                 username,
                 password,
@@ -251,7 +247,7 @@ public class ConfigureABusiness {
                     username, password, e, new LabAssistantRole());
         }*/
         
-        //固定的 Lab Assistant 测试账号
+        // Fixed Lab Assistant test account (固定的Lab Assistant测试账号)
         Employee labTestEmp = vetLabOrg.getEmployeeDirectory()
                 .createEmployee("Test Lab Assistant");
         vetLabOrg.getUserAccountDirectory().createUserAccount(
@@ -271,12 +267,12 @@ public class ConfigureABusiness {
                     username, password, e, new InsuranceAgentRole());
         }
         
-                    // ⭐ 固定 Insurance Agent 测试账号：agent / agent123
+            // Fixed Insurance Agent test account (固定Insurance Agent测试账号)
             Employee testAgentEmp = policyOrg.getEmployeeDirectory()
                                              .createEmployee("Test Insurance Agent");
             policyOrg.getUserAccountDirectory().createUserAccount(
-                    "agent",          // 登录用户名
-                    "12345",       // 登录密码
+                    "agent",
+                    "12345", 
                     testAgentEmp,
                     new InsuranceAgentRole()
             );
@@ -292,32 +288,32 @@ public class ConfigureABusiness {
                     username, password, e, new ClaimProcessorRole());
         }
 
-        // 固定的 Claim Processor 测试账号
+        // Fixed Claim Processor test account (固定的Claim Processor测试账号)
         Employee cpTestEmp = claimOrg.getEmployeeDirectory()
                                      .createEmployee("Test Claim Processor");
         claimOrg.getUserAccountDirectory().createUserAccount(
-                "claim",          // 用户名
-                "12345",         // 密码
+                "claim",    
+                "12345", 
                 cpTestEmp,
                 new ClaimProcessorRole()
         );
         
-        // 7. 用 Faker 生成 WorkRequest 测试数据
+        // 7. Generate WorkRequest test data using Faker(用Faker生成WorkRequest测试数据)
         
-    PetOwnerDirectory petOwnerDirectory = system.getPetOwnerDirectory();
-    java.util.List<Pet> createdPets = new java.util.ArrayList<>();
+        PetOwnerDirectory petOwnerDirectory = system.getPetOwnerDirectory();
+        java.util.List<Pet> createdPets = new java.util.ArrayList<>();
 
-    for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
 
-        // 创建 PetOwner
+        // Create PetOwner
         String ownerId = "PO" + faker.number().digits(4);
         String name = faker.name().fullName();
         String phone = faker.phoneNumber().cellPhone();
         String email = faker.internet().emailAddress();
         String address = faker.address().fullAddress();
         String emergencyContact = faker.phoneNumber().phoneNumber();
-        String insuranceCompany = faker.company().name() + " Insurance"; // 随便生成公司 + Insurance
-        String policyId = "PL" + faker.number().digits(6);                // 保单号
+        String insuranceCompany = faker.company().name() + " Insurance"; 
+        String policyId = "PL" + faker.number().digits(6); 
         String coverageLevel = faker.options().option("Full Coverage 100%", "Partial Coverage 50%"); 
         String expirationDate = faker.date().future(300, java.util.concurrent.TimeUnit.DAYS).toString();
 
@@ -327,7 +323,7 @@ public class ConfigureABusiness {
         
         
 
-        // 创建 Pet
+        // Create Pet
         PetDirectory petDirectory = owner.getPetDirectory();
 
         Pet pet = petDirectory.addPet(
@@ -344,8 +340,8 @@ public class ConfigureABusiness {
 
         createdPets.add(pet);
         
-        // ⭐⭐⭐ 为这个 owner + pet 创建一条 InsurancePolicy，加到 system 的 policyDir 里
-        // 生成开始和结束日期（格式：yyyy-MM-dd）
+        // Create an InsurancePolicy for this owner + pet, add to system's policyDir (为这个owner + pet创建一条InsurancePolicy，加到system的policyDir里)
+        // Generate start and end dates (format: yyyy-MM-dd) 生成开始和结束日期
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         java.util.Date startDate = faker.date().past(60, java.util.concurrent.TimeUnit.DAYS);
         java.util.Date endDate   = faker.date().future(300, java.util.concurrent.TimeUnit.DAYS);
@@ -353,27 +349,27 @@ public class ConfigureABusiness {
         String startDateStr = sdf.format(startDate);
         String endDateStr   = sdf.format(endDate);
 
-        // 覆盖类型、状态用和 UI 对得上的选项
+        // Coverage type, status using options
         String coverageType = faker.options().option("Full Coverage", "Partial Coverage");
         double premium      = faker.number().randomDouble(2, 50, 300);
         String status       = faker.options().option("Active", "Expired", "Cancelled");
 
         policyDir.addPolicy(
-                policyId,           // 上面已经生成的保单号
-                insuranceCompany,   // 保险公司
-                coverageType,       // Basic / Standard / Premium
-                startDateStr,       // StartDate
-                endDateStr,         // EndDate
-                premium,            // Premium
-                status,             // Status
-                pet,                // 关联宠物
-                owner               // 关联主人
+                policyId,          
+                insuranceCompany, 
+                coverageType,      
+                startDateStr,     
+                endDateStr,   
+                premium,     
+                status,        
+                pet,                
+                owner            
     );
     }
     
     
-    // ⭐⭐⭐ 在这里添加 Customer Service 测试数据 ⭐⭐⭐
-for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
+    // Add Customer Service test data here(在这里添加Customer Service测试数据)
+    for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
     Pet pet = createdPets.get(i);
     
     HealthCareCheckRequest csRequest = new HealthCareCheckRequest();
@@ -385,8 +381,8 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
     csRequest.setBoardingRecordId("BR" + faker.number().digits(4));
     csRequest.setCheckResult("Health check completed");
     
-     // 设置治疗相关字段
-    csRequest.setTreatmentNeeded(faker.options().option(
+     // Set treatment-related fields(设置治疗相关字段)
+        csRequest.setTreatmentNeeded(faker.options().option(
         "Medication Only", 
         "IV Fluids & Supportive Care ", 
         "Diagnostic Imaging (X-ray / Ultrasound) ", 
@@ -395,21 +391,21 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
     
     ));
     csRequest.setTreatmentCost(faker.number().randomDouble(2, 100, 1000));
-    // 可选：关联一个 Claim Request（模拟已提交保险）
+        // Associate a Claim Request
         if (i == 0) {
             InsuranceClaimRequest claim = new InsuranceClaimRequest();
-            claim.setClaimDecision("Pending Payment"); // 模拟已批准理赔
-            claim.setClaimAmount(csRequest.getTreatmentCost() * 0.8); // 80% 赔付
+            claim.setClaimDecision("Pending Payment"); // Simulate approved claim 模拟已批准理赔
+            claim.setClaimAmount(csRequest.getTreatmentCost() * 0.8); // 80% coverage
             csRequest.setInsuranceClaimRequest(claim);
         } else if (i == 1) {
             InsuranceClaimRequest claim = new InsuranceClaimRequest();
             claim.setClaimDecision("Approved"); 
-            claim.setClaimAmount(csRequest.getTreatmentCost() * 0.5); // 50% 赔付
+            claim.setClaimAmount(csRequest.getTreatmentCost() * 0.5); // 50% coverage
             csRequest.setInsuranceClaimRequest(claim);
         }else{
             InsuranceClaimRequest claim = new InsuranceClaimRequest();
             claim.setClaimDecision("Approved"); 
-            claim.setClaimAmount(csRequest.getTreatmentCost() * 1); // 100% 赔付
+            claim.setClaimAmount(csRequest.getTreatmentCost() * 1); // 100% coverage
             csRequest.setInsuranceClaimRequest(claim);
         }
         
@@ -418,7 +414,7 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
     
   
 
-        // 7.1 Boarding -> Clinic：健康检查
+        // 7.1 Boarding -> Clinic：Health check 健康检查
         for (int i = 0; i < createdPets.size(); i++) {
 
         Pet pet = createdPets.get(i);
@@ -427,18 +423,18 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
         req.setMessage("Health check for pet: " + pet.getPetName());
         req.setStatus("Pending");
 
-        //塞宠物
+        //Set pet
         req.setPet(pet);
 
-        //设定症状
+        //Set symptom
         req.setSymptom(faker.medical().symptoms());
         
 
-        //将这个request放到clinic front desk的队列里
+        //Add this request to clinic front desk queue 将这个request放到clinic front desk的队列里
         frontDeskOrg.getWorkQueue().getWorkRequestList().add(req);
         }
 
-        // 7.2 Doctor -> Lab：实验室检查
+        // 7.2 Doctor -> Lab：Laboratory tests
         /*
         for (int i = 0; i < 5; i++) {
             LabTestRequest req = new LabTestRequest();
@@ -447,22 +443,22 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
             vetLabOrg.getWorkQueue().getWorkRequestList().add(req);
         }*/
 
-        // 7.3 Insurance Claim 请求
+        // 7.3 Insurance Claim requests
         for (int i = 0; i < 5; i++) {
 
         InsuranceClaimRequest req = new InsuranceClaimRequest();
 
-        // ===== 先从 createdPets 找一个宠物 + 宠物主人 =====
+        // First find a pet + pet owner from createdPets
         if (!createdPets.isEmpty()) {
-            // 简单一点：循环使用 createdPets
+            // cycle through createdPets
             Pet pet = createdPets.get(i % createdPets.size());
             PetOwner owner = pet.getPetOwner();   // Pet 里应该有 getOwner()
 
-            // 挂到 claim 上（⭐关键）
+            // Attach to claim
             req.setPet(pet);
             req.setOwner(owner);
 
-        // 把已有字段也用 owner 的真实信息来填，更一致
+        // Fill existing fields with real owner info for consistency
         if (owner != null) {
             req.setHolderName(owner.getOwnerName());
             req.setInsuranceCompany(owner.getInsuranceCompany());
@@ -472,12 +468,12 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
         }
     }
 
-            // ===== 基础信息 =====
-            req.setMessage("Claim for " + req.getHolderName()); // 没有就还是 random name
+            // Basic information
+            req.setMessage("Claim for " + req.getHolderName()); // Use random name if not set
             req.setStatus("Pending");
             req.setClaimAmount(0);
 
-            // 展示字段（如果上面已经从 owner 拿了，也可以只补充没填的）
+            // Display fields (can fill unfilled ones if already got from owner above)
             if (req.getPatientId() == null) {
                 req.setPatientId("PT" + faker.number().digits(4));
             }
@@ -504,9 +500,9 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
 
             req.setTreatmentNeeded(
                 "Treatment plan for " + req.getLabResult()
-                // 你也可以用 faker.medical().symptoms() 或者自定义字符串
+                // can also use faker.medical().symptoms() or custom strings 也可以用 faker.medical().symptoms() 或者自定义字符串
             );
-            // 如果上面没有从 owner 那里 set 过 coverageLevel，就走原来的随机逻辑
+            // If coverageLevel not set from owner above, use original random logic 如果上面没有从 owner 那里 set 过 coverageLevel，就走原来的随机逻辑
             if (req.getCoverageLevel() == null) {
                 String level = faker.options().option("Basic", "Standard", "Premium");
                 req.setCoverageLevel(level);
@@ -519,7 +515,7 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
                 req.setExpirationDate(sdf.format(futureDate));
             }
 
-            // 决策相关一开始不填
+            // Decision-related fields initially blank 决策相关一开始不填
             req.setCoverageDecision(null);
             req.setClaimDecision(null);
 
@@ -530,7 +526,7 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
 
 
 
-        // 7.4 Compensation 通知
+        // 7.4 Compensation notifications
         for (int i = 0; i < 3; i++) {
             CompensationNotificationRequest req = new CompensationNotificationRequest();
             req.setMessage("Compensation notice");
@@ -540,9 +536,7 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
             policyOrg.getWorkQueue().getWorkRequestList().add(req);
         }
         
-        // 8.2 创建 PetBoardingRecord
-        // *** 关键假设：PetBoardingEnterprise 有 getBoardingRecordDirectory() 方法 ***
-        // *** 实际中您可能需要去 PetBoardingEnterprise.java 中实现这个方法 ***
+        // 8.2 Create PetBoardingRecord
         BoardingRecordDirectory boardingRecordDirectory = 
                 ((PetBoardingEnterprise) boardingEnt).getBoardingRecordDirectory();
 
@@ -553,23 +547,23 @@ for (int i = 0; i < Math.min(3, createdPets.size()); i++) {
             
             String recordId = "BR" + faker.number().digits(4);
             
-            // 生成过去 1-7 天的日期作为开始日期
+            // Generate date 1-7 days ago as start date 生成过去 1-7 天的日期作为开始日期
             java.util.Date startDate = faker.date().past(7, java.util.concurrent.TimeUnit.DAYS);
-            // 生成未来 1-7 天的日期作为结束日期
+            // Generate date 1-7 days in future as end date 生成未来 1-7 天的日期作为结束日期
             java.util.Date endDate = faker.date().future(7, java.util.concurrent.TimeUnit.DAYS); 
             
-            // 状态从 Checked In, Pending Check-out, Completed 中随机选择
+            // Status randomly selected from Checked In, Pending Check-out, Completed 状态从 Checked In, Pending Check-out, Completed 中随机选择
             String status = faker.options().option("Checked In", "Pending Check-out", "Completed");
 
             // Room Number: 楼层-房间号 (e.g., A-101)
             String roomNumber = faker.bothify("?-###", true); 
 
-            // 使用 BoardingRecordDirectory.addRecord() 方法
+            // Use BoardingRecordDirectory.addRecord() method
             boardingRecordDirectory.addRecord(
                     recordId,
                     pet,
-                    startDate.toString(), // 实际项目建议使用 SimpleDateFormat 格式化
-                    endDate.toString(),   // 实际项目建议使用 SimpleDateFormat 格式化
+                    startDate.toString(),
+                    endDate.toString(), 
                     roomNumber, 
                     faker.lorem().sentence(),
                     status

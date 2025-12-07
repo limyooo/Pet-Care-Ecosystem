@@ -671,12 +671,13 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnModifyActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-     if (claim == null) {
+    // Defensive check: ensure claim is not null
+        if (claim == null) {
         return;
     }
 
     try {
-        // 1. 从界面读值并做基本校验
+        // 1. Read values from UI components and validate 从界面读值并做基本校验
         String claimReason = txtClaimReason.getText().trim();
         double claimAmount = Double.parseDouble(txtClaimAmount.getText().trim());
         double cost        = Double.parseDouble(txtCost.getText().trim());
@@ -689,7 +690,7 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         String coverageLevel    = txtCoverageLevel.getText().trim();
         String expirationDate   = txtExpirationDate.getText().trim();
 
-        // 2. 写回 InsuranceClaimRequest 对象
+        // 2. Write back values into the InsuranceClaimRequest object 写回 InsuranceClaimRequest 对象
         claim.setMessage(claimReason);
         claim.setClaimAmount(claimAmount);
 
@@ -702,12 +703,12 @@ public class ClaimDetailJPanel extends javax.swing.JPanel {
         claim.setCoverageLevel(coverageLevel);
         claim.setExpirationDate(expirationDate);
 
-        // 3. 关闭编辑
+        // 3. Disable editing after saving 关闭编辑
         setEditableFields(false);
 
-        // 4. 刷新父面板表格
+        // 4. Refresh parent panel table if available 刷新父面板表格
         if (parentPanel != null) {
-            parentPanel.refreshTable();   // 下面第 ④ 步会加这个方法
+            parentPanel.refreshTable();   
         }
 
         javax.swing.JOptionPane.showMessageDialog(

@@ -68,7 +68,6 @@ public abstract class WorkRequest {
 
     @Override
     public String toString() {
-        // 通常在 JTable 里显示 status 或 message
         return status;
     }
 }

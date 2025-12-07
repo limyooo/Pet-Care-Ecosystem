@@ -321,35 +321,35 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         
         InsuranceClaimRequest claimRequest = new InsuranceClaimRequest();
         
-        // Basic Info 
+        //Basic Info 
         Pet p = Request.getPet();
         claimRequest.setPatientId(p.getPetId());
         claimRequest.setPolicyId(p.getPetOwner().getPolicyId());
         claimRequest.setHolderName(p.getPetOwner().getOwnerName());
         claimRequest.setPetName(p.getPetName());
         
-        // 设置 Pet 和 Owner 对象
+        //设置Pet和Owner对象
         claimRequest.setPet(p);
         claimRequest.setOwner(p.getPetOwner());
         
-        // 设置 Treatment Needed（从下拉框获取）
+        //设置Treatment Needed（从下拉框获取）
         String treatmentNeeded = (String) comboTreatmentNeeded.getSelectedItem();
         claimRequest.setTreatmentNeeded(treatmentNeeded);
         
-        // 设置 Doctor Name（如果有的话）
+        //设置DoctorName
         if (Request.getAssignedDoctor() != null) {
             claimRequest.setDoctorName(Request.getAssignedDoctor());
         }
         
-        // Treatment Cost
+        //TreatmentCost
         double treatmentCost = Double.parseDouble(fieldTreatmentCost.getText());
         
-        // Medical Info
+        //Medical Info
         claimRequest.setSymptom(Request.getSymptom());
         claimRequest.setLabResult(Request.getLabResult());
         claimRequest.setTreatmentCost(treatmentCost);
         
-        // Insurance Info
+        //Insurance Info
         claimRequest.setInsuranceCompany(p.getPetOwner().getInsuranceCompany());
         claimRequest.setCoverageLevel((String) comboCoverageLevel.getSelectedItem());
         claimRequest.setExpirationDate(p.getPetOwner().getExpirationDate());
@@ -360,18 +360,18 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         // Relationship to Clinic Request
         claimRequest.setHealthRequest(Request);
         
-        // ⭐ 关键：建立双向关联
+        //建立双向关联
         Request.setInsuranceClaimRequest(claimRequest);
         
-        // ⭐ 同时更新 HealthCareCheckRequest 的 Treatment 信息
+        //同时更新HealthCareCheckRequest的Treatment信息
         Request.setTreatmentNeeded(treatmentNeeded);
         Request.setTreatmentCost(treatmentCost);
         
-        // Sender
+        //Sender
         claimRequest.setSender(account);
         claimRequest.setMessage("Insurance claim for patient: " + p.getPetId());
         
-        // Find the Insurance Claim Org
+        //Find the Insurance Claim Org
         Organization claimOrg = null;
         for (Organization org : insuranceEnterprise.getOrganizationDirectory().getOrganizationList()) {
             if (org instanceof InsuranceClaimOrganization) {
@@ -386,7 +386,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
             
             frontDeskOrg.getWorkQueue().getWorkRequestList().add(claimRequest);
 
-            //新增：发送到 Pet Boarding Customer Service 
+            //发送到 Pet Boarding Customer Service 
             sendToCustomerService(Request);
             
             JOptionPane.showMessageDialog(this,
@@ -415,20 +415,20 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
 
 
 
-// ⭐⭐⭐ 新增辅助方法：发送到 Customer Service ⭐⭐⭐
+//发送到 Customer Service
 private void sendToCustomerService(HealthCareCheckRequest healthRequest) {
-    // 获取系统实例
+    //获取系统实例
     Business.Petsystem system = Business.Petsystem.getInstance();
     
-    // 遍历所有网络，查找 Pet Boarding Enterprise 的 Customer Service Organization
+    //遍历所有网络，查找Pet Boarding Enterprise的Customer Service Organization
     for (Business.Network.Network network : system.getNetworkList()) {
         for (Business.Enterprise.Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
-            // 找到 Pet Boarding Enterprise
+            //找到Pet Boarding Enterprise
             if (enterprise instanceof Business.Enterprise.PetBoardingEnterprise) {
                 for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
-                    // 找到 Customer Service Organization
+                    //找到Customer Service Organization
                     if (org instanceof Business.PetBoardingOrganization.CustomerService) {
-                        // 把 HealthCareCheckRequest 添加到 Customer Service 的队列
+                        //把HealthCareCheckRequest添加到Customer Service的队列
                         org.getWorkQueue().getWorkRequestList().add(healthRequest);
                         System.out.println("✅ Request sent to Customer Service: " + healthRequest.getPatientId());
                         return;
@@ -500,10 +500,6 @@ private void sendToCustomerService(HealthCareCheckRequest healthRequest) {
     comboCoverageLevel.setSelectedItem(p.getPetOwner().getCoverageLevel());
     fieldExpirationDate.setText(p.getPetOwner().getExpirationDate());
 
-    /*//Boarding info
-    fieldServiceProvider.setText(Request.getServiceProvider());
-    fieldStartDate.setText(Request.getStartDate());
-    fieldEndDate.setText(Request.getEndDate()); */
 
     //Medical Result (来自Pet Clinic)
     fieldLabTestResult.setText(Request.getLabResult());

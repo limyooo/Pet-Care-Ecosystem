@@ -213,17 +213,17 @@ public class ProcessLabTestJPanel extends javax.swing.JPanel {
         request.setTestResult(result);
         request.setStatus("Completed");
 
-        //更新 Doctor 那边 HealthCareRequest 的 lab result
+        //更新 Doctor那边 HealthCareRequest的lab result
         if (request.getHealthCareRequest() != null) {
             request.getHealthCareRequest().setLabResult(result);
         }
 
         JOptionPane.showMessageDialog(null, "Lab Test Result Submitted!");
 
-        //移除当前 panel
+        //移除当前panel
         userProcessContainer.remove(this);
 
-        //获取上一页 panel
+        //获取上一页panel
         Component[] componentArray = userProcessContainer.getComponents();
         Component previousComponent = componentArray[componentArray.length - 1];
 

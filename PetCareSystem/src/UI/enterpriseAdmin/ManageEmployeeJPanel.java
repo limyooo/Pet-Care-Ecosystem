@@ -18,9 +18,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private Map<String, Organization> orgMap = new HashMap<>();
 
-    /**
-     * Creates new form ManageEmployeeJPanel
-     */
+    
     public ManageEmployeeJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
@@ -41,13 +39,13 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
 
     for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
         String name = org.getName();
-        cbxSelectOrg.addItem(name);   // 下拉框显示名字
-        orgMap.put(name, org);        // 记住名字对应哪个 org 对象
+        cbxSelectOrg.addItem(name);   // show name in combo box 下拉框显示名字 
+        orgMap.put(name, org);        // remember mapping 记住名字对应哪个org对象
     }
 }
 
 
-    // 填充表格：显示选中 organization 的所有员工
+    // Populate employee table: display all employees of the selected organization 填充表格：显示选中organization的所有员工
     private void populateEmployeeTable(Organization organization) {
         DefaultTableModel model = (DefaultTableModel) tblEmployee.getModel();
         model.setRowCount(0);
@@ -56,7 +54,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
 
         for (Employee e : organization.getEmployeeDirectory().getEmployeeList()) {
             Object[] row = new Object[2];
-            row[0] = e.getId();   // 如果没有 getId()，可以改成 e.hashCode() 或者留空
+            row[0] = e.getId();   
             row[1] = e.getName();
             model.addRow(row);
         }

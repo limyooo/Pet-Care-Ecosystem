@@ -13,13 +13,15 @@ import java.util.ArrayList;
 public class PetOwnerDirectory {
      private ArrayList<PetOwner> ownerList = new ArrayList<>();
     
-    //Constructor
+    
     public PetOwnerDirectory(){
     }
+    
     //get ownerlist method
     public ArrayList<PetOwner> getOwnerList(){
         return ownerList;
     }
+    
     //get addowner method
     public PetOwner addOwner(String ownerId, String name, String phone, String email, 
                              String address, String emergencyContact,

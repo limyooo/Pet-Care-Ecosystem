@@ -19,17 +19,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageUserAccountJPanel extends javax.swing.JPanel {
 
-    // ==== 业务对象 ====
     private JPanel userProcessContainer;
     private Enterprise enterprise;
     private Petsystem system;
 
-    // 用来把下拉框里的 String 名字 映射回真正对象
+    //  Maps to convert combo box display strings back to real objects
     private Map<String, Organization> orgMap = new HashMap<>();
     private Map<String, Employee> empMap = new HashMap<>();
     private Map<String, Role> roleMap = new HashMap<>();
 
-    // 推荐使用的构造函数：从 EnterpriseAdminWorkAreaJPanel 传进来
+    
     public ManageUserAccountJPanel(JPanel userProcessContainer,
                                    Enterprise enterprise,
                                    Petsystem system) {
@@ -38,19 +37,22 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.system = system;
 
+        // 填充组织下拉框并填充用户表格
+        // Populate organization combo box and user table
         populateOrganizationComboBox();
         populateUserTable();
 
-        // 当选择的 organization 变化时，刷新员工和角色下拉框
+        // 当组织选择变化时，刷新员工与角色下拉框
+        // When selected organization changes, refresh employee & role combo boxes
         cbxOrg.addActionListener(e -> onOrganizationChanged());
     }
 
-    // 保留一个无参构造给 GUI 设计器用（不从代码里调用也没关系）
+    
     public ManageUserAccountJPanel() {
         initComponents();
     }
     
-    // 填充组织下拉框
+    // Populate organization combo box: read from enterprise's organization directory 填充组织下拉框
     private void populateOrganizationComboBox() {
         if (enterprise == null) return;
 
@@ -63,11 +65,11 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
             orgMap.put(name, org);
         }
 
-        // 默认选中第一个组织时，顺便填充员工和角色
+        // When default selection is set, refresh employees and roles accordingly 默认选中第一个组织时，顺便填充员工和角色
         onOrganizationChanged();
     }
 
-    // 当前组织改变时，刷新员工 & 角色下拉框
+    // Handle organization change: refresh employee and role combo boxes 当前组织改变时，刷新员工 & 角色下拉框
     private void onOrganizationChanged() {
         String orgName = (String) cbxOrg.getSelectedItem();
         if (orgName == null) return;
@@ -77,7 +79,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         populateRoleComboBox(org);
     }
 
-    // 填充员工下拉框
+    // Populate employee combo box: list employees within the organization and store mapping 填充员工下拉框
     private void populateEmployeeComboBox(Organization org) {
         cbxEmployee.removeAllItems();
         empMap.clear();
@@ -90,7 +92,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         }
     }
 
-    // 填充角色下拉框
+    // Populate role combo box: list supported roles of the organization and store mapping 填充角色下拉框
     private void populateRoleComboBox(Organization org) {
         cbxRole.removeAllItems();
         roleMap.clear();
@@ -103,7 +105,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         }
     }
 
-    // 填充左侧用户表格
+    // Populate user table: list user accounts (username + role) across enterprise organizations
     private void populateUserTable() {
         DefaultTableModel model = (DefaultTableModel) tblUsersList.getModel();
         model.setRowCount(0);
@@ -329,8 +331,6 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // 可选：如果系统有「用户名唯一性」校验，可以在这里先检查
-        // if (!system.checkIfUsernameIsUnique(username)) { ... }
 
         UserAccount ua = org.getUserAccountDirectory()
                 .createUserAccount(username, password, emp, role);

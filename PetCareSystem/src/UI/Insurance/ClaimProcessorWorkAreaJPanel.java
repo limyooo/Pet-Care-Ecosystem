@@ -319,7 +319,6 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 🔥 column 0 直接存的就是 InsuranceClaimRequest 对象
         InsuranceClaimRequest targetClaim = (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
 
         if (targetClaim == null) {
@@ -332,7 +331,6 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 🔥 跳转详情页面
         ClaimDetailJPanel detailPanel = new ClaimDetailJPanel(userProcessContainer, targetClaim, this);
 
         userProcessContainer.add("ClaimDetailJPanel", detailPanel);
@@ -341,7 +339,7 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_btnViewDetailActionPerformed
 
     private void btnApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveActionPerformed
-         // 1. 先检查有没有选中行
+         // 1. First check whether a row is selected; if not, show a warning and return. 先检查有没有选中行
         int selectedRow = tblInsuranceClaim.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(
@@ -353,7 +351,7 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 2. 直接从表格第 0 列拿出这一行对应的 InsuranceClaimRequest 对象
+        // 2. Column 0 stores the InsuranceClaimRequest object 直接从表格第0列拿出这一行对应的InsuranceClaimRequest 对象
         InsuranceClaimRequest targetClaim =
                 (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
 
@@ -367,7 +365,7 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 3. 防止重复审批
+        // 3. If it's already approved or rejected, notify and return to avoid double-processing. 防止重复审批
         if ("Approved".equalsIgnoreCase(targetClaim.getStatus())) {
             JOptionPane.showMessageDialog(
                     this,
@@ -387,10 +385,10 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 4. 自动计算赔付 & 更新状态
+        // 4. Call the business method to determine coverage/amount and update the request object. 自动计算赔付 & 更新状态
         autoDecideCoverage(targetClaim);
 
-        // 5. 给处理结果的弹窗
+        // 5. Show a dialog summarizing status, decision and amount. 给处理结果的弹窗
         JOptionPane.showMessageDialog(
                 this,
                 "Claim processed.\n"
@@ -401,7 +399,7 @@ import javax.swing.table.DefaultTableModel;
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-        // 6. 刷新表格，让修改显示出来
+        // 6. Refresh the UI so the table shows the updated status and amount. 刷新表格，让修改显示出来
         populateTable();
     }//GEN-LAST:event_btnApproveActionPerformed
 
@@ -488,7 +486,7 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_btnPolicyRecordActionPerformed
 
     private void btnSendCompensationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendCompensationActionPerformed
-        // 1. 先确认用户有选中一行
+        // 1. Check if a row is selected 先确认用户有选中一行
         int selectedRow = tblInsuranceClaim.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(
@@ -500,7 +498,7 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 2. 直接从表格中取出这一行对应的 InsuranceClaimRequest 对象（第 0 列）
+        // 2. Retrieve the InsuranceClaimRequest from column 0 直接从表格中取出这一行对应的 InsuranceClaimRequest 对象（第 0 列）
         InsuranceClaimRequest targetClaim =
                 (InsuranceClaimRequest) tblInsuranceClaim.getValueAt(selectedRow, 0);
 
@@ -514,8 +512,7 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 👉 如果你希望“必须先审批（Approved / Rejected）才能发送”，保留下面这段
-        //    （不想限制的话，可以把这一段删掉）
+        // If the claim is still Pending, prevent sending the notification.
         if ("Pending".equalsIgnoreCase(targetClaim.getStatus())) {
             JOptionPane.showMessageDialog(
                     this,
@@ -526,7 +523,7 @@ import javax.swing.table.DefaultTableModel;
             return;
         }
 
-        // 3. 不管 Approved / Rejected，都发送通知给 Pet Boarding 的 CustomerService
+        // 3. Send notification to Pet Boarding organization
         sendCompensationNotification(targetClaim);
 
         JOptionPane.showMessageDialog(

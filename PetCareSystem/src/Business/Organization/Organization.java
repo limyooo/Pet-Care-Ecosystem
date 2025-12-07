@@ -27,7 +27,7 @@ public abstract class Organization {
         FrontDesk("Front Desk Organization"),
         InsurancePolicy("Insurance Policy Organization"),
         InsuranceClaim("Insurance Claim Organization"),
-        CustomerService("Customer Service");  // ⭐ 新增这行
+        CustomerService("Customer Service");  
         
         private String value;
 

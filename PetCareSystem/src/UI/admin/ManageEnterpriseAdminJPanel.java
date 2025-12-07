@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author hanlinyao
  */
+// 1. Declare parent panel instance variables
 public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
     private Petsystem system;
     private SystemAdminWorkAreaJPanel parent;
@@ -25,6 +26,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
     
     public ManageEnterpriseAdminJPanel(Petsystem system, SystemAdminWorkAreaJPanel parent) {
         initComponents();
+        // 2. Initialize parent panel variables
         this.system = system;
         this.parent = parent;
 

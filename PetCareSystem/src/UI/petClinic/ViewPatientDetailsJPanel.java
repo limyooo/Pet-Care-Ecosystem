@@ -62,6 +62,8 @@ public class ViewPatientDetailsJPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 204, 204));
+
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         lblTitle.setText("View Patient Details ");
 

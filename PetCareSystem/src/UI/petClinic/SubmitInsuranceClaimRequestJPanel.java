@@ -89,14 +89,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
         fieldPolicyID = new javax.swing.JTextField();
         fieldExpirationDate = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        lblPetBoarding = new javax.swing.JLabel();
         lblMedicalResult = new javax.swing.JLabel();
-        lblServiceProvider = new javax.swing.JLabel();
-        lblStartDate = new javax.swing.JLabel();
-        lblEndDate = new javax.swing.JLabel();
-        fieldServiceProvider = new javax.swing.JTextField();
-        fieldStartDate = new javax.swing.JTextField();
-        fieldEndDate = new javax.swing.JTextField();
         lblLabTestResult = new javax.swing.JLabel();
         lblTreatmentNeeded = new javax.swing.JLabel();
         lblTreatmentCost = new javax.swing.JLabel();
@@ -140,15 +133,7 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
 
         lblExpirationDate.setText("Expiration Date");
 
-        lblPetBoarding.setText("Pet Boarding ");
-
         lblMedicalResult.setText("Medical Result");
-
-        lblServiceProvider.setText("Service Provider");
-
-        lblStartDate.setText("Start Date");
-
-        lblEndDate.setText("End Date");
 
         lblLabTestResult.setText("Lab Test Result");
 
@@ -187,73 +172,64 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(248, 248, 248)
                         .addComponent(btnSubmitInsuranceClaimRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBack)
-                                .addGap(13, 13, 13))
-                            .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(75, 75, 75)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblPetName)
+                                .addComponent(lblSpecies)
+                                .addComponent(lblAge)
+                                .addComponent(lblWeight)
+                                .addComponent(lblFoodAllergy))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(fieldFoodAllergy, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblServiceProvider)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblEndDate)
-                                        .addComponent(lblStartDate)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldServiceProvider, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                    .addComponent(fieldStartDate)
-                                    .addComponent(fieldEndDate))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblTreatmentNeeded)
-                                    .addComponent(lblLabTestResult)
-                                    .addComponent(lblTreatmentCost))
-                                .addGap(62, 62, 62)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldLabTestResult, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                    .addComponent(comboTreatmentNeeded, 0, 1, Short.MAX_VALUE)
-                                    .addComponent(fieldTreatmentCost)))
-                            .addComponent(jSeparator1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(93, 93, 93)
-                                        .addComponent(lblPetBoarding)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
-                                        .addComponent(lblMedicalResult))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(34, 34, 34)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblPetName)
-                                            .addComponent(lblSpecies)
-                                            .addComponent(lblAge)
-                                            .addComponent(lblWeight)
-                                            .addComponent(lblFoodAllergy))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(fieldFoodAllergy, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(fieldSpieces, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(fieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(fieldAge, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(fieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(96, 96, 96)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblInsuranceCompany)
-                                            .addComponent(lblPolicyID)
-                                            .addComponent(lblCoverageLevel)
-                                            .addComponent(lblExpirationDate))))
-                                .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldInsuranceCompany)
-                                    .addComponent(fieldPolicyID)
-                                    .addComponent(fieldExpirationDate)
-                                    .addComponent(comboCoverageLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jSeparator2))))
+                                    .addComponent(fieldSpieces, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldAge, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(96, 96, 96)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblInsuranceCompany)
+                                .addComponent(lblPolicyID)
+                                .addComponent(lblCoverageLevel)
+                                .addComponent(lblExpirationDate))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(fieldInsuranceCompany)
+                                .addComponent(fieldPolicyID)
+                                .addComponent(fieldExpirationDate)
+                                .addComponent(comboCoverageLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(41, 41, 41)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
+                                            .addComponent(btnBack)
+                                            .addGap(13, 13, 13))
+                                        .addComponent(jSeparator1)
+                                        .addComponent(jSeparator2)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(197, 197, 197)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblTreatmentNeeded)
+                                        .addComponent(lblLabTestResult)
+                                        .addComponent(lblTreatmentCost))
+                                    .addGap(62, 62, 62)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(fieldLabTestResult)
+                                        .addComponent(comboTreatmentNeeded, 0, 1, Short.MAX_VALUE)
+                                        .addComponent(fieldTreatmentCost, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(0, 0, Short.MAX_VALUE))))
                 .addContainerGap(67, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(324, 324, 324)
+                .addComponent(lblMedicalResult)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,36 +282,23 @@ public class SubmitInsuranceClaimRequestJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldFoodAllergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFoodAllergy))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPetBoarding)
-                    .addComponent(lblMedicalResult))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(19, 19, 19)
+                .addComponent(lblMedicalResult)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblServiceProvider)
-                    .addComponent(fieldServiceProvider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLabTestResult)
                     .addComponent(fieldLabTestResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblStartDate)
-                    .addComponent(fieldStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTreatmentNeeded)
                     .addComponent(comboTreatmentNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEndDate)
-                            .addComponent(fieldEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTreatmentCost)
-                            .addComponent(fieldTreatmentCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTreatmentCost)
+                    .addComponent(fieldTreatmentCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(btnSubmitInsuranceClaimRequest)
                 .addGap(27, 27, 27))
         );
@@ -491,16 +454,13 @@ private void sendToCustomerService(HealthCareCheckRequest healthRequest) {
     private javax.swing.JComboBox<String> comboCoverageLevel;
     private javax.swing.JComboBox<String> comboTreatmentNeeded;
     private javax.swing.JTextField fieldAge;
-    private javax.swing.JTextField fieldEndDate;
     private javax.swing.JTextField fieldExpirationDate;
     private javax.swing.JTextField fieldFoodAllergy;
     private javax.swing.JTextField fieldInsuranceCompany;
     private javax.swing.JTextField fieldLabTestResult;
     private javax.swing.JTextField fieldPetName;
     private javax.swing.JTextField fieldPolicyID;
-    private javax.swing.JTextField fieldServiceProvider;
     private javax.swing.JTextField fieldSpieces;
-    private javax.swing.JTextField fieldStartDate;
     private javax.swing.JTextField fieldTreatmentCost;
     private javax.swing.JTextField fieldWeight;
     private javax.swing.JLabel jLabel1;
@@ -509,19 +469,15 @@ private void sendToCustomerService(HealthCareCheckRequest healthRequest) {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblCoverageLevel;
-    private javax.swing.JLabel lblEndDate;
     private javax.swing.JLabel lblExpirationDate;
     private javax.swing.JLabel lblFoodAllergy;
     private javax.swing.JLabel lblInsuranceCompany;
     private javax.swing.JLabel lblLabTestResult;
     private javax.swing.JLabel lblMedicalResult;
     private javax.swing.JLabel lblPet;
-    private javax.swing.JLabel lblPetBoarding;
     private javax.swing.JLabel lblPetName;
     private javax.swing.JLabel lblPolicyID;
-    private javax.swing.JLabel lblServiceProvider;
     private javax.swing.JLabel lblSpecies;
-    private javax.swing.JLabel lblStartDate;
     private javax.swing.JLabel lblTreatmentCost;
     private javax.swing.JLabel lblTreatmentNeeded;
     private javax.swing.JLabel lblWeight;
@@ -572,9 +528,7 @@ private void sendToCustomerService(HealthCareCheckRequest healthRequest) {
     fieldExpirationDate.setEnabled(false);
     comboCoverageLevel.setEnabled(false);
 
-    fieldServiceProvider.setEnabled(false);
-    fieldStartDate.setEnabled(false);
-    fieldEndDate.setEnabled(false);
+    
 
     fieldLabTestResult.setEnabled(false);
     comboTreatmentNeeded.setEnabled(false);

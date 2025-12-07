@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  *
  * @author hanlinyao
@@ -274,6 +275,7 @@ public class CustomerServiceJPanel extends javax.swing.JPanel {
             
             Pet pet = healthRequest.getPet();
             PetOwner owner = (pet != null) ? pet.getPetOwner() : null;
+            
             
             // 获取关联的 InsuranceClaimRequest（如果有）
             InsuranceClaimRequest claimRequest = healthRequest.getInsuranceClaimRequest();

@@ -22,64 +22,17 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jSeparator1" min="-2" pref="809" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="809" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Component id="lblor" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblnc" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbldd" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lbltr" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="fieldor" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fieldnc" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fielddd" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fieldtr" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblir" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbls" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="fieldir" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fields" alignment="0" min="-2" pref="112" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="743" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jSeparator1" min="-2" pref="809" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="809" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
@@ -107,35 +60,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fieldor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fieldir" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblnc" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbls" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fieldnc" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fields" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbldd" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fielddd" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lbltr" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="fieldtr" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -252,64 +177,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;&lt;&lt; Back"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="fieldor">
-    </Component>
-    <Component class="javax.swing.JTextField" name="fieldir">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblnc">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="New Check-ins"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="fields">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbldd">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Dog/Cat-Days"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbltr">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Total Revenue"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="fieldnc">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Incident Rate"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Helvetica Neue" size="14" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Operation Indicators Report"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbls">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Staff-to-Dog Ratio"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="fielddd">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblor">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Occupancy Rate"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="fieldtr">
     </Component>
   </SubComponents>
 </Form>

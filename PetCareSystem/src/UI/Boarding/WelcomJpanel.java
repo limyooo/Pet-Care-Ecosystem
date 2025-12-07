@@ -70,7 +70,7 @@ public class WelcomJpanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Record ID", "Pet Name", "Specis", "Age", "Owner Name", "Start Date", "End Date", "Status"
+                "Record ID", "Pet Name", "Species ", "Age", "Owner Name", "Start Date", "End Date", "Status"
             }
         ));
         jScrollPane1.setViewportView(tblPet);

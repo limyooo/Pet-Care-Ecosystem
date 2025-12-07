@@ -244,16 +244,16 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         java.awt.Component comp = this;
 
-        // 向上遍历组件树，直到找到 MainJFrame
+        //向上遍历组件树，直到找到 MainJFrame
         while (comp != null && !(comp instanceof UI.admin.MainJFrame)) {
             comp = comp.getParent();
         }
 
         if (comp instanceof UI.admin.MainJFrame) {
-            // ⭐ 关键修正：调用新的公共代理方法
+            //调用新的公共代理方法
             ((UI.admin.MainJFrame) comp).triggerLogout(); 
         } else {
-            // 找不到 MainJFrame，执行后备方案
+            //找不到MainJFrame，执行后备方案
             if (userProcessContainer != null) {
                 userProcessContainer.removeAll();
                 userProcessContainer.revalidate();

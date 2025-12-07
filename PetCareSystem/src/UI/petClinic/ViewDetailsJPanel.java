@@ -355,11 +355,11 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // 1.Update request itself
+        //1.Update request itself
         request.setAssignedDoctor(doctorName);
         request.setStatus(HealthCareCheckRequest.STATUS_ASSIGNED_DOCTOR);
 
-        // 2. 找到 VetDoctorOrganization
+        //2. 找到VetDoctorOrganization
         VetDoctorOrganization doctorOrg = enterprise.getOrganizationDirectory().getOrganizationList()
             .stream().filter(org -> org instanceof VetDoctorOrganization).map(org -> (VetDoctorOrganization) org)
             .findFirst().orElse(null);
@@ -369,7 +369,7 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // 3. 在医生账号列表中找到这个医生并把 request 加进去
+        //3. 在医生账号列表中找到这个医生并把request加进去
         doctorOrg.getUserAccountDirectory().getUserAccountList().stream()
             .filter(ua -> ua.getEmployee().getName().equals(doctorName)).findFirst().ifPresent(ua -> {
             ua.getWorkQueue().getWorkRequestList().add(request);
@@ -448,7 +448,7 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
             fieldSymptom.setText(request.getSymptom());
     fieldMessage.setText(request.getMessage());
 
-    // 1. Pet 
+    // 1.Pet 
     if (request.getPet() != null) {
         Pet pet = request.getPet();
 
@@ -458,18 +458,18 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
         fieldWeight.setText(String.valueOf(pet.getWeight()));
         fieldFoodAllergy.setText(pet.getFoodAllergy());
 
-        // 2. Pet Owner
+        // 2.Pet Owner
         if (pet.getPetOwner() != null) {
             PetOwner owner = pet.getPetOwner();
 
-            // --- Owner Info ---
+            //Owner Info 
             fieldPetOwnerName.setText(owner.getOwnerName());
             fieldPhone.setText(owner.getPhone());
             fieldEmail.setText(owner.getEmail());
             fieldAddress.setText(owner.getAddress());
             fieldEmergencyContact.setText(owner.getEmergencyContact());
 
-            // --- Insurance Info ---
+            //Insurance Info 
             fieldInsuranceCompany.setText(owner.getInsuranceCompany());
             fieldPolicyID.setText(owner.getPolicyId());
             fieldCoverageLevel.setText(owner.getCoverageLevel());
@@ -505,7 +505,7 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
         comboDoctors.setEnabled(true);
         fieldAssignDoctor.setEnabled(true);
         
-        // 如果已经有assigned doctor，就不允许再分配
+        //如果已经有assigned doctor就不允许再分配
         if (request.getAssignedDoctor() != null) {
             comboDoctors.setEnabled(false);
             fieldAssignDoctor.setEnabled(false);

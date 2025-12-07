@@ -72,6 +72,8 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
         lblHealthCareCheckStatus = new javax.swing.JLabel();
         fieldHealthCareCheckStatus = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(204, 204, 204));
+
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         lblTitle.setText("View Medical Status ");
 
@@ -132,7 +134,6 @@ public class ViewMedicalStatusJPanel extends javax.swing.JPanel {
                             .addComponent(lblHealthCareCheckStatus))
                         .addGap(74, 74, 74))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(lblDoctorAssigned)

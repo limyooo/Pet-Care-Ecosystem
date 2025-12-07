@@ -40,20 +40,21 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" max="32767" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnViewDetail" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                  <Component id="btnPolicyRecord" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="btnReject" min="-2" pref="160" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
-                      <Component id="btnSendCompensation" min="-2" pref="160" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnViewDetail" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="btnPolicyRecord" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnApprove" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="btnReject" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="btnApprove" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                  <Component id="btnSendCompensation" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -76,13 +77,14 @@
                   <Component id="btnViewDetail" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnApprove" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnReject" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnPolicyRecord" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnSendCompensation" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="92" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="btnSendCompensation" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="72" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

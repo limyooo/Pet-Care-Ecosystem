@@ -107,7 +107,7 @@ import UI.admin.MainJFrame;
         btnViewPolicy = new javax.swing.JButton();
         btnDashboard = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 204, 204));
+        setBackground(new java.awt.Color(204, 204, 255));
         setForeground(new java.awt.Color(242, 242, 242));
 
         btnLogout.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
@@ -135,7 +135,7 @@ import UI.admin.MainJFrame;
         jScrollPane1.setViewportView(tblPolicyList);
 
         lblPolicyList.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        lblPolicyList.setText("Policy List:");
+        lblPolicyList.setText("Policy List");
 
         btnCreateNew.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         btnCreateNew.setText("Create New Policy");
@@ -177,8 +177,8 @@ import UI.admin.MainJFrame;
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 853, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnViewPolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCreateNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
-                    .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnCreateNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)))
+                    .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -188,17 +188,17 @@ import UI.admin.MainJFrame;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitle)
                     .addComponent(btnLogout))
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(lblPolicyList)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(btnCreateNew)
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addComponent(btnViewPolicy)
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
                 .addComponent(btnDashboard)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

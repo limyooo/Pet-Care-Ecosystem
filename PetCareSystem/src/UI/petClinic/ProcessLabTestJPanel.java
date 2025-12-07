@@ -66,6 +66,8 @@ public class ProcessLabTestJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 204, 204));
+
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
         lblTitle.setText("Process Lab Test ");
 

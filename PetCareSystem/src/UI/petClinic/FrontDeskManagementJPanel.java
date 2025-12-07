@@ -69,8 +69,10 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblClaims = new javax.swing.JTable();
 
-        title.setFont(new java.awt.Font("Helvetica Neue", 1, 16)); // NOI18N
-        title.setText("Welcome Front Desk");
+        setBackground(new java.awt.Color(255, 255, 204));
+
+        title.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        title.setText("Welcome ! Front Desk");
 
         btnLogout.setText("Logout");
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +178,7 @@ public class FrontDeskManagementJPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

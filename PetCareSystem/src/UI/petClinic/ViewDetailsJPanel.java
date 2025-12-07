@@ -90,7 +90,9 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
         fieldAssignDoctor = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
-        title.setFont(new java.awt.Font("Helvetica Neue", 1, 15)); // NOI18N
+        setBackground(new java.awt.Color(204, 204, 204));
+
+        title.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         title.setText("View Details");
 
         lblSymptom.setText("Symptom");
@@ -341,7 +343,7 @@ public class ViewDetailsJPanel extends javax.swing.JPanel {
                     .addComponent(comboDoctors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldAssignDoctor)
                     .addComponent(lblSelect))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

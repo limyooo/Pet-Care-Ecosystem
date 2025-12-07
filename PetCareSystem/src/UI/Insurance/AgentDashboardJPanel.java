@@ -213,12 +213,12 @@ import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
         lblActivePartial = new javax.swing.JLabel();
         txtActivePartial = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(204, 204, 255));
 
         lblTitle.setFont(new java.awt.Font("Microsoft YaHei UI", 3, 24)); // NOI18N
         lblTitle.setText("Insurance Operation Dashboard");
 
-        btnBack.setText("<<Back");
+        btnBack.setText("<<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -226,7 +226,7 @@ import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
         });
 
         lblPolicy.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        lblPolicy.setText("Policy Overview:");
+        lblPolicy.setText("Policy Overview");
 
         lblTotalPolicy.setText("Total Policies:");
 
@@ -246,7 +246,7 @@ import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
         });
 
         lblClaimOverview.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        lblClaimOverview.setText("Claim Overview:");
+        lblClaimOverview.setText("Claim Overview");
 
         lblTotalClaims.setText("Total Claims:");
 
@@ -265,7 +265,7 @@ import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
         txtPendingClaims.setEditable(false);
 
         lblCoverageOverview.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        lblCoverageOverview.setText("Coverage Overview:");
+        lblCoverageOverview.setText("Coverage Overview");
 
         lblFullCoverage.setText("Full Coverage Policies:");
 
@@ -304,86 +304,91 @@ import Business.PetInsuranceOrganization.InsuranceClaimOrganization;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblApprovedClaims)
+                                .addComponent(lblTotalClaims, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblPendingClaims, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblRejectedClaims, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(70, 70, 70)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtApprovedClaims, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtTotalClaims, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtRejectedClaims)
+                                .addComponent(txtPendingClaims, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(14, 14, 14)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblFullCoverage)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(25, 25, 25)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblExpiredPolicy)
+                                        .addComponent(lblTotalPolicy, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblAcitivePolicy, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGap(72, 72, 72)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtActivePolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(txtTotalPolicy, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtExpiredPolicy, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtFullCoverage, javax.swing.GroupLayout.Alignment.LEADING))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCoverageOverview)
+                        .addGap(200, 200, 200))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPartialCoverage)
+                        .addGap(63, 63, 63)
+                        .addComponent(txtPartialCoverage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtActivePartial, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBack)
-                        .addGap(57, 57, 57)
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtPartialCoverage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lblPartialCoverage)
-                                            .addComponent(lblCoverageOverview, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblFullCoverage, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(31, 31, 31))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblTotalPolicy)
-                                            .addComponent(lblAcitivePolicy)
-                                            .addComponent(lblExpiredPolicy)
-                                            .addComponent(lblClaimOverview, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(50, 50, 50)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtActivePolicy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(txtTotalPolicy, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtExpiredPolicy, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFullCoverage, javax.swing.GroupLayout.Alignment.LEADING)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTotalClaims)
-                                    .addComponent(lblApprovedClaims)
-                                    .addComponent(lblRejectedClaims)
-                                    .addComponent(lblPendingClaims))
-                                .addGap(70, 70, 70)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtApprovedClaims, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(txtTotalClaims, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtRejectedClaims)
-                                    .addComponent(txtPendingClaims))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblApprovalRate)
-                                    .addComponent(lblActiveRate)
-                                    .addComponent(lblCancelledPolicy))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblActivePartial)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtActivePartial, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblActiveFull)
-                                            .addComponent(lblAverageClaimAmount))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtActiveRate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtActiveFull, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                                                .addComponent(txtApprovalRate)
-                                                .addComponent(txtAverageClaimAmount))
-                                            .addComponent(txtCancelledPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)))))
-                .addGap(76, 76, 76))
+                                    .addComponent(lblCancelledPolicy, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblActiveRate, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblApprovalRate, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblAverageClaimAmount, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(49, 49, 49))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblActivePartial)
+                                    .addComponent(lblActiveFull))
+                                .addGap(37, 37, 37))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtApprovalRate, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                                .addComponent(txtAverageClaimAmount))
+                            .addComponent(txtActiveRate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtActiveFull, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnBack)
+                                .addComponent(txtCancelledPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(72, 72, 72))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPolicy, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblClaimOverview, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitle)
                     .addComponent(btnBack))
-                .addGap(28, 28, 28)
+                .addGap(27, 27, 27)
                 .addComponent(lblPolicy)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

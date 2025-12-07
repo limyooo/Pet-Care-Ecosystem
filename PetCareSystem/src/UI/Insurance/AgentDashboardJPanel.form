@@ -22,108 +22,121 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblApprovedClaims" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblTotalClaims" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblPendingClaims" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblRejectedClaims" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtApprovedClaims" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtTotalClaims" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtRejectedClaims" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtPendingClaims" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblFullCoverage" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblExpiredPolicy" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblTotalPolicy" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblAcitivePolicy" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="txtActivePolicy" alignment="0" pref="100" max="32767" attributes="0"/>
-                                      <Component id="txtTotalPolicy" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtExpiredPolicy" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtFullCoverage" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblCoverageOverview" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblPartialCoverage" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-                      <Component id="txtPartialCoverage" min="-2" pref="100" max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblCancelledPolicy" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblActiveRate" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="txtActivePartial" min="-2" pref="101" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="txtActiveRate" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                  <Component id="txtCancelledPolicy" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblCancelledPolicy" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblActiveRate" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblApprovalRate" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblAverageClaimAmount" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="lblPolicy" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Component id="lblClaimOverview" min="-2" pref="120" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="lblActivePartial" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblActiveFull" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblActivePartial" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblActiveFull" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="lblTitle" min="-2" pref="403" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblTitle" min="-2" pref="403" max="-2" attributes="0"/>
-                              <EmptySpace pref="187" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblAverageClaimAmount" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblApprovalRate" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtApprovalRate" pref="111" max="32767" attributes="0"/>
-                              <Component id="txtAverageClaimAmount" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="txtActiveRate" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                          <Component id="txtActiveFull" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="btnBack" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCancelledPolicy" min="-2" pref="101" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblPolicy" min="-2" pref="120" max="-2" attributes="0"/>
-                          <Component id="lblClaimOverview" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="lblFullCoverage" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
+                                          <Component id="txtFullCoverage" min="-2" pref="100" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="lblPartialCoverage" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="txtPartialCoverage" min="-2" pref="100" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblTotalClaims" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblRejectedClaims" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblPendingClaims" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblApprovedClaims" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="txtApprovedClaims" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtTotalClaims" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtRejectedClaims" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="txtPendingClaims" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblExpiredPolicy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblTotalPolicy" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblAcitivePolicy" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="txtActivePolicy" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtTotalPolicy" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtExpiredPolicy" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="lblCoverageOverview" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="btnBack" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="txtApprovalRate" max="32767" attributes="0"/>
+                  <Component id="txtAverageClaimAmount" pref="111" max="32767" attributes="0"/>
+                  <Component id="txtActiveFull" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtActivePartial" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -137,50 +150,75 @@
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="lblPolicy" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtTotalPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTotalPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblCancelledPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtCancelledPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblTotalPolicy" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblAcitivePolicy" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblExpiredPolicy" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="txtTotalPolicy" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="txtActivePolicy" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblCancelledPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCancelledPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblActiveRate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtActiveRate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="txtExpiredPolicy" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtActivePolicy" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAcitivePolicy" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblActiveRate" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtActiveRate" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtExpiredPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblExpiredPolicy" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="lblClaimOverview" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblTotalClaims" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtTotalClaims" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblApprovalRate" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtApprovalRate" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtTotalClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblTotalClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtApprovedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblApprovedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="lblApprovalRate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblAverageClaimAmount" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="txtApprovalRate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="txtAverageClaimAmount" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtApprovedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblApprovedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAverageClaimAmount" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtAverageClaimAmount" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="txtRejectedClaims" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblRejectedClaims" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblRejectedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtRejectedClaims" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblPendingClaims" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtPendingClaims" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPendingClaims" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Component id="lblCoverageOverview" min="-2" max="-2" attributes="0"/>
@@ -198,7 +236,7 @@
                   <Component id="lblActivePartial" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtActivePartial" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="40" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

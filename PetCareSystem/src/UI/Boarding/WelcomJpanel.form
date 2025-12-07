@@ -92,7 +92,7 @@
               <Table columnCount="8" rowCount="0">
                 <Column editable="true" title="Record ID" type="java.lang.Object"/>
                 <Column editable="true" title="Pet Name" type="java.lang.Object"/>
-                <Column editable="true" title="Specis" type="java.lang.Object"/>
+                <Column editable="true" title="Species " type="java.lang.Object"/>
                 <Column editable="true" title="Age" type="java.lang.Object"/>
                 <Column editable="true" title="Owner Name" type="java.lang.Object"/>
                 <Column editable="true" title="Start Date" type="java.lang.Object"/>
